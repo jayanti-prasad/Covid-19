@@ -4,10 +4,9 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import matplotlib 
 import numpy as np
-
-
 matplotlib.rc('xtick', labelsize=12) 
 matplotlib.rc('ytick', labelsize=12) 
+
 
 if __name__ == "__main__":
 
@@ -34,4 +33,4 @@ if __name__ == "__main__":
    plt.title(country)
    plt.grid()
    ax.legend()
-   plt.savefig("countries" + os.sep + country +".pdf")
+   plt.savefig("plots" + os.sep + country +".pdf")
