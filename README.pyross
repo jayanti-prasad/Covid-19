@@ -1,0 +1,35 @@
+Intsalling and using Pyross
+==============
+
+Step 1: Get the repo 
+ -  Change to some directory :
+   cd /Users/jayanti/Software/
+ -  Clone the repo :
+   git clone https://github.com/rajeshrinet/pyross.git
+ - Change to the repo :
+   cd pyross 
+
+Step 2: Install the repo 
+   python setup.py install
+
+   This step will create a 'build' folder and in that we will have 
+   our 'python lib' with the 'SIR.models'
+
+Step 3: Set the environment :   
+   export PYTHONPATH=/Users/jayanti/Software/pyross/build/lib.macosx-10.15-x86_64-3.7/:$PYTHONPATH
+
+   Please change the path accordingly 
+
+Step 4: Use the module :
+   $ pthon 
+   >>> import  pyross.models as models
+   >>> dir (models)
+   ['DTYPE', 'SEAIR', 'SEAIRQ', 'SEIR', 'SIR', '__builtins__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__pyx_unpickle_Enum', '__pyx_unpickle_SEAIR', '__pyx_unpickle_SEAIRQ', '__pyx_unpickle_SEIR', '__pyx_unpickle_SIR', '__spec__', '__test__', 'np']
+
+   *** If you get the above output then your installation have been successul ***
+  
+ --
+For problems & issues:  
+prasad.jayanti@gmail.com 
+
+
