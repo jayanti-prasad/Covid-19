@@ -4,33 +4,54 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import matplotlib 
 import numpy as np
+import argparse
 matplotlib.rc('xtick', labelsize=12) 
 matplotlib.rc('ytick', labelsize=12) 
-
+matplotlib.pyplot.grid(True, which="both")
 
 if __name__ == "__main__":
 
-   df = pd.read_csv(sys.argv[1])
-   country = sys.argv[2] 
-   print("countries:",set(df['countriesAndTerritories'].to_list()))
+   parser = argparse.ArgumentParser()
+   parser.add_argument('-i', '--input-file', help='Input CSV file')
+   parser.add_argument('-o', '--output-dir', help='Output dir')
+   parser.add_argument('-c', '--country', help='Country')
+   parser.add_argument('-d', '--num-days', type=int, help='Number of days', default=30)
+   args = parser.parse_args()
 
-   df_in = df[df['countriesAndTerritories'] == country]
-   dates = df_in['dateRep'].to_list()
-   y = df_in['deaths'].to_list()
-   z = df_in['cases'].to_list()
-   dates = [dates [len(dates)-i-1] for i in range (0, len(dates))]
+   df = pd.read_csv(args.input_file)
+   os.makedirs(args.output_dir, exist_ok=True)
 
-   y = [i for i  in reversed(y)]
+   print("Latest data point")
+   print("data:",df.columns)
+   print("columns:",df.columns)
 
-   y_c = np.cumsum(y) 
+   date_column= 'ObservationDate'
+   country_column ='Country/Region'
+   deaths_column = 'Deaths' 
+
+   if args.country not in list(set(df[country_column].to_list())):
+      print("Give the country name from the following:\n")
+      print(list(set(df[country_column].to_list())))
+      sys.exit() 
+
+   df_c = df[df[country_column] == args.country]
+   dates = df_c[date_column].to_list()
+   dates = [x.replace('/2020','') for x in dates]
+   y_c = df_c[deaths_column].to_list()
+ 
+   y =  [0] + [ y_c[i]-y_c[i-1]  for i in range (1, len(y_c))]
+
    fig,ax = plt.subplots(figsize=(20, 10))
-   plt.plot(dates[-30:], y[-30:],label='Number of death')
-   plt.plot(dates[-30:], y[-30:],'o')
-   plt.plot(dates[-30:], y_c[-30:],label='Number of death till date')
-   plt.plot(dates[-30:], y_c[-30:],'o')
+   start = -1 * args.num_days 
+
+   plt.plot(dates[start:], y[start:],label='Number of death')
+   plt.plot(dates[start:], y[start:],'o')
+   plt.plot(dates[start:], y_c[start:],label='Number of death till date')
+   plt.plot(dates[start:], y_c[start:],'o')
+
    plt.xticks(rotation=90)
    plt.ylabel("Total deaths")
-   plt.title(country)
+   plt.title(args.country)
    plt.grid()
    ax.legend()
-   plt.savefig("plots" + os.sep + country +".pdf")
+   plt.savefig(args.output_dir  + os.sep + args.country +".pdf")
