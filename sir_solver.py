@@ -1,7 +1,9 @@
+import os
 import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 import argparse
+
 
 """
 This program solve the SIR equation numerically for a given set of
@@ -37,8 +39,10 @@ if __name__ == "__main__":
    parser.add_argument('-n', '--num-people', help='Number of people', type=int, default=1000)
    parser.add_argument('-b', '--beta', help='S decay param', type=float, default=0.2)
    parser.add_argument('-g', '--gamma', help='R growth param', type=float, default=0.1)
+   parser.add_argument('-o', '--output-dir', help='Output dir')
    args = parser.parse_args()
 
+   os.makedirs(args.output_dir, exist_ok=True)
 
    # Total population, N.
    N = args.num_people 
@@ -60,9 +64,9 @@ if __name__ == "__main__":
    ret = odeint(deriv, y0, t, args=(N, beta, gamma))
    S, I, R = ret.T
 
-   plt.plot(t, S, label='Susceptible')
-   plt.plot(t, I, label='Infected')
-   plt.plot(t, R, label='Recovered with immunity')
+   plt.plot(t, S,'g', label='Susceptible')
+   plt.plot(t, I,'r', label='Infected')
+   plt.plot(t, R,'b', label='Recovered with immunity')
    plt.legend()
-   plt.savefig("plots/sir_plot.pdf")
+   plt.savefig(args.output_dir + os.sep + "sir_solver_plot.pdf")
 
