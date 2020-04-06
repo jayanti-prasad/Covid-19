@@ -64,9 +64,13 @@ if __name__ == "__main__":
    ret = odeint(deriv, y0, t, args=(N, beta, gamma))
    S, I, R = ret.T
 
-   plt.plot(t, S,'g', label='Susceptible')
+   plt.fill_between(t,0, S,color="#348ABD", alpha=0.3)
+   plt.plot(t,S,'g', label='Susceptible')
+   plt.fill_between(t,0, I,color='#A60628', alpha=0.3)
    plt.plot(t, I,'r', label='Infected')
+   plt.fill_between(t,0, R,color='#A61628', alpha=0.3)
    plt.plot(t, R,'b', label='Recovered with immunity')
+   plt.xlabel("Days")
    plt.legend()
    plt.savefig(args.output_dir + os.sep + "sir_solver_plot.pdf")
 
