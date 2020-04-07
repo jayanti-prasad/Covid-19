@@ -85,5 +85,5 @@ if __name__ == "__main__":
    ax2.set_title("Number of Confimed cases")
    ax2.grid()
    ax2.legend()
-   plt.savefig(args.output_dir + os.sep + "india_data_fitted.pdf")
+   plt.savefig(args.output_dir + os.sep + "india_"+str(start)+"_"+str(end)+"_fit.pdf")
 
