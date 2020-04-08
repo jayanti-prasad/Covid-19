@@ -15,9 +15,13 @@
 - [Thomson Reuters](https://www.thomsonreuters.com/en/resources/covid-19.html)
 - [CDC](https://www.cdc.gov/coronavirus/2019-nCoV/index.html)
 - [MIT SLOAN](https://sloanreview.mit.edu/tag/covid-19/)
+- [CORD-19](https://pages.semanticscholar.org/coronavirus-research)
 - [INDIA](https://www.mygov.in/covid-19/)
+- [CDDEP INDIA](https://cddep.org/covid-19/)
 
 
 # Papers 
 - [Epidemiological and clinical characteristics of 99 cases of 2019 novel coronavirus pneumonia in Wuhan, China: a descriptive study](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30211-7/fulltext)
 
+
+# Preprints 
