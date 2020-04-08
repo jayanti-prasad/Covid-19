@@ -3,7 +3,7 @@
 
 # Collection 
 - [WHO](https://www.who.int/emergencies/diseases/novel-coronavirus-2019)
-- [Science Collection ] (https://www.sciencemag.org/coronavirus-research-commentary-and-news?intcmp=ghd_cov)
+- [Science Collection ](https://www.sciencemag.org/coronavirus-research-commentary-and-news?intcmp=ghd_cov)
 - [Nature Collection](https://www.nature.com/collections/aijdgieecb/)
 - [The Lancet](https://www.thelancet.com/coronavirus)
 - [Elsevier](https://www.elsevier.com/connect/coronavirus-information-center?dgcid=_SD_banner)
