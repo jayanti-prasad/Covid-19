@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import argparse 
 import matplotlib
 
-plt.rcParams.update({'font.size': 22})
+plt.rcParams.update({'font.size': 12})
 
 
 """
@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
    parser.add_argument('-','--input-file',help='Input CSV file',\
-      default='data/full-data-07-04-2020.csv')
+      default='data/covid-19-data-latest.csv')
    parser.add_argument('-c','--country-name',help='Country name',default='India')   
    parser.add_argument('-s','--start-day',help='Starting day for  plot',\
       type=int,default=30)
@@ -53,49 +53,51 @@ if __name__ == "__main__":
    dates1 = [datetime.datetime.strptime(ts, "%m-%d-%Y") for ts in dates]
    dates2 = dates1.sort()
 
-   x, yc, yd, yr = [], [], [], []  
+   xx = []
+   yy = np.zeros([df.shape[0],3])
 
    dfc = pd.DataFrame(columns=['date','confirmed','deaths','recovered'])
    count = 0 
    for d in dates1:
      dd = str(d).split()[0].split("-")
      key = dd[1]+"-"+dd[2]+"-"+dd[0]
-     print(count, key, D[key]) 
-     x.append(count)
-     yc.append (D[key][0])
-     yd.append (D[key][1])
-     yr.append (D[key][2])
-     dfc.loc[count] = [key,D[key][0], D[key][1], D[key][2]]
+     xx.append(key)
+     yy[count, 2] = D[key][0] 
+     yy[count, 0] = D[key][1] 
+     yy[count, 1] = D[key][2] 
+     dfc.loc[count]=[key,D[key][0],D[key][1],D[key][2]]
      count +=1
-
-   dfc.to_csv(args.output_dir + os.sep + "cdr_" + args.country_name +".csv")
-
+   
+   dfc.to_csv("data" + os.sep + args.country_name +".csv")
+   print("Output written:", "data" + os.sep + args.country_name +".csv")
+ 
    dates1 = [str(x).replace('2020-','') for x in dates1]
    dates = [x.split(" ")[0] for x in dates1]
 
+   cases=['deaths','recovered','confirmed']
+   colors=['red','green','blue']
    fig  = plt.figure(figsize=(18,18))
+   ax = []
 
-   ax = fig.add_subplot(311)
-   ax.set_title("Covid-19: "+args.country_name)
-   plt.grid()
-   ax.set_ylabel("Deaths")
-   ax.set_xticklabels([])
+   ax.append(fig.add_subplot(311))
+   ax.append(fig.add_subplot(312))
+   ax.append(fig.add_subplot(313))
 
-   bx = fig.add_subplot(312)
-   bx.set_ylabel("Recovered")
-   bx.set_xticklabels([])
-   plt.grid()
+   for i in range(0, len(cases)):
+      plt.xticks(rotation=90)
+      ax[i].plot(dates[start:end], yy[start:end,i],'r',linewidth=4.0,c=colors[i])
+      ax[i].set_ylabel(cases[i])
+      ax[i].tick_params(labeltop=False, labelright=True)
+      if i == 0:
+         ax[i].set_title(args.country_name)
+      if i < 2:
+        ax[i].set_xticklabels([])
+      else :
+        ax[i].tick_params(axis='x', which='major', labelsize=10)
+        ax[i].tick_params(axis='x', which='minor', labelsize=8)
+      ax[i].grid()
+ 
 
-   cx = fig.add_subplot(313)
-   plt.xticks(rotation=90)
-   cx.set_ylabel("Infected")
-   cx.tick_params(axis='x', which='major', labelsize=10)
-   cx.tick_params(axis='x', which='minor', labelsize=8)
-
-     
-   ax.plot(dates[start:end], yd[start:end],'r',linewidth=4.0)
-   bx.plot(dates[start:end], yr[start:end],'g',linewidth=4.0)
-   cx.plot(dates[start:end], yc[start:end],'b',linewidth=4.0)
-   plt.grid()
-   plt.savefig(args.output_dir + os.sep + "cdr_" + args.country_name +".pdf")
-
+   plt.savefig(args.output_dir + os.sep + args.country_name +".pdf")
+   print("Input file:",args.input_file)
+   print("Output file:",args.output_dir + os.sep + args.country_name +".pdf")

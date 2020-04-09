@@ -11,7 +11,6 @@ import datetime
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
 
-
 def func(x, a, b):
 
    return a * np.exp(-b * x)   
@@ -19,9 +18,9 @@ def func(x, a, b):
 if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
-   parser.add_argument('-i', '--input-file', help='Input cvv file')
+   parser.add_argument('-i', '--input-file', help='Input csv file')
    parser.add_argument('-s', '--start-day', help='Star day for fitting data',type=int,default=10)
-   parser.add_argument('-e', '--end-day', help='End day for fitting data', type=int,default=20)
+   parser.add_argument('-e', '--end-day', help='End day for fitting data', type=int,default=80)
    parser.add_argument('-o', '--output-dir', help='Output dir',default="plots")
    args = parser.parse_args()
 
@@ -31,7 +30,6 @@ if __name__ == "__main__":
 
    for index, rows in df.iterrows():
       print(index, rows['date'], rows['confirmed'],rows['recovered'],rows['deaths'])
-
 
    start = args.start_day
    end = args.end_day 
@@ -68,13 +66,15 @@ if __name__ == "__main__":
          
       start = 0 
       for j in range(0, len(yy[i])):
-         if start == 0 and yy[i][j] > 0:
-            start = j
+        if start == 0 and yy[i][j] > 0:
+           start = j
 
       x_fit = np.array(days[start:end]-days[start])
       dates_fit = np.array(dates[start:end])
       y_fit = np.array(yy[i][start:end])
- 
+      print("x:",x_fit)
+      print("y:",y_fit)
+  
       ax[i].plot(dates_fit, y_fit, 'ro',label='Fitting data' )
       popt, pcov = curve_fit(func, x_fit, y_fit)
       print("coeff:",popt) 

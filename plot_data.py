@@ -12,9 +12,9 @@ matplotlib.pyplot.grid(True, which="both")
 if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
-   parser.add_argument('-i', '--input-file', help='Input CSV file')
-   parser.add_argument('-o', '--output-dir', help='Output dir')
-   parser.add_argument('-c', '--country', help='Country')
+   parser.add_argument('-i', '--input-file', help='Input CSV file',default='data/covid-19-data-latest.csv')
+   parser.add_argument('-o', '--output-dir', help='Output dir',default='plots')
+   parser.add_argument('-c', '--country', help='Country',default='India')
    parser.add_argument('-d', '--num-days', type=int, help='Number of days', default=30)
    args = parser.parse_args()
 
@@ -55,3 +55,5 @@ if __name__ == "__main__":
    plt.grid()
    ax.legend()
    plt.savefig(args.output_dir  + os.sep + args.country +".pdf")
+   print("Input file:",args.input_file)
+   print("Output file:", args.output_dir  + os.sep + args.country +".pdf")
