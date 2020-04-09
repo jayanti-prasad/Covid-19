@@ -42,7 +42,6 @@ def get_summary (df):
 if __name__ == "__main__":
 
    inp_dir='/Users/jayanti/Data/COVID-19/full-data/COVID-19/csse_covid_19_data/csse_covid_19_daily_reports/'
-
    parser = argparse.ArgumentParser()
    parser.add_argument('-i','--input-dir',help='Input data dir',default=inp_dir)
    parser.add_argument('-o','--output-dir',help='Output data dir', default="data") 
