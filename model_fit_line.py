@@ -44,7 +44,7 @@ if __name__ == "__main__":
           start = i
 
    x = x[start:] - x[start] 
-   y = np.log10(y[start:])
+   y = np.log(y[start:])
 
    slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
    y_predict = intercept + slope * x 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
    ax.plot(x, y_predict,'k-',\
       label='fit [y = a + b *x]: a=%5.3f, b=%5.3f' % (intercept,slope))
    ax.legend()
-   ax.set_ylabel("log10( "+args.type+" )")
+   ax.set_ylabel("log( "+args.type+" )")
    plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
    plt.savefig("plots" + os.sep + args.country+"_"+args.type+".pdf")
  
