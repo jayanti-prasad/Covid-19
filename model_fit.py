@@ -1,14 +1,12 @@
 import os
 import sys
-import numpy as np
-import matplotlib.pyplot as plt 
-from scipy.optimize import curve_fit
-import pandas as pd 
 import argparse
-from common_utils import date_normalize
+import numpy as np
+import pandas as pd 
+import matplotlib.pyplot as plt 
+from models import ExpModel, TimeSeriesModel  
+from common_utils import date_normalize, get_dates, strip_year 
 
-def func(x, a, b):
-   return a * np.exp(-b * x)   
 
 if __name__ == "__main__":
 
@@ -17,24 +15,36 @@ if __name__ == "__main__":
    parser.add_argument('-c', '--country', help='Country',default='India')
    parser.add_argument('-s', '--start-day', help='Star day for fitting data',type=int,default=10)
    parser.add_argument('-e', '--end-day', help='End day for fitting data', type=int,default=80)
+   parser.add_argument('-n', '--num-predict', help='Number of days to predict', type=int,default=10)
    parser.add_argument('-o', '--output-dir', help='Output dir',default="plots")
    args = parser.parse_args()
 
    os.makedirs(args.output_dir, exist_ok=True)
 
+   # read and normalize the data frame 
    df = pd.read_csv(args.input_file)
+   df = df.fillna(0)
    df = df[df['country'] == args.country]
 
    df = date_normalize (df)
    df = df.sort_values(by='dates')
-   
-   dates = [d.replace('2020-','') for d in df['dates'].to_list()]
 
-   x = np.array([float(i) for i in range(0, len(dates))])
+   # let us get all the dates 
+   dates = df['dates'].to_list() 
 
-   start = args.start_day
-   end = args.end_day 
+   # add some future dates also 
+   dates_predict = dates + get_dates (dates[df.shape[0]-1],args.num_predict)
 
+   # get the days
+   days = np.array([float(i) for i in range(0, len(dates))])
+   days_predict  = np.array([float(i) for i in range(0, len(dates_predict))])
+
+
+   # let us get rid of the year for plotting 
+   dates_predict = strip_year (dates_predict)
+   dates = strip_year (dates)
+
+   # now let us iterate over the three columns 
    cases=["deaths","recovered","confirmed"]
 
    fig = plt.figure(figsize=(18,18))
@@ -43,11 +53,11 @@ if __name__ == "__main__":
    ax.append(plt.subplot(312))
    ax.append(plt.subplot(313))
 
-   #for i in range(0, 1):
-   for i in range(0, len(cases)):
-      y = df[cases[i]].to_list()
+   num_days = len(days)
 
-      ax[i].plot(dates, y, 'bo',label='Full data' )
+   for i in range(0, len(cases)):
+      y = df[cases[i]].to_numpy()
+      ax[i].plot(dates,y, 'bo',label='Full data' )
       plt.setp(ax[i].get_xticklabels(), rotation=90, horizontalalignment='right')
       ax[i].set_ylabel(cases[i])
       ax[i].grid()
@@ -55,30 +65,26 @@ if __name__ == "__main__":
       if i < 2 :
          ax[i].set_xticklabels([])
       if i == 0: 
-         ax[i].set_title("Covid-19 data fitting [a*exp(-b*x)] for:" + args.country)
-         
-      start = 0 
-      for j in range(0, len(y)):
-        if start == 0 and y[j] > 0:
-           start = j
+         ax[i].set_title("Covid-19: " + args.country)
 
-      x_fit = np.array(x[start:end]-x[start])
-      dates_fit = dates[start:end]
-      y_fit = np.array(y[start:end])
+      model = ExpModel()
+      model.fit(days,y)          
+      y_predict = model.predict(days_predict)
 
-      print("x_fit:",x_fit)
-      print("y_fit:",y_fit)
-  
-      ax[i].plot(dates_fit, y_fit, 'ro',label='Fitting data' )
-      popt, pcov = curve_fit(func, x_fit, y_fit)
-      print("coeff:",popt) 
+      model1 = TimeSeriesModel(5)
+      model1.fit (days[model.start:],y[model.start:])
 
-      y_predict = func(x_fit, *popt) 
+      y_predict1 = model1.predict(y[-10], 10 + args.num_predict)     
 
-      print("y_predict:",y_predict) 
-      ax[i].plot(dates_fit, y_predict, 'k-',\
-         label='fit: a=%5.3f, b=%5.3f' % tuple(popt))
+      days_predict1 = dates_predict[num_days-10:num_days+args.num_predict] 
+
+      ax[i].plot(days_predict1, y_predict1, 'r-',\
+         label='fit: growth rate =%5.3f ' % (model1.rate))
+
+      ax[i].plot(dates_predict[model.start:], y_predict[model.start:], 'k-',\
+         label='fit [a*exp(-b)]: a=%5.3f, b=%5.3f' % (model.a,model.b))
+
       ax[i].legend()
-  
-   plt.savefig(args.output_dir + os.sep + args.country + "_model_fit.pdf")
 
+   plt.savefig(args.output_dir + os.sep + args.country + "_model_fit.pdf")
+   plt.show()

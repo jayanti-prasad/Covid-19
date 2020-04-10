@@ -1,3 +1,6 @@
+from datetime import timedelta, date
+import datetime as dt
+
 def date_normalize (df):
     dates = df['date'].to_list()
     dates1 = []
@@ -7,3 +10,16 @@ def date_normalize (df):
     df['dates'] = dates1
     return df
 
+def get_dates (start_date, num_days):
+
+   date_time_str = start_date + " 12:00:00"
+   tmp_date = dt.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
+   dates = []
+   for i in range(0, num_days):
+      tmp_date  = tmp_date + timedelta(days=1)
+      dates.append(str(tmp_date).split(" ")[0])
+   return dates
+
+def strip_year (dates):
+   dates = [d.replace('2020-','') for d in dates]
+   return dates  

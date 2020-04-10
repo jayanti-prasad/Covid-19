@@ -19,6 +19,7 @@ if __name__ == "__main__":
       default='data/covid-19-data-latest.csv')
     parser.add_argument('-c','--country',help='Country name',default='India')
     parser.add_argument('-o','--output-dir',help='Output dir',default='plots')
+    parser.add_argument('-n','--num-days',help='Number of days',default=0,type=int)
 
     args = parser.parse_args()
 
@@ -41,8 +42,9 @@ if __name__ == "__main__":
 
     for i in range (0, len(cases)):
       plt.setp(ax[i].get_xticklabels(), rotation=90, horizontalalignment='right')
-      y = df[cases[i]].to_list()
-      ax[i].plot(dates,y,c=colors[i])
+      y = df[cases[i]].to_numpy()
+      ax[i].plot(dates[-1*args.num_days:],y[-1*args.num_days:],c=colors[i])
+      #ax[i].scatter(dates[-1*args.num_days:],y[-1*args.num_days:],'o')
       ax[i].set_ylabel(cases[i])
       ax[i].grid()
       if i == 0:
