@@ -12,9 +12,11 @@ if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
    parser.add_argument('-i', '--input-file', help='Input csv file')
+   parser.add_argument('-o', '--output-dir', help='Output dir',default="plots")
    parser.add_argument('-c', '--country', help='Country',default='India')
    parser.add_argument('-t', '--type', help='Data colums',default="confirmed")
    parser.add_argument('-s', '--start-day', help='Start day',default=0,type=int)
+   parser.add_argument('-e', '--end-day', help='End day',default=0,type=int)
    args = parser.parse_args()
 
    # read and normalize the data frame 
@@ -39,17 +41,31 @@ if __name__ == "__main__":
 
  
    start = args.start_day
+   end = args.end_day 
+
    for i in range (0, df.shape[0]):
       if start == 0 and y[i] > 0:
           start = i
 
-   x = x[start:] - x[start] 
-   y = np.log(y[start:])
+   if end == 0:
+      end = df.shape[0]
+
+   x = np.array(x[start:end] - x[start]) 
+   y = np.log(y[start:end])
 
    slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
    y_predict = intercept + slope * x 
+   x = strip_year(dates[start:end])
 
-   x = strip_year(dates[start:])
+   parts1 = dates[start].split("-")
+   parts2 = dates[end-1].split("-")
+   p1 = parts1[2]+"-"+parts1[1]+"-"+parts1[0]
+   p2 = parts2[2]+"-"+parts2[1]+"-"+parts2[0]
+
+   #date_str = dates[start]+"_to_"+dates[end-1]
+   date_str = p1 +"_to_"+p2
+
+   output_file = args.output_dir + os.sep + args.country+"_"+args.type+"_"+date_str+".pdf"
 
    fig = plt.figure()
    ax = fig.add_subplot()
@@ -62,5 +78,5 @@ if __name__ == "__main__":
    ax.legend()
    ax.set_ylabel("log( "+args.type+" )")
    plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
-   plt.savefig("plots" + os.sep + args.country+"_"+args.type+".pdf")
- 
+   plt.savefig(output_file)
+   print("output file:", output_file)

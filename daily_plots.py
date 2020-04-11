@@ -31,6 +31,8 @@ if __name__ == "__main__":
 
     dates = [d.replace('2020-','') for d in df['dates'].to_list()]
 
+    print("dates:",dates)
+
     fig = plt.figure(figsize=(18,18))
  
     ax = [fig.add_subplot(311)]  
@@ -43,7 +45,7 @@ if __name__ == "__main__":
     for i in range (0, len(cases)):
       plt.setp(ax[i].get_xticklabels(), rotation=90, horizontalalignment='right')
       y = df[cases[i]].to_numpy()
-      ax[i].plot(dates[-1*args.num_days:],y[-1*args.num_days:],c=colors[i])
+      ax[i].plot(dates,y,c=colors[i])
       #ax[i].scatter(dates[-1*args.num_days:],y[-1*args.num_days:],'o')
       ax[i].set_ylabel(cases[i])
       ax[i].grid()
