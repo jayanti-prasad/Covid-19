@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt 
 import argparse 
+import pandas as pd
 
 def deriv(P, X, N):
     # P = [beta, sigma,gamma]
@@ -27,14 +28,29 @@ if __name__ == "__main__":
     parser.add_argument('-s','--sigma',type=float,default=0.2,help='Parameter sigma')
 
     args = parser.parse_args()
+  
+    df = pd.read_csv("../data/India.csv")
+
+    yy = df['confirmed'].to_numpy()
+    xx = np.array([int(i) for i in range(0, len(yy))])
+
+    xx = xx[34:54] - xx[34]
+    yy = yy[34:54] 
+
+    count = 0
+    print("day-date-confirmed-recovered-deaths")
+    for index, row in df.iterrows():
+       print(count, row['date'], row['confirmed'], row['recovered'],row['deaths'])
+       count +=1
+
 
     print("Parameters:", args)
    
     m, N = args.num_days, args.num_pop 
    
     P = np.array([args.beta,args.sigma,args.gamma])
-    X = np.array([100.0,1.0,2.0,0.0])
-    C = np.array([0.5,0.5,0.5,0.5])
+    X = np.array([args.num_pop,0.0,28.0,0.0])
+    C = np.array([0.25,0.25,0.25,0.25])
 
     x = np.zeros([m])
     S = np.zeros([m])
@@ -54,6 +70,7 @@ if __name__ == "__main__":
       +r', $\gamma=$'+str(args.gamma))
     plt.plot(x,S,label='Succeptable')
     plt.plot(x,I,label='Infected')
+    plt.plot(xx,yy,'o')
     plt.plot(x,R,label='Recovered')
     plt.plot(x,E,label='Exposed')
     plt.legend()
