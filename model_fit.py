@@ -28,6 +28,13 @@ if __name__ == "__main__":
 
    df = date_normalize (df)
    df = df.sort_values(by='dates')
+ 
+   print("day-date-confirmed-recovered-deaths")
+   count = 0
+   for index,row in df.iterrows():
+      print(count, row['date'], row['confirmed'], row['recovered'], row['deaths'])
+      count +=1
+
 
    # let us get all the dates 
    dates = df['dates'].to_list() 
