@@ -8,6 +8,15 @@ from models import ExpModel, TimeSeriesModel
 from common_utils import date_normalize, get_dates, strip_year
 from scipy import stats
 
+def get_file_name (dates, stat, end):
+   print("dates:",dates)
+   parts1 = dates[start].split("-")
+   parts2 = dates[end-1].split("-")
+   p1 = parts1[2]+"-"+parts1[1]+"-"+parts1[0]
+   p2 = parts2[2]+"-"+parts2[1]+"-"+parts2[0]
+   date_str = p1 +"_to_"+p2
+   return date_str 
+
 if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
@@ -32,7 +41,7 @@ if __name__ == "__main__":
    x = np.array([float(i) for i in range(0, df.shape[0])]) 
    y = df[args.type].to_numpy()
    dates = df['dates'].to_list()
-   
+
    count = 0 
    print("day-date-confirmed-recovered-deaths")
    for index, row in df.iterrows():
@@ -50,31 +59,26 @@ if __name__ == "__main__":
    if end == 0:
       end = df.shape[0]
 
-   x = np.array(x[start:end] - x[start]) 
-   y = np.log(y[start:end])
+   x_fit = np.array(x[start:end] - x[start]) 
+   y_fit = np.log(y[start:end])
 
-   slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
-   y_predict = intercept + slope * x 
-   x = strip_year(dates[start:end])
+   slope, intercept, r_value, p_value, std_err = stats.linregress(x_fit,y_fit)
 
-   parts1 = dates[start].split("-")
-   parts2 = dates[end-1].split("-")
-   p1 = parts1[2]+"-"+parts1[1]+"-"+parts1[0]
-   p2 = parts2[2]+"-"+parts2[1]+"-"+parts2[0]
+   y_predict = intercept + slope * (x [start:] -x[start])
 
-   #date_str = dates[start]+"_to_"+dates[end-1]
-   date_str = p1 +"_to_"+p2
+   date_str = get_file_name (dates, start, end)
 
    output_file = args.output_dir + os.sep + args.country+"_"+args.type+"_"+date_str+".pdf"
 
+   dates = strip_year(df['dates'].to_list())
    fig = plt.figure()
    ax = fig.add_subplot()
 
    ax.set_title(args.type)
-   ax.plot(x,y,'o',label='data')
-   ax.plot(x,y_predict)
-   ax.plot(x, y_predict,'k-',\
-      label='fit [y = a + b *x]: a=%5.3f, b=%5.3f' % (intercept,slope))
+   ax.plot(x,np.log(y),'o',label='data')
+   ax.plot(x[start:],y_predict)
+   ax.plot(x[start:], y_predict,'k-',\
+      label='fit [y = a + b *x]: a=%5.3f, b=%5.3f, fit window =[%d-%d]' % (intercept,slope,start,end))
    ax.legend()
    ax.set_ylabel("log( "+args.type+" )")
    plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')

@@ -7,7 +7,7 @@ def date_normalize (df):
     for d in dates:
       dd = d.split('-')
       dates1.append(dd[2]+"-"+dd[0]+"-"+dd[1])
-    df['dates'] = dates1
+    df['date'] = dates1
     return df
 
 def get_dates (start_date, num_days):

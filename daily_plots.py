@@ -27,9 +27,14 @@ if __name__ == "__main__":
     df = df[df['country'] == args.country]
 
     df = date_normalize (df)
-    df = df.sort_values(by='dates') 
+    df = df.sort_values(by='date') 
 
-    dates = [d.replace('2020-','') for d in df['dates'].to_list()]
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+    df = df.loc[:, ~df.columns.str.contains('country')]
+
+    df.to_csv("data/"+args.country + ".csv",index=False)
+
+    dates = [d.replace('2020-','') for d in df['date'].to_list()]
 
     print("dates:",dates)
 
