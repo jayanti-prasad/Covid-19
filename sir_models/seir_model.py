@@ -7,11 +7,8 @@ def deriv(P, X, N):
     # P = [beta, sigma,gamma]
     # X = [S, E, I, R]
 
-    c1 = X[0] * X[2]/N  
-    c2 = X[1]
-    c3 = X[2]
-
-    A = np.array([[-c1,0,0],[c1,-c2,0],[0,c2,-c3],[0,0,c3]])
+    C = np.array([X[0] * X[2]/N,X[1],X[2]])
+    A = np.array([[-C[0],0,0],[C[0],-C[1],0],[0,C[1],-C[2]],[0,0,C[2]]])
 
     Y = np.matmul(A,P) 
 
@@ -29,6 +26,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
   
+    m, N = args.num_days, args.num_pop 
     df = pd.read_csv("../data/India.csv")
 
     yy = df['confirmed'].to_numpy()
@@ -37,6 +35,11 @@ if __name__ == "__main__":
     xx = xx[34:54] - xx[34]
     yy = yy[34:54] 
 
+    I0 = np.min(yy)
+    R0 = 0
+    E0 = 0
+    S0 = N - I0 -R0 -E0
+
     count = 0
     print("day-date-confirmed-recovered-deaths")
     for index, row in df.iterrows():
@@ -44,12 +47,11 @@ if __name__ == "__main__":
        count +=1
 
 
-    print("Parameters:", args)
+    print("Parameters:", args, np.min(yy))
    
-    m, N = args.num_days, args.num_pop 
    
     P = np.array([args.beta,args.sigma,args.gamma])
-    X = np.array([args.num_pop,0.0,28.0,0.0])
+    X = np.array([args.num_pop-I0,0.0,I0,0.0])
     C = np.array([0.25,0.25,0.25,0.25])
 
     x = np.zeros([m])
@@ -64,11 +66,13 @@ if __name__ == "__main__":
       S[i], E[i], I[i], R[i] = X[0], X[1], X[2], X[3]
       x[i] = i
  
-   
-    plt.title(r'$\beta=$'+str(args.beta)\
+    fig = plt.figure(figsize=(12,12))
+    ax = fig.add_subplot(111)
+ 
+    ax.set_title(r'$\beta=$'+str(args.beta)\
       + r', $\sigma=$'+str(args.sigma)\
-      +r', $\gamma=$'+str(args.gamma))
-    plt.plot(x,S,label='Succeptable')
+      +r', $\gamma=$'+str(args.gamma)+",N="+str(N)+",S0="+str(S0)+",I0="+str(I0)+",E0=0,R0=0")
+    ax.plot(x,S,label='Succeptable')
     plt.plot(x,I,label='Infected')
     plt.plot(xx,yy,'o')
     plt.plot(x,R,label='Recovered')
