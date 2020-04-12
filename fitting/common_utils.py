@@ -1,6 +1,15 @@
 from datetime import timedelta, date
 import datetime as dt
 
+def get_country_data (df, country):
+   df = df.fillna(0)
+   df = df[df['country'] == country]
+   df = date_normalize (df)
+   df = df.sort_values(by='date')
+   df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+   df = df.loc[:, ~df.columns.str.contains('country')]
+   return df 
+
 def date_normalize (df):
     dates = df['date'].to_list()
     dates1 = []
@@ -22,4 +31,11 @@ def get_dates (start_date, num_days):
 
 def strip_year (dates):
    dates = [d.replace('2020-','') for d in dates]
-   return dates  
+   return dates 
+
+
+
+
+
+
+ 
