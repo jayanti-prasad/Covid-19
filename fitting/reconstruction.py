@@ -69,6 +69,7 @@ if __name__ == "__main__":
    
    columns=['date','infected','exposed','recovered','succeptable','beta']
    df_new = pd.DataFrame(columns=columns)
+   df_new['date'] = df['date'].to_list()
    df_new['infected'] = i
    df_new['exposed'] = e
    df_new['recovered'] = rr
