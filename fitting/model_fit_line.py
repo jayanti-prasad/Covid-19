@@ -9,12 +9,13 @@ from common_utils import date_normalize, get_dates, strip_year
 from scipy import stats
 
 def get_file_name (dates, stat, end):
-   parts1 = dates[start].split("-")
-   parts2 = dates[end-1].split("-")
-   p1 = parts1[2]+"-"+parts1[1]+"-"+parts1[0]
-   p2 = parts2[2]+"-"+parts2[1]+"-"+parts2[0]
-   date_str = p1 +"_to_"+p2
-   return date_str 
+
+   pp = []
+   for date in [dates[start], dates[end-1]]:
+     parts = date.split("-")
+     pp.append (parts[2]+"-"+parts[1]+"-"+parts[0])
+
+   return pp[0]+"_to_"+pp[1]
 
 if __name__ == "__main__":
 

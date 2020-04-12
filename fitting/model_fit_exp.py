@@ -27,7 +27,7 @@ if __name__ == "__main__":
    df = df[df['country'] == args.country]
 
    df = date_normalize (df)
-   df = df.sort_values(by='dates')
+   df = df.sort_values(by='date')
  
    print("day-date-confirmed-recovered-deaths")
    count = 0
@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
 
    # let us get all the dates 
-   dates = df['dates'].to_list() 
+   dates = df['date'].to_list() 
 
    # add some future dates also 
    dates_predict = dates + get_dates (dates[df.shape[0]-1],args.num_predict)
