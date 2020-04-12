@@ -5,6 +5,10 @@ import argparse
 import glob
 import os
 
+"""
+Program to update daily data
+"""
+
 def get_summary (df):
 
    CONFIRMED = {}
@@ -63,10 +67,8 @@ if __name__ == "__main__":
              print(count, data)
              count +=1
 
-   dF.to_csv(args.output_dir + os.sep + "covid-19-data-latest.csv")
+   dF.to_csv(args.output_dir + os.sep + "covid-19-global.csv")
    print(dF.shape)
    print("Input dir:",args.input_dir)
-   print("Output file:",args.output_dir + os.sep + "covid-19-data-latest.csv")
-
-
+   print("Output file:",args.output_dir + os.sep + "covid-19-global.csv")
  

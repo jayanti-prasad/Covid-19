@@ -12,7 +12,7 @@ matplotlib.pyplot.grid(True, which="both")
 if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
-   parser.add_argument('-i', '--input-file', help='Input CSV file',default='data/covid-19-data-latest.csv')
+   parser.add_argument('-i', '--input-file', help='Input CSV file',default='data/covid-19-global.csv')
    parser.add_argument('-o', '--output-dir', help='Output dir',default='plots')
    parser.add_argument('-c', '--country', help='Country',default='India')
    parser.add_argument('-d', '--num-days', type=int, help='Number of days', default=30)

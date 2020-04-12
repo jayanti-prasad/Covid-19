@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-i','--input-file',help='Input CSV file',\
-      default='data/covid-19-data-latest.csv')
+      default='data/covid-19-global.csv')
     parser.add_argument('-c','--country',help='Country name',default='India')
     parser.add_argument('-o','--output-dir',help='Output dir',default='plots')
     parser.add_argument('-n','--num-days',help='Number of days',default=0,type=int)
@@ -32,9 +32,10 @@ if __name__ == "__main__":
     df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     df = df.loc[:, ~df.columns.str.contains('country')]
 
-    df.to_csv("data/"+args.country + ".csv",index=False)
+    df.to_csv("data/"+"covid-19-"+args.country + ".csv",index=False)
 
     dates = [d.replace('2020-','') for d in df['date'].to_list()]
+    days  = [int(i) for i in range(0, len(dates))]
 
     print("dates:",dates)
 
@@ -59,6 +60,6 @@ if __name__ == "__main__":
       if i < 2 :
         ax[i].set_xticklabels([])
 
-    plt.savefig(args.output_dir + os.sep + args.country+".pdf")
+    plt.savefig(args.output_dir + os.sep + "covid-19-"+args.country+".pdf")
 
  

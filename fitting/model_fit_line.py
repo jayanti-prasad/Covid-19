@@ -9,7 +9,6 @@ from common_utils import date_normalize, get_dates, strip_year
 from scipy import stats
 
 def get_file_name (dates, stat, end):
-   print("dates:",dates)
    parts1 = dates[start].split("-")
    parts2 = dates[end-1].split("-")
    p1 = parts1[2]+"-"+parts1[1]+"-"+parts1[0]
@@ -28,19 +27,22 @@ if __name__ == "__main__":
    parser.add_argument('-e', '--end-day', help='End day',default=0,type=int)
    args = parser.parse_args()
 
+   os.makedirs(args.output_dir, exist_ok=True)
    # read and normalize the data frame 
    df = pd.read_csv(args.input_file)
    df = df.fillna(0)
    df = df[df['country'] == args.country]
 
    df = date_normalize (df)
-   df = df.sort_values(by='dates')
+   df = df.sort_values(by='date')
    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
    df = df.loc[:, ~df.columns.str.contains('country')]
 
+   print("read data frame:",df.shape)
+
    x = np.array([float(i) for i in range(0, df.shape[0])]) 
    y = df[args.type].to_numpy()
-   dates = df['dates'].to_list()
+   dates = df['date'].to_list()
 
    count = 0 
    print("day-date-confirmed-recovered-deaths")
@@ -70,7 +72,7 @@ if __name__ == "__main__":
 
    output_file = args.output_dir + os.sep + args.country+"_"+args.type+"_"+date_str+".pdf"
 
-   dates = strip_year(df['dates'].to_list())
+   dates = strip_year(df['date'].to_list())
    fig = plt.figure()
    ax = fig.add_subplot()
 
@@ -78,8 +80,8 @@ if __name__ == "__main__":
    ax.plot(x,np.log(y),'o',label='data')
    ax.plot(x[start:],y_predict)
    ax.plot(x[start:], y_predict,'k-',\
-      label='fit [y = a + b *x]: a=%5.3f, b=%5.3f, fit window =[%d-%d]' % (intercept,slope,start,end))
-   ax.legend()
+      label='fit: a=%5.3f, b=%5.3f, fit window =[%d-%d]' % (intercept,slope,start,end))
+   ax.legend(loc='upper center')
    ax.set_ylabel("log( "+args.type+" )")
    plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
    plt.savefig(output_file)
