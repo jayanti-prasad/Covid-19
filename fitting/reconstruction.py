@@ -73,13 +73,13 @@ if __name__ == "__main__":
       count +=1
   
    # initial number for the removed 
-   rr[0] = (r[0]+d[0])/2
+   rr[0] = (r[0]+d[0])
    
    # Now get the reconstructed ones  
    for j in range(0, df.shape[0]-1):   
       e[j] = (i[j+1] - i[j] + gamma * i[j])/sigma 
       if j > 0:
-         rr[j] = rr[j-1] + gamma * i[j] 
+         rr[j] = rr[j-1] + gamma * i[j-1] 
       s[j] = 1.0 - (i[j] + e[j] + rr[j])
       beta[j] = (e[j+1] - e[j] + sigma * e[j])/ (s[j] * i[j])
 
