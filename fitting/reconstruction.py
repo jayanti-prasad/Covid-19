@@ -13,9 +13,12 @@ if __name__ == "__main__":
    parser.add_argument('-i','--input-file',help='Input csv file',\
       default='../data/covid-19-global.csv')
    parser.add_argument('-c','--country-name',help='Country name', default='India')
-   parser.add_argument('-o','--output-dir',help='Output dir', default='plots') 
+   parser.add_argument('-g','--gamma',help='Parameter gama',type=float,default=0.142857)
+   parser.add_argument('-s','--sigma',help='Parameter sigma',type=float,default=0.142857)
+   parser.add_argument('-o','--output-dir',help='Output dir', default='results') 
    parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
       default='../data/covid-19-lockdown.csv')
+ 
 
    args = parser.parse_args()
 
@@ -35,6 +38,7 @@ if __name__ == "__main__":
    print("Population=",N[args.country_name])
    print("Lockdown=",L[args.country_name])
 
+   # This is the condition we have imposed 
    df = df[df['confirmed'] > 25]
    print("data frame after removing low count:",df.shape)
 
@@ -43,30 +47,43 @@ if __name__ == "__main__":
    
    count = 0 
 
-   i = np.zeros ([df.shape[0]])
-   r = np.zeros ([df.shape[0]])
-   rr = np.zeros ([df.shape[0]])
-   s = np.zeros ([df.shape[0]])
-   e = np.zeros ([df.shape[0]])
-   beta = np.zeros ([df.shape[0]])
+   # These three are directly avaliable from the data 
+   i = np.zeros ([df.shape[0]]) # infected
+   r = np.zeros ([df.shape[0]]) # recovered
+   d = np.zeros ([df.shape[0]]) # dead
+
+
+   rr = np.zeros ([df.shape[0]]) # removed 
+   s = np.zeros ([df.shape[0]])  # succeptable 
+   e = np.zeros ([df.shape[0]])  # exposed 
+   beta = np.zeros ([df.shape[0]]) # beta 
 
    population = N[args.country_name]
-   gamma = 1.0/7.0
-   sigma = 1.0/7.0
+   # read from data file 
 
+   gamma = args.gamma # can be given (default=1/7)
+   sigma = args.sigma # can be given (default=1/7)
+
+   # Let us read what is available  
    count = 0 
    for index, row in df.iterrows():
       i[count] = row['confirmed']/population 
-      rr[count] = row['recovered']/population 
+      r[count] = row['recovered']/population 
+      d[count] = row['deaths']/population 
       count +=1
   
-   for j in range(1, df.shape[0]):   
-      e[j] = ( i[j] - i[j-1] + gamma * i[j])/sigma 
-      r[j] = r[j-1] + gamma * i[j] 
-      s[j] = 1.0 - ( i[j] + e[j] + r[j])
-      beta[j] = (e[j] - e[j-1] + sigma * e[j])/ (s[j] * i[j])
-
+   # initial number for the removed 
+   rr[0] = (r[0]+d[0])/2
    
+   # Now get the reconstructed ones  
+   for j in range(0, df.shape[0]-1):   
+      e[j] = (i[j+1] - i[j] + gamma * i[j])/sigma 
+      if j > 0:
+         rr[j] = rr[j-1] + gamma * i[j] 
+      s[j] = 1.0 - (i[j] + e[j] + rr[j])
+      beta[j] = (e[j+1] - e[j] + sigma * e[j])/ (s[j] * i[j])
+
+   # For writing the data in a file (csv)
    columns=['date','infected','exposed','recovered','succeptable','beta']
    df_new = pd.DataFrame(columns=columns)
    df_new['date'] = df['date'].to_list()
@@ -75,13 +92,14 @@ if __name__ == "__main__":
    df_new['recovered'] = rr
    df_new['succeptable'] = s
    df_new['beta'] = beta
-
    df_new.to_csv(args.output_dir + os.sep + args.country_name +".csv")
 
+   # Now draw the plot 
    fig = plt.figure(figsize=(12,12))
    ax  = fig.add_subplot(211)
    bx  = fig.add_subplot(212)
 
+   ax.set_title(args.country_name)
    ax.plot(dates, beta)
    ax.plot(dates, beta,'o')
    ax.set_ylabel(r'$\beta(t)$')
@@ -91,10 +109,10 @@ if __name__ == "__main__":
 
    bx.plot(dates,np.log(i),'b',label='Infected')
    bx.plot(dates,np.log(i),'o',c='blue')
-   bx.plot(dates,np.log(e),'p:',label='Exposed')
-   bx.plot(dates,np.log(r),'o:',label='Removed')
-   bx.plot(dates,np.log(rr),'g',label='Recovered+Dead')
-   bx.plot(dates,np.log(rr),'o',c='green')
+   bx.plot(dates,np.log(r),'g',label='Recovered')
+   bx.plot(dates,np.log(r),'o',c='green')
+   bx.plot(dates,np.log(rr),'ro:',label='Removed')
+   bx.plot(dates,np.log(e),'ko:',label='Exposed')
    #bx.plot(dates,np.log(s),'k',label='Succeptable')
    plt.setp(bx.get_xticklabels(), rotation=90, horizontalalignment='right')
    bx.legend(loc='lower right') 
