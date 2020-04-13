@@ -25,6 +25,7 @@
 
 # Papers 
 - [Epidemiological and clinical characteristics of 99 cases of 2019 novel coronavirus pneumonia in Wuhan, China: a descriptive study](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30211-7/fulltext)
+- [COVID-19: Epidemiology, Evolution, and Cross-Disciplinary Perspectives](https://www.sciencedirect.com/science/article/pii/S1471491420300654)
 - [CoronaTracker: World-wide COVID-19 Outbreak Data Analysis and Prediction (WHO)](https://www.who.int/bulletin/online_first/20-255695.pdf)
 - [A new coronavirus associated with human respiratory disease in China](https://www.nature.com/articles/s41586-020-2008-3)
 - [A pneumonia outbreak associated with a new coronavirus of probable bat origin](https://www.nature.com/articles/s41586-020-2012-7)
@@ -34,6 +35,5 @@
 - [Strategies for mitigating an influenza pandemic](https://www.nature.com/articles/nature04795)
 - [The Global Impact of COVID-19 and Strategies for Mitigation and Suppression](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-Global-Impact-26-03-2020v2.pdf)
 - [The effect of control strategies to reduce social mixing on outcomes of the COVID-19 epidemic in Wuhan, China: a modelling study](https://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(20)30073-6/fulltext)
-- [COVID-19: Epidemiology, Evolution, and Cross-Disciplinary Perspectives](https://www.sciencedirect.com/science/article/pii/S1471491420300654)
 # Preprints 
 
