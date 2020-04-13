@@ -21,6 +21,7 @@
 - [INDIA](https://www.mygov.in/covid-19/)
 - [CDDEP INDIA](https://cddep.org/covid-19/)
 - [DATA.GOV INDIA](https://data.gov.in/major-indicator/covid-19-india-data-source-mohfw)
+- [COVID-19 INDIA](https://www.covid19india.org/)
 
 # Papers 
 - [Epidemiological and clinical characteristics of 99 cases of 2019 novel coronavirus pneumonia in Wuhan, China: a descriptive study](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30211-7/fulltext)
