@@ -24,6 +24,8 @@
 
 # Papers 
 - [Epidemiological and clinical characteristics of 99 cases of 2019 novel coronavirus pneumonia in Wuhan, China: a descriptive study](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30211-7/fulltext)
-
-
+- [CoronaTracker: World-wide COVID-19 Outbreak Data Analysis and Prediction (WHO)](https://www.who.int/bulletin/online_first/20-255695.pdf)
+- [A new coronavirus associated with human respiratory disease in China](https://www.nature.com/articles/s41586-020-2008-3)
+- [A pneumonia outbreak associated with a new coronavirus of probable bat origin](https://www.nature.com/articles/s41586-020-2012-7)
+- [Epidemiological data from the COVID-19 outbreak, real-time case information](https://www.nature.com/articles/s41597-020-0448-0)
 # Preprints 
