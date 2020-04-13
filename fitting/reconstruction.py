@@ -10,13 +10,12 @@ import numpy as np
 if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
-   parser.add_argument('-i','--input-file',help='Input csv file')
+   parser.add_argument('-i','--input-file',help='Input csv file',\
+      default='../data/covid-19-global.csv')
    parser.add_argument('-c','--country-name',help='Country name', default='India')
    parser.add_argument('-o','--output-dir',help='Output dir', default='plots') 
-   parser.add_argument('-s','--start-day',help='Starting day', type=int)
-   parser.add_argument('-e','--end-day',help='Ending day', type=int)
-   parser.add_argument('-l','--lockdown-day',help='Lockdown  day', type=int)
-   parser.add_argument('-d','--lockdown-duration',help='Lockdown duration', type=int)
+   parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
+      default='../data/covid-19-lockdown.csv')
 
    args = parser.parse_args()
 
@@ -27,7 +26,9 @@ if __name__ == "__main__":
    df = pd.read_csv(args.input_file)
    df = get_country_data (df, args.country_name)
 
-   df_l = pd.read_csv("../data/covid-19-lockdown.csv")
+   # read the lockdown file 
+   df_l = pd.read_csv(args.lockdown_file)
+
    N = dict(zip(df_l['country'].to_list(), df_l['population'].to_list())) 
    L = dict(zip(df_l['country'].to_list(), strip_year(df_l['lockdown'].to_list())))
 
@@ -36,11 +37,10 @@ if __name__ == "__main__":
 
    df = df[df['confirmed'] > 25]
    print("data frame after removing low count:",df.shape)
-   days = [int(i) for i in range(0, df.shape[0])]
 
+   days = [int(i) for i in range(0, df.shape[0])]
    dates = strip_year(df['date'].to_list())
    
-
    count = 0 
 
    i = np.zeros ([df.shape[0]])
@@ -91,12 +91,11 @@ if __name__ == "__main__":
 
    bx.plot(dates,np.log(i),label='Infected')
    bx.plot(dates,np.log(e),':',label='Exposed')
-   bx.plot(dates,np.log(r),':',label='Recovered')
-   bx.plot(dates,np.log(rr),label='Recovered+Dead')
-   bx.plot(dates,s,label='Succeptable')
+   bx.plot(dates,np.log(r),':',label='Removed')
+   bx.plot(dates,np.log(rr),label='Removed+Dead')
+   bx.plot(dates,np.log(s),label='Succeptable')
    plt.setp(bx.get_xticklabels(), rotation=90, horizontalalignment='right')
    bx.legend() 
-   #bx.axvline(x=14)
    bx.axvline(x=L[args.country_name])
    plt.savefig(args.output_dir + os.sep + args.country_name +".pdf")
 
