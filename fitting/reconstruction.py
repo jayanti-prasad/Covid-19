@@ -81,15 +81,20 @@ if __name__ == "__main__":
       if j > 0:
          rr[j] = rr[j-1] + gamma * i[j-1] 
       s[j] = 1.0 - (i[j] + e[j] + rr[j])
+
+   for j in range(0, df.shape[0]-1):   
       beta[j] = (e[j+1] - e[j] + sigma * e[j])/ (s[j] * i[j])
+    
+
+
 
    # For writing the data in a file (csv)
-   columns=['date','infected','exposed','recovered','succeptable','beta']
+   columns=['date','infected','exposed','removed','succeptable','beta']
    df_new = pd.DataFrame(columns=columns)
    df_new['date'] = df['date'].to_list()
    df_new['infected'] = i
    df_new['exposed'] = e
-   df_new['recovered'] = rr
+   df_new['removed'] = rr
    df_new['succeptable'] = s
    df_new['beta'] = beta
    df_new.to_csv(args.output_dir + os.sep + args.country_name +".csv")
