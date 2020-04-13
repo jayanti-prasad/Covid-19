@@ -86,8 +86,6 @@ if __name__ == "__main__":
       beta[j] = (e[j+1] - e[j] + sigma * e[j])/ (s[j] * i[j])
     
 
-
-
    # For writing the data in a file (csv)
    columns=['date','infected','exposed','removed','succeptable','beta']
    df_new = pd.DataFrame(columns=columns)
@@ -97,14 +95,18 @@ if __name__ == "__main__":
    df_new['removed'] = rr
    df_new['succeptable'] = s
    df_new['beta'] = beta
-   df_new.to_csv(args.output_dir + os.sep + args.country_name +".csv")
+
+   prefix = '_sigma_%6.4f_gamma_%6.4f' % (sigma,gamma)
+   prefix = args.country_name + prefix
+   print("prefix=",prefix)
+   df_new.to_csv(args.output_dir + os.sep + prefix +".csv")
 
    # Now draw the plot 
    fig = plt.figure(figsize=(12,12))
    ax  = fig.add_subplot(211)
    bx  = fig.add_subplot(212)
 
-   ax.set_title(args.country_name)
+   ax.set_title(args.country_name + r'$, \gamma$='+str(args.gamma)+"," + r'$\sigma$='+ str(args.sigma))
    ax.plot(dates, beta)
    ax.plot(dates, beta,'o')
    ax.set_ylabel(r'$\beta(t)$')
@@ -122,5 +124,5 @@ if __name__ == "__main__":
    plt.setp(bx.get_xticklabels(), rotation=90, horizontalalignment='right')
    bx.legend(loc='lower right') 
    bx.axvline(x=L[args.country_name])
-   plt.savefig(args.output_dir + os.sep + args.country_name +".pdf")
+   plt.savefig(args.output_dir + os.sep + prefix +".pdf")
 
