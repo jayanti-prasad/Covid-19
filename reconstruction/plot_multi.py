@@ -43,8 +43,9 @@ if __name__ == "__main__":
        lab = lab.replace(".csv",'')
        parts = lab.split("_")
        print("parts:",parts)
-       label  = r'$1/\sigma=$'+parts[3]# + r', $1/\gamma=$'+parts[6]
-       label  = label.replace('0','').replace('.','')   
+       #label = r'$1/\gamma=$'+parts[6]
+       label = r'$1/\sigma=$'+parts[3]
+       label = label.replace('0','').replace('.','')   
        ax.plot(x,y,label=label,c=colors[count], lw='2')
        ax.scatter(x,y,c=colors[count])
 
