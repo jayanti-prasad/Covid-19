@@ -47,8 +47,8 @@ if __name__ == "__main__":
       if count % 2==  0: 
          ax[count].set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
          
-      if count %2 !=0:
-         ax[count].set_yticks([])
+      #if count %2 !=0:
+      #ax[count].set_yticks([])
 
       if count == 0 or count == 2: 
          #ax[count].set_xticks([])
