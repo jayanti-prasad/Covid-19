@@ -35,13 +35,13 @@
 8. [Coronaviruses: an overview of their replication and pathogenesis.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4369385/)
 9. [Strategies for mitigating an influenza pandemic](https://www.nature.com/articles/nature04795)
 10. [The Global Impact of COVID-19 and Strategies for Mitigation and Suppression](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-Global-Impact-26-03-2020v2.pdf)
-- [Early Transmission Dynamics in Wuhan, China, of Novel Coronavirus–Infected Pneumonia](https://www.nejm.org/doi/full/10.1056/NEJMoa2001316)
-11. [Strategies for mitigating an influenza pandemic](https://www.nature.com/articles/nature04795)
-12. [Substantial undocumented infection facilitates the rapid dissemination of novel coronavirus (SARS-CoV2)](https://science.sciencemag.org/content/early/2020/03/24/science.abb3221)
-13. [Simulation of an SEIR infectious disease model on
+11. [Early Transmission Dynamics in Wuhan, China, of Novel Coronavirus–Infected Pneumonia](https://www.nejm.org/doi/full/10.1056/NEJMoa2001316)
+12. [Strategies for mitigating an influenza pandemic](https://www.nature.com/articles/nature04795)
+13. [Substantial undocumented infection facilitates the rapid dissemination of novel coronavirus (SARS-CoV2)](https://science.sciencemag.org/content/early/2020/03/24/science.abb3221)
+14. [Simulation of an SEIR infectious disease model on
 the dynamic contact network of conference
 attendees](https://bmcmedicine.biomedcentral.com/articles/10.1186/1741-7015-9-87)
-14. [Simulation of an SEIR infectious disease model on the dynamic contact network of conference attendees](https://bmcmedicine.biomedcentral.com/articles/10.1186/1741-7015-9-87)
-15. [Epidemic Dynamics at the Human-Animal Interface](https://science.sciencemag.org/content/326/5958/1362)
+15. [Simulation of an SEIR infectious disease model on the dynamic contact network of conference attendees](https://bmcmedicine.biomedcentral.com/articles/10.1186/1741-7015-9-87)
+16. [Epidemic Dynamics at the Human-Animal Interface](https://science.sciencemag.org/content/326/5958/1362)
 # Preprints 
 
