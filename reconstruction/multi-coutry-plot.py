@@ -70,8 +70,9 @@ if __name__ == "__main__":
       print("country",country,"lockdown",lockdown,l)
       print("dates",dates)
       ax[count].axvline(x=float(l),c='k',ls='--')
-      ax[count].plot(xx,y,lw='2',label=country)
-      ax[count].scatter(xx,y)
+      ax[count].axhline(y=0,c='k',ls='--')
+      ax[count].plot(xx[:-2],y[:-2],lw='2',label=country)
+      ax[count].scatter(xx[:-2],y[:-2])
       ax[count].legend()
       count +=1
       
