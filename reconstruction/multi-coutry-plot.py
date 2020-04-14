@@ -47,8 +47,8 @@ if __name__ == "__main__":
       if count % 2==  0: 
          ax[count].set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
          
-      #if count %2 !=0:
-      #ax[count].set_yticks([])
+      if count %2 !=0:
+         ax[count].set_yticks([])
 
       if count == 0 or count == 2: 
          #ax[count].set_xticks([])
@@ -73,6 +73,7 @@ if __name__ == "__main__":
       ax[count].axhline(y=0,c='k',ls='--')
       ax[count].plot(xx[:-2],y[:-2],lw='2',label=country)
       ax[count].scatter(xx[:-2],y[:-2])
+      ax[count].set_ylim(-6,6)
       ax[count].legend()
       count +=1
       
