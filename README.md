@@ -37,10 +37,8 @@
 12. [Early Transmission Dynamics in Wuhan, China, of Novel Coronavirus–Infected Pneumonia](https://www.nejm.org/doi/full/10.1056/NEJMoa2001316)
 13. [Strategies for mitigating an influenza pandemic](https://www.nature.com/articles/nature04795)
 14. [Substantial undocumented infection facilitates the rapid dissemination of novel coronavirus (SARS-CoV2)](https://science.sciencemag.org/content/early/2020/03/24/science.abb3221)
-15. [Simulation of an SEIR infectious disease model on
-the dynamic contact network of conference
-attendees](https://bmcmedicine.biomedcentral.com/articles/10.1186/1741-7015-9-87)
-16. [Simulation of an SEIR infectious disease model on the dynamic contact network of conference attendees](https://bmcmedicine.biomedcentral.com/articles/10.1186/1741-7015-9-87)
-17. [Epidemic Dynamics at the Human-Animal Interface](https://science.sciencemag.org/content/326/5958/1362)
+15. [Simulation of an SEIR infectious disease model on the dynamic contact network of conference attendees](https://bmcmedicine.biomedcentral.com/articles/10.1186/1741-7015-9-87)
+16. [Epidemic Dynamics at the Human-Animal Interface](https://science.sciencemag.org/content/326/5958/1362)
+17. [Origins of major human infectious diseases (Review)](https://www.nature.com/articles/nature05775)
 # Preprints 
 - [ArXiv](https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=COVID-19&terms-0-field=title&terms-1-operator=OR&terms-1-term=SARS-CoV-2&terms-1-field=abstract&terms-3-operator=OR&terms-3-term=COVID-19&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=SARS-CoV-2&terms-4-field=title&terms-5-operator=OR&terms-5-term=coronavirus&terms-5-field=title&terms-6-operator=OR&terms-6-term=coronavirus&terms-6-field=abstract&classification-physics_archives=all&classification-include_cross_list=include&date-filter_by=all_dates&date-year=&date-from_date=&date-to_date=&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first&source=home-covid-19)
