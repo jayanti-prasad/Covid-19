@@ -7,6 +7,7 @@ import matplotlib
 import numpy as np
 from common_utils import get_country_data,strip_year
 import arrow
+from matplotlib.ticker import AutoMinorLocator
 
 fontsize = 20 
 matplotlib.rc('xtick', labelsize=fontsize) 
@@ -32,9 +33,9 @@ if __name__ == "__main__":
     ax.append(fig.add_subplot(325))
     ax.append(fig.add_subplot(326))
 
-    for a in ax:
-      a.set_xlabel([])
-      #a.set_yticklabels([])
+    #for a in ax:
+    #  a.set_xlabel([])
+    #  #a.set_yticklabels([])
 
     plt.subplots_adjust(wspace=0, hspace=0)
 
@@ -71,11 +72,15 @@ if __name__ == "__main__":
       print("country",country,"lockdown",lockdown,l)
       print("dates",dates)
       ax[count].axvline(x=float(l),c='k',ls='--')
+
       ax[count].axhline(y=0,c='k',ls='--')
       ax[count].plot(xx[:-2],y[:-2],lw='2',label=country)
       ax[count].scatter(xx[:-2],y[:-2])
       ax[count].set_ylim(-5,6)
       ax[count].legend()
+      ax[count].xaxis.set_minor_locator(AutoMinorLocator())
+
+      ax[count].xaxis.grid(True, which='both')
       count +=1
       
 
