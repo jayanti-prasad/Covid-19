@@ -49,36 +49,37 @@ class Reconstruct:
       self.r = self.df['recovered'].to_numpy()/N
       self.d = self.df['deaths'].to_numpy()/N
 
+   def solve (self, gamma_in, sigma_in,alpha):
+
+      """
+      SOLVE SEIR equations.  
+      """
+      self.sigma_in = sigma_in
+      self.gamma_in = gamma_in 
+ 
+      self.gamma, self.sigma, self.alpha = 1.0/gamma_in, 1.0/sigma_in,alpha 
+
+      prefix = '_sigma_in_%4.2f_gamma_in_%4.2f_alpha_%6.4f' % (sigma_in,gamma_in, alpha)
+      self.prefix = self.country + prefix
+
       self.rr = np.zeros ([self.num_rows]) # removed 
       self.s = np.zeros ([self.num_rows])  # succeptable 
       self.e = np.zeros ([self.num_rows])  # exposed 
       self.beta = np.zeros ([self.num_rows]) # be
 
-
-   def solve (self, gamma, sigma):
-
-      """
-      SOLVE SEIR equations.  
-      """
-
-      self.gamma, self.sigma = gamma, sigma 
-
-      prefix = '_sigma_%6.4f_gamma_%6.4f' % (sigma,gamma)
-      self.prefix = self.country + prefix
-
       # initial number for the removed 
-      self.rr[0] = (self.r[0] + self.d[0])
+      self.rr[0] = (self.r[0] + self.d[0]) * alpha 
    
       # Now get the reconstructed ones  
       for j in range(0, self.num_rows-1):
-         self.e[j] = (self.i[j+1] - self.i[j] + gamma * self.i[j])/sigma
+         self.e[j] = (self.i[j+1] - self.i[j] + self.gamma * self.i[j])/self.sigma
          if j > 0:
-            self.rr[j] = self.rr[j-1] + gamma * self.i[j-1]
+            self.rr[j] = self.rr[j-1] + self.gamma * self.i[j-1]
          self.s[j] = 1.0 - (self.i[j] + self.e[j] + self.rr[j])
 
       for j in range(0, self.num_rows-1):
          self.beta[j] = (self.e[j+1] - self.e[j] \
-           + sigma * self.e[j])/ (self.s[j] * self.i[j])
+           + self.sigma * self.e[j])/ (self.s[j] * self.i[j])
 
    def output (self):
 
@@ -92,7 +93,13 @@ class Reconstruct:
       ax  = fig.add_subplot(211)
       bx  = fig.add_subplot(212)
 
-      ax.set_title(args.country_name + r'$, \gamma$='+str(self.gamma)+"," + r'$\sigma$='+ str(self.sigma))
+      title = args.country_name \
+         + r' [ $1/\sigma$' + '= %d' % (self.sigma_in)\
+         + r', $1/\gamma$' + '= %d' % (self.gamma_in)\
+         + r', $\alpha$' + '= %6.4f' % (self.alpha) +' ]'
+  
+      ax.set_title(title)
+
       ax.plot(dates, self.beta)
       ax.plot(dates, self.beta,'o')
       ax.set_ylabel(r'$\beta(t)$')
@@ -110,7 +117,7 @@ class Reconstruct:
       plt.setp(bx.get_xticklabels(), rotation=90, horizontalalignment='right')
       bx.legend(loc='lower right')
       bx.axvline(x=self.lockdown,c='k',ls='--')
-      plt.show()
+      #plt.show()
       plt.savefig(self.output_dir + os.sep + self.prefix +".pdf")
       print("Output plot file:", self.output_dir + os.sep + self.country+".pdf")
 
@@ -136,8 +143,8 @@ if __name__ == "__main__":
    parser.add_argument('-i','--input-file',help='Input csv file',\
       default='../data/covid-19-global.csv')
    parser.add_argument('-c','--country-name',help='Country name', default='India')
-   parser.add_argument('-g','--gamma',help='Parameter gama',type=float,default=0.142857)
-   parser.add_argument('-s','--sigma',help='Parameter sigma',type=float,default=0.142857)
+   parser.add_argument('-g','--gamma--inverse',help='Parameter 1/gama',type=float,default=7)
+   parser.add_argument('-s','--sigma--inverse',help='Parameter 1/sigma',type=float,default=7)
    parser.add_argument('-o','--output-dir',help='Output dir', default='results') 
    parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
       default='../data/covid-19-lockdown.csv')
@@ -150,9 +157,18 @@ if __name__ == "__main__":
 
    R = Reconstruct(args)
 
-   R.solve (args.gamma, args.sigma)
- 
-   R.output ()
+   sigma = [5.0,9.0,14.0]
+   gamma = [9.0]
+   alpha = [1.0]
 
+   for g in gamma:
+     for s in sigma:
+        for a in alpha: 
+          R.solve (g, s, a)
+          R.output ()
+
+   #R.solve (args.gamma_inverse, args.sigma_inverse)
+ 
+   #R.output ()
 
 
