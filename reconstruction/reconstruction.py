@@ -143,13 +143,15 @@ if __name__ == "__main__":
    parser.add_argument('-i','--input-file',help='Input csv file',\
       default='../data/covid-19-global.csv')
    parser.add_argument('-c','--country-name',help='Country name', default='India')
-   parser.add_argument('-g','--gamma--inverse',help='Parameter 1/gama',type=float,default=7)
-   parser.add_argument('-s','--sigma--inverse',help='Parameter 1/sigma',type=float,default=7)
+   parser.add_argument('-g','--gamma-inverse',help='Parameter 1/gama',type=float,default=7)
+   parser.add_argument('-s','--sigma-inverse',help='Parameter 1/sigma',type=float,default=7)
+   parser.add_argument('-a','--alpha',help='Alpha',type=float,default=1)
    parser.add_argument('-o','--output-dir',help='Output dir', default='results') 
    parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
       default='../data/covid-19-lockdown.csv')
  
    args = parser.parse_args()
+   print(args)
 
    os.makedirs(args.output_dir, exist_ok=True)
 
@@ -157,18 +159,17 @@ if __name__ == "__main__":
 
    R = Reconstruct(args)
 
-   sigma = [5.0,9.0,14.0]
-   gamma = [9.0]
-   alpha = [1.0]
+   #sigma = [5.0,9.0,14.0]
+   #gamma = [9.0]
+   #alpha = [1.0]
 
-   for g in gamma:
-     for s in sigma:
-        for a in alpha: 
-          R.solve (g, s, a)
-          R.output ()
+   #for g in gamma:
+   #  for s in sigma:
+   #     for a in alpha: 
+   #       R.solve (g, s, a)
+   #       R.output ()
 
-   #R.solve (args.gamma_inverse, args.sigma_inverse)
- 
-   #R.output ()
+   R.solve (args.gamma_inverse, args.sigma_inverse, args.alpha)
+   R.output ()
 
 
