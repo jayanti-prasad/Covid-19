@@ -12,8 +12,7 @@ from matplotlib.ticker import AutoMinorLocator
 fontsize = 20 
 matplotlib.rc('xtick', labelsize=fontsize) 
 matplotlib.rc('ytick', labelsize=fontsize) 
-matplotlib.rcParams['axes.linewidth'] = 1.0 
-
+matplotlib.rcParams['axes.linewidth'] = 2.0
 
 if __name__ == "__main__":
 

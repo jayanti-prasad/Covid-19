@@ -45,9 +45,9 @@ if __name__ == "__main__":
        print("parts:",parts)
 
        if fname == "vary_sigma":
-          label = r'$1/\sigma=$'+parts[2]
+          label = r'$1/\sigma=$'+parts[4]
        if fname == "vary_gamma":
-          label = r'$1/\gamma=$'+parts[4]
+          label = r'$1/\gamma=$'+parts[7]
 
        label = label.replace('0','').replace('.','')   
        ax.plot(x[:-2],y[:-2],label=label,c=colors[count], lw='2')
