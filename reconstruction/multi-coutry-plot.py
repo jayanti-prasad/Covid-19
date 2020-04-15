@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     L = dict(zip(df_l['country'].to_list(), df_l['lockdown'].to_list()))
 
-    fig = plt.figure(figsize=(10,18))
+    fig = plt.figure(figsize=(12,18))
 
     ax = []
     ax.append(fig.add_subplot(321))
@@ -87,8 +87,8 @@ if __name__ == "__main__":
 
       plt.setp(ax[count].get_xticklabels(), rotation=90, horizontalalignment='right')
       ax[count].legend(fontsize=fontsize)
-      #ax[count].xaxis.set_minor_locator(AutoMinorLocator())
-      #ax[count].xaxis.grid(True, which='both')
+      ax[count].xaxis.set_minor_locator(AutoMinorLocator())
+      ax[count].xaxis.grid(True, which='both')
       count +=1
       
 
