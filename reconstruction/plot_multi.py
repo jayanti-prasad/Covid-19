@@ -19,14 +19,16 @@ if __name__ == "__main__":
 
     #files = files + files1
 
-    fig = plt.figure(figsize=(12,12))
+    fig = plt.figure(figsize=(12,18))
     ax = fig.add_subplot(111)
-    ax.set_xlim(0,45)
+
+    ax.set_xlim(-1,50)
     ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
     if sys.argv[2] == 'beta':
        ax.set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
     else: 
       ax.set_ylabel(sys.argv[2],fontsize=fontsize) 
+    ax.axhline(y=0,c='k',ls='--')
    
     
     colors=['r','b','g','k','o']
@@ -43,11 +45,11 @@ if __name__ == "__main__":
        lab = lab.replace(".csv",'')
        parts = lab.split("_")
        print("parts:",parts)
-       #label = r'$1/\gamma=$'+parts[6]
-       label = r'$1/\sigma=$'+parts[3]
+       #label = r'$1/\gamma=$'+parts[5]
+       label = r'$1/\sigma=$'+parts[2]
        label = label.replace('0','').replace('.','')   
-       ax.plot(x,y,label=label,c=colors[count], lw='2')
-       ax.scatter(x,y,c=colors[count])
+       ax.plot(x[:-2],y[:-2],label=label,c=colors[count], lw='2')
+       ax.scatter(x[:-2],y[:-2],c=colors[count])
 
        #ax.plot(x,y,label=label, lw='2')
        #ax.scatter(x,y)
