@@ -22,6 +22,8 @@ if __name__ == "__main__":
     df_l = pd.read_csv('../data/covid-19-lockdown.csv')
 
     L = dict(zip(df_l['country'].to_list(), df_l['lockdown'].to_list()))
+    P = dict(zip(df_l['country'].to_list(), df_l['population'].to_list()))
+    T = dict(zip(df_l['country'].to_list(), df_l['num_testing'].to_list()))
 
     fig = plt.figure(figsize=(16,18))
 
@@ -46,7 +48,7 @@ if __name__ == "__main__":
       y = pd.read_csv(f)['beta'].to_numpy()
       dates = pd.read_csv(f)['date'].to_numpy()
       days = np.array([i for i in range (0, y.shape[0])])
-      print("num data points:",y.shape)
+      #print("num data points:",y.shape)
 
       # now get the lockdown day 
       fname = os.path.basename(f).split('_')
@@ -57,7 +59,7 @@ if __name__ == "__main__":
       b = arrow.get(lockdown)
       l = str(b-a).split(" ")[0]
       
-      print("country",country,"lockdown",lockdown,l)
+      print(count+1,'&',country,'&', P[country],'&', T[country], '&', dates[0], '&', lockdown,' \\\ \hline') 
 
       # now set the limits & labels 
   
@@ -78,7 +80,7 @@ if __name__ == "__main__":
  
       xx , yy = days[:-2], y[:-2]
       #xx = strip_year(xx)
-      print("xx=",xx)
+      #print("xx=",xx)
       ax[count].axvline(x=float(l),c='k',ls='--')
       ax[count].axhline(y=0,c='k',ls='--')
 

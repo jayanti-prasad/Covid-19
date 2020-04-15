@@ -44,10 +44,12 @@ class Reconstruct:
 
       self.lockdown = L[self.country]
       N = population[self.country]
-  
+
       self.i = self.df['confirmed'].to_numpy()/N
       self.r = self.df['recovered'].to_numpy()/N
       self.d = self.df['deaths'].to_numpy()/N
+
+      self.i = self.i - (self.r + self.d)
 
    def solve (self, gamma_in, sigma_in,alpha):
 
@@ -159,8 +161,8 @@ if __name__ == "__main__":
 
    R = Reconstruct(args)
 
-   #sigma = [5.0,9.0,14.0]
-   #gamma = [9.0]
+   #gamma = [5.0,9.0,14.0]
+   #sigma = [9.0]
    #alpha = [1.0]
 
    #for g in gamma:

@@ -49,5 +49,8 @@ on Coronavirus Disease 2019 (COVID-19)](https://www.who.int/docs/default-source/
 20. [Identification of a new human coronavirus](https://www.nature.com/articles/nm1024)
 21. [Bats Are Natural Reservoirs of SARS-Like Coronaviruses](https://science.sciencemag.org/content/310/5748/676)
 
+# Classic Papers :
+1. [A contribution to the mathematical theory of epidemics-I](https://royalsocietypublishing.org/doi/10.1098/rspa.1927.0118)
+
 # Preprints 
 - [ArXiv](https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=COVID-19&terms-0-field=title&terms-1-operator=OR&terms-1-term=SARS-CoV-2&terms-1-field=abstract&terms-3-operator=OR&terms-3-term=COVID-19&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=SARS-CoV-2&terms-4-field=title&terms-5-operator=OR&terms-5-term=coronavirus&terms-5-field=title&terms-6-operator=OR&terms-6-term=coronavirus&terms-6-field=abstract&classification-physics_archives=all&classification-include_cross_list=include&date-filter_by=all_dates&date-year=&date-from_date=&date-to_date=&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first&source=home-covid-19)
