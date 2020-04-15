@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     #files = files + files1
 
-    fig = plt.figure(figsize=(12,18))
+    fig = plt.figure(figsize=(18,12))
     ax = fig.add_subplot(111)
 
     ax.set_xlim(-1,50)
@@ -45,8 +45,8 @@ if __name__ == "__main__":
        lab = lab.replace(".csv",'')
        parts = lab.split("_")
        print("parts:",parts)
-       #label = r'$1/\gamma=$'+parts[5]
-       label = r'$1/\sigma=$'+parts[2]
+       label = r'$1/\gamma=$'+parts[5]
+       #label = r'$1/\sigma=$'+parts[2]
        label = label.replace('0','').replace('.','')   
        ax.plot(x[:-2],y[:-2],label=label,c=colors[count], lw='2')
        ax.scatter(x[:-2],y[:-2],c=colors[count])
