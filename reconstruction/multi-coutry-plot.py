@@ -33,54 +33,62 @@ if __name__ == "__main__":
     ax.append(fig.add_subplot(325))
     ax.append(fig.add_subplot(326))
 
-    #for a in ax:
-    #  a.set_xlabel([])
-    #  #a.set_yticklabels([])
+    for a in ax:
+      a.set_xlim(1,55)
+      a.set_ylim(-5,7)
+      #a.set_yticklabels([])
 
     plt.subplots_adjust(wspace=0, hspace=0)
 
-
-
     count = 0
     for f in files:
-      ax[count].set_xlim(0,45)
-      ax[count].set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
-      if count % 2==  0: 
-         ax[count].set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
-         
-      if count %2 !=0:
-         ax[count].set_yticks([])
-
-      if count == 0 or count == 2: 
-         #ax[count].set_xticks([])
-         ax[count].tick_params(labelbottom=False) 
-
-      #ax[0].get_yticklabels()[-1].set_visible(False)
 
       y = pd.read_csv(f)['beta'].to_numpy()
       dates = pd.read_csv(f)['date'].to_numpy()
-      xx = [float(i) for i in range(0, y.shape[0])]
-      xx = np.array(xx)
+      days = np.array([i for i in range (0, y.shape[0])])
+      print("num data points:",y.shape)
+
+      # now get the lockdown day 
       fname = os.path.basename(f).split('_')
-      country = fname[0]  
+      country = fname[0]
       lockdown = L[country]
 
       a = arrow.get(dates[0])
       b = arrow.get(lockdown)
       l = str(b-a).split(" ")[0]
-
+      
       print("country",country,"lockdown",lockdown,l)
-      print("dates",dates)
+
+      # now set the limits & labels 
+  
+      ax[count].set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
+      #ax[count].set_ylim(-5,6)
+      #ax[count].set_xlim(1,45)
+
+
+      if count % 2==  0: 
+         ax[count].set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
+         
+      if count %2 !=0:
+      #  ax[count].set_yticks([])
+         ax[count].yaxis.tick_right()
+
+      if count == 0 or count == 2: 
+         ax[count].tick_params(labelbottom=False) 
+ 
+      xx , yy = days[:-2], y[:-2]
+      #xx = strip_year(xx)
+      print("xx=",xx)
       ax[count].axvline(x=float(l),c='k',ls='--')
-
       ax[count].axhline(y=0,c='k',ls='--')
-      ax[count].plot(xx[:-2],y[:-2],lw='2',label=country)
-      ax[count].scatter(xx[:-2],y[:-2])
-      ax[count].set_ylim(-5,6)
-      ax[count].legend()
-      ax[count].xaxis.set_minor_locator(AutoMinorLocator())
 
-      ax[count].xaxis.grid(True, which='both')
+      ax[count].plot(xx,yy,lw='2',label=country)
+      ax[count].scatter(xx,yy)
+
+      plt.setp(ax[count].get_xticklabels(), rotation=90, horizontalalignment='right')
+      ax[count].legend(fontsize=fontsize)
+      #ax[count].xaxis.set_minor_locator(AutoMinorLocator())
+      #ax[count].xaxis.grid(True, which='both')
       count +=1
       
 
