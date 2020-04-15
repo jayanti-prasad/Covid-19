@@ -34,8 +34,8 @@ if __name__ == "__main__":
     ax.append(fig.add_subplot(326))
 
     for a in ax:
-      a.set_xlim(1,55)
-      a.set_ylim(-5,7)
+      a.set_xlim(-1,55)
+      a.set_ylim(-3.5,7.5)
       #a.set_yticklabels([])
 
     plt.subplots_adjust(wspace=0, hspace=0)
