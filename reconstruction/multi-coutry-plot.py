@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     L = dict(zip(df_l['country'].to_list(), df_l['lockdown'].to_list()))
 
-    fig = plt.figure(figsize=(12,18))
+    fig = plt.figure(figsize=(14,18))
 
     ax = []
     ax.append(fig.add_subplot(321))
