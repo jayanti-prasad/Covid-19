@@ -21,7 +21,7 @@ if __name__ == "__main__":
     fig = plt.figure(figsize=(18,12))
     ax = fig.add_subplot(111)
 
-    ax.set_xlim(-1,50)
+    ax.set_xlim(-1,51)
     ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
     #if sys.argv[2] == 'beta':
     ax.set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)

@@ -161,15 +161,15 @@ if __name__ == "__main__":
 
    R = Reconstruct(args)
 
-   #gamma = [5.0,9.0,14.0]
-   #sigma = [9.0]
-   #alpha = [1.0]
+   gamma = [5.0,9.0,14.0]
+   sigma = [9.0]
+   alpha = [1.0]
 
-   #for g in gamma:
-   #  for s in sigma:
-   #     for a in alpha: 
-   #       R.solve (g, s, a)
-   #       R.output ()
+   for g in gamma:
+     for s in sigma:
+        for a in alpha: 
+          R.solve (g, s, a)
+          R.output ()
 
    R.solve (args.gamma_inverse, args.sigma_inverse, args.alpha)
    R.output ()
