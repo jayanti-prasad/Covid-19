@@ -5,16 +5,14 @@ import numpy as np
 import pandas as pd
 import matplotlib 
 import matplotlib.pyplot as plt
-
+from reconstruction import Reconstruct
 
 fontsize = 28 
 matplotlib.rc('xtick', labelsize=fontsize) 
 matplotlib.rc('ytick', labelsize=fontsize) 
 matplotlib.rcParams['axes.linewidth'] = 2.0 
 matplotlib.rcParams["font.family"] = "Courier New"
-matplotlib.rcParams['axes.labelweight'] = 'bold'
 
-from reconstruction import Reconstruct
 
 if __name__ == "__main__":
 
@@ -55,8 +53,10 @@ if __name__ == "__main__":
    fig = plt.figure(figsize=(18,12))
    ax = fig.add_subplot(111)
    ax.set_xlim(-1,52)
+
    ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
    ax.set_ylabel('Raw '+ r'$\beta$(t)',fontsize=fontsize)
+
    ax.axhline(y=0,c='k',ls='--')
    colors=['r','b','g','k','y','m','w','g','r']
  
@@ -87,6 +87,6 @@ if __name__ == "__main__":
           count +=1
 
    ax.legend(fontsize=fontsize)
-   plt.savefig(args.output_dir + os.sep + "vary_" + args.param +".pdf")
+   plt.savefig(args.output_dir + os.sep + "vary_" + args.param + ".pdf")
    plt.show()
        
