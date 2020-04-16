@@ -5,42 +5,32 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 from datetime import timedelta, datetime
+from scipy.integrate import odeint
 
-def SIR(y,t,P): 
-    beta, gamma = P[0], P[1]
-    S = y[0]
-    I = y[1]
-    R = y[2]
+def SIR(y,t,N,beta,gamma): 
+    S = y[0]/N
+    I = y[1]/N
+    R = y[2]/N
     return [-beta*S*I, beta*S*I-gamma*I, gamma*I]
 
 
 
-def loss(beta, gamma, data):
-    #RMSE between actual confirmed cases and the estimated infectious people with given beta and gamma.
+def loss(data, beta, gamma):
+    N = 1000
     size = data.shape[0]
-    print("beta=",beta,"gamma=",gamma)
     S_0,I_0,R_0=1000,10,0 
-    P = [beta, gamma]  
-    print("beta=",beta,"gamma=",gamma)
     t = t_eval=np.arange(0, size, 1) 
-    Y0 = [S_0,I_0,R_0] 
-    solution = solve_ivp(SIR, [0, size], Y0, t, vectorized=True, args = P)
-
-    return solution 
-    #return np.sqrt(np.mean((solution.y[1] - data)**2))
-
-"""
+    y0 = [S_0,I_0,R_0] 
+    #solution = solve_ivp(SIR, [0, size], Y0, t, vectorized=True, args = P)
+    solution = odeint(SIR, y0, t, args=(N, beta, gamma))
+    return np.sqrt(np.mean((solution[:,1] - data)**2))
 
 class Learner(object):
-    def __init__(self, df, country, loss):
-        self.country = country
+    def __init__(self, beta, gamma, data, loss):
+        self.beta = beta
+        self.gamma = gamma
+        self.data = data
         self.loss = loss
-
-    def load_confirmed(self, country):
-      #Load confirmed cases downloaded from HDX
-      #country_df = df[df['country'] == country]
-      country_df = pd.read_csv("../data/covid-19-Italy.csv",skiprows=24)
-      return country_df#.iloc[0].loc[START_DATE[country]:]
 
 
     def extend_index(self, index, new_size):
@@ -62,16 +52,17 @@ class Learner(object):
 
     def train(self):
         #Run the optimization to estimate the beta and gamma fitting the given confirmed cases.
-        data = self.load_confirmed(self.country)
-        print("data")
+        data = self.data
+        beta, gamma = self.beta, self.gamma  
         optimal = minimize(
             loss,
             [0.001, 0.001],
-            args=(data),
+            args=(beta, gamma),
             method='L-BFGS-B',
             bounds=[(0.00000001, 0.4), (0.00000001, 0.4)]
         )
-        beta, gamma = optimal.x
+        beta, gamma = optimal.data
+        """
         new_index, extended_actual, prediction = self.predict(beta, gamma, data)
         df = pd.DataFrame({
             'Actual': extended_actual,
@@ -83,15 +74,13 @@ class Learner(object):
         ax.set_title(self.country)
         df.plot(ax=ax)
         fig.savefig(f"{self.country}.png")
-
-"""
+        """
 
 if __name__ == "__main__":
 
     df = pd.read_csv('../data/covid-19-global.csv')
 
     df = df[df['country']==sys.argv[1]]
-
     data = df['confirmed'].to_numpy()
 
     print(df.columns)
@@ -100,8 +89,15 @@ if __name__ == "__main__":
   
     data1 = loss (0.24,0.42,data)
     print(data1)
-   
   
+    beta, gamma = 0.24, 0.24 
+
+    L = Learner(beta,gamma, data,loss)
+
+    #L.train()
+
+    #print(data1.shape)
+   
 
 
  
