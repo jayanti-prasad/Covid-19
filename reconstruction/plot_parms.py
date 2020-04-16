@@ -18,7 +18,7 @@ if __name__ == "__main__":
    parser = argparse.ArgumentParser()
    parser.add_argument('-i','--input-file',help='Input csv file',\
       default='../data/covid-19-global.csv')
-   parser.add_argument('-c','--country-name',help='Country name', default='India')
+   parser.add_argument('-c','--country-name',help='Country name')
    parser.add_argument('-p','--param',help='Parameter to vary')
    parser.add_argument('-o','--output-dir',help='Output dir', default='results')
    parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
    fig = plt.figure(figsize=(18,12))
    ax = fig.add_subplot(111)
-   ax.set_xlim(-1,51)
+   ax.set_xlim(-1,52)
    ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
    ax.set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
    ax.axhline(y=0,c='k',ls='--')

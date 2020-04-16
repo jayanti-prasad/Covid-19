@@ -51,8 +51,8 @@ if __name__ == "__main__":
     print("countries:",df['country'].to_list())
     df = df.replace({'United Kingdom': 'UK'}, regex=True)
   
-    get_top_countries (df)
-    sys.exit()
+    #get_top_countries (df)
+    #sys.exit()
 
     df = df[df['country'] == args.country]
 
