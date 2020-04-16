@@ -1,65 +1,69 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import sys
 import os
-import glob 
-import matplotlib 
+import sys
+import argparse
 import numpy as np
+import pandas as pd
+import matplotlib 
+import matplotlib.pyplot as plt
+
 
 fontsize = 26 
 matplotlib.rc('xtick', labelsize=fontsize) 
 matplotlib.rc('ytick', labelsize=fontsize) 
 matplotlib.rcParams['axes.linewidth'] = 2.0 
-
+from reconstruction import Reconstruct
 
 if __name__ == "__main__":
 
-    files = glob.glob(sys.argv[1] + os.sep + "*.csv")
-    fname = sys.argv[1].split("/")[-1]
-    print("fname:", fname)
+   parser = argparse.ArgumentParser()
+   parser.add_argument('-i','--input-file',help='Input csv file',\
+      default='../data/covid-19-global.csv')
+   parser.add_argument('-c','--country-name',help='Country name', default='India')
+   parser.add_argument('-p','--param',help='Parameter to vary')
+   parser.add_argument('-o','--output-dir',help='Output dir', default='results')
+   parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
+      default='../data/covid-19-lockdown.csv')
 
-    fig = plt.figure(figsize=(18,12))
-    ax = fig.add_subplot(111)
+   args = parser.parse_args()
+   os.makedirs(args.output_dir, exist_ok=True)
 
-    ax.set_xlim(-1,51)
-    ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
-    #if sys.argv[2] == 'beta':
-    ax.set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
-    #else: 
-    #  ax.set_ylabel(sys.argv[2],fontsize=fontsize) 
-    ax.axhline(y=0,c='k',ls='--')
-   
-    
-    colors=['r','b','g','k','o']
+   R = Reconstruct(args, args.country_name)
 
-    files1 = [files[2], files[0], files[1]]
+   if args.param == "gamma":
+      gamma = [5,9,14]
+      sigma = [9]
+ 
+   if args.param == "sigma":
+      sigma = [5,9,14]
+      gamma = [9]
 
-    count = 0
-    for f in files1:
-       y = pd.read_csv(f)[sys.argv[2]].to_numpy()
-       x = [float(i) for i in range(0, y.shape[0])]
-       x = np.array(x)
-       lab = f.replace(sys.argv[1]+"Italy_",'')
-       lab = lab.replace(".csv",'')
-       parts = lab.split("_")
-       print("parts:",parts)
+   alpha = [1.0]
 
-       if fname == "vary_sigma":
-          label = r'$1/\sigma=$'+parts[4]
-       if fname == "vary_gamma":
-          label = r'$1/\gamma=$'+parts[7]
+   fig = plt.figure(figsize=(18,12))
+   ax = fig.add_subplot(111)
+   ax.set_xlim(-1,51)
+   ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
+   ax.set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
+   ax.axhline(y=0,c='k',ls='--')
+   colors=['r','b','g','k','o']
+ 
+   count = 0  
+   for g in gamma:
+     for s in sigma:
+        for a in alpha:
+          R.solve (g, s, a)
+          y = R.beta 
+          x = np.array([float(i) for i in range(0, y.shape[0])])
+          if args.param == 'gamma':
+             label = r'$1/\gamma=$' + str(g)
+          if args.param == 'sigma':
+             label = r'$1/\sigma=$' + str(s)
 
-       label = label.replace('0','').replace('.','')   
-       ax.plot(x[:-2],y[:-2],label=label,c=colors[count], lw='2')
-       ax.scatter(x[:-2],y[:-2],c=colors[count])
+          ax.plot(x[:-2],y[:-2],label=label,c=colors[count], lw='2')
+          ax.scatter(x[:-2],y[:-2],c=colors[count])
+          count +=1
 
-       #ax.plot(x,y,label=label, lw='2')
-       #ax.scatter(x,y)
-
-
-       ax.legend(fontsize=fontsize)
-       count +=1
-
-    plt.savefig(sys.argv[1] + os.sep + fname +".pdf")
-    plt.show()
+   ax.legend(fontsize=fontsize)
+   plt.savefig(args.output_dir + os.sep + "vary_" + args.param +".pdf")
+   plt.show()
        
