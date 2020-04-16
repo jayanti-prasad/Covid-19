@@ -15,6 +15,7 @@ fontsize = 20
 matplotlib.rc('xtick', labelsize=fontsize) 
 matplotlib.rc('ytick', labelsize=fontsize) 
 matplotlib.rcParams['axes.linewidth'] = 2.0
+matplotlib.rcParams["font.family"] = "Courier New"
 
 
 def read_lockdown (args):

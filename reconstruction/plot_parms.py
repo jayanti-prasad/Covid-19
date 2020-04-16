@@ -11,6 +11,8 @@ fontsize = 26
 matplotlib.rc('xtick', labelsize=fontsize) 
 matplotlib.rc('ytick', labelsize=fontsize) 
 matplotlib.rcParams['axes.linewidth'] = 2.0 
+matplotlib.rcParams["font.family"] = "Courier New"
+
 from reconstruction import Reconstruct
 
 if __name__ == "__main__":
@@ -45,8 +47,8 @@ if __name__ == "__main__":
       alpha = [0.2,1.0,5.0]
 
    if args.param == "all":
-      sigma = [5,9,14]
-      gamma = [5,9,14]
+      sigma = [5,14,9]
+      gamma = [5,14,9]
       alpha = [1.0]
    
    fig = plt.figure(figsize=(18,12))
@@ -72,8 +74,15 @@ if __name__ == "__main__":
              label = r'$\alpha=$' + str(a)
           if args.param == 'all':
              label = ""
-          ax.plot(x[:-2],y[:-2],label=label,c=colors[count], lw='2')
-          ax.scatter(x[:-2],y[:-2],c=colors[count])
+             if s== 9 and g == 9:
+                color = 'k'
+             else :
+                color = 'grey'  
+          else:
+             color = colors[count]     
+
+          ax.plot(x[:-2],y[:-2],label=label,c=color, lw='3')
+          ax.scatter(x[:-2],y[:-2],c=color)
           count +=1
 
    ax.legend(fontsize=fontsize)
