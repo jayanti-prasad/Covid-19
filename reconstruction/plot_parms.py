@@ -32,20 +32,30 @@ if __name__ == "__main__":
    if args.param == "gamma":
       gamma = [5,9,14]
       sigma = [9]
+      alpha = [1.0]
  
    if args.param == "sigma":
       sigma = [5,9,14]
       gamma = [9]
+      alpha = [1.0]
 
-   alpha = [1.0]
+   if args.param == "alpha":
+      sigma = [9]
+      gamma = [9]
+      alpha = [0.2,1.0,5.0]
 
+   if args.param == "all":
+      sigma = [5,9,14]
+      gamma = [5,9,14]
+      alpha = [1.0]
+   
    fig = plt.figure(figsize=(18,12))
    ax = fig.add_subplot(111)
    ax.set_xlim(-1,52)
    ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
    ax.set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
    ax.axhline(y=0,c='k',ls='--')
-   colors=['r','b','g','k','o']
+   colors=['r','b','g','k','y','m','w','g','r']
  
    count = 0  
    for g in gamma:
@@ -58,7 +68,10 @@ if __name__ == "__main__":
              label = r'$1/\gamma=$' + str(g)
           if args.param == 'sigma':
              label = r'$1/\sigma=$' + str(s)
-
+          if args.param == 'alpha':
+             label = r'$\alpha=$' + str(a)
+          if args.param == 'all':
+             label = ""
           ax.plot(x[:-2],y[:-2],label=label,c=colors[count], lw='2')
           ax.scatter(x[:-2],y[:-2],c=colors[count])
           count +=1
