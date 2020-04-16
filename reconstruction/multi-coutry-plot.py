@@ -11,7 +11,7 @@ from matplotlib.ticker import AutoMinorLocator
 from reconstruction import Reconstruct
 import argparse
 
-fontsize = 20 
+fontsize = 22 
 matplotlib.rc('xtick', labelsize=fontsize) 
 matplotlib.rc('ytick', labelsize=fontsize) 
 matplotlib.rcParams['axes.linewidth'] = 2.0
@@ -85,7 +85,7 @@ if __name__ == "__main__":
         ax[count].set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
 
         if count % 2==  0: 
-            ax[count].set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
+            ax[count].set_ylabel('Raw '+ r'$\beta$(t)',fontsize=fontsize)
          
         if count %2 !=0:
             ax[count].yaxis.tick_right()

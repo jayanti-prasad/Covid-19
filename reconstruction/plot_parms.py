@@ -7,7 +7,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 
-fontsize = 26 
+fontsize = 28 
 matplotlib.rc('xtick', labelsize=fontsize) 
 matplotlib.rc('ytick', labelsize=fontsize) 
 matplotlib.rcParams['axes.linewidth'] = 2.0 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
    ax = fig.add_subplot(111)
    ax.set_xlim(-1,52)
    ax.set_xlabel('Number of days since '+r'$ t_i$',fontsize=fontsize)
-   ax.set_ylabel('raw '+ r'$\beta$(t)',fontsize=fontsize)
+   ax.set_ylabel('Raw '+ r'$\beta$(t)',fontsize=fontsize)
    ax.axhline(y=0,c='k',ls='--')
    colors=['r','b','g','k','y','m','w','g','r']
  
