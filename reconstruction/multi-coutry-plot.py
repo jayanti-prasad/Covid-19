@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     for a in ax:
       a.set_xlim(-1,53)
-      a.set_ylim(-5.0,11.0)
+      a.set_ylim(-8.0,11.0)
 
     plt.subplots_adjust(wspace=0, hspace=0)
 
