@@ -31,7 +31,7 @@ class Learner(object):
         self.gamma = gamma
         self.data = data
         self.loss = loss
-
+        print("data shape:",data.shape)
 
     def extend_index(self, index, new_size):
         values = index.values
@@ -57,7 +57,7 @@ class Learner(object):
         optimal = minimize(
             loss,
             [0.001, 0.001],
-            args=(beta, gamma),
+            args=(data, beta, gamma),
             method='L-BFGS-B',
             bounds=[(0.00000001, 0.4), (0.00000001, 0.4)]
         )
@@ -87,14 +87,14 @@ if __name__ == "__main__":
     print(df.shape)
     print(data)
   
-    data1 = loss (0.24,0.42,data)
-    print(data1)
+    #data1 = loss (data, 0.24,0.42)
+    #print(data1)
   
     beta, gamma = 0.24, 0.24 
 
     L = Learner(beta,gamma, data,loss)
 
-    #L.train()
+    L.train()
 
     #print(data1.shape)
    

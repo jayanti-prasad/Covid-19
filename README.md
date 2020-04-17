@@ -2,6 +2,8 @@
 
 
 ## References 
+# Our Papers 
+1. [Extracting the effective contact rate of COVID-19 pandemic](https://arxiv.org/abs/2004.07750)
 
 
 # Collection 
@@ -48,6 +50,7 @@ on Coronavirus Disease 2019 (COVID-19)](https://www.who.int/docs/default-source/
 19. [Isolation and characterization of a bat SARS-like coronavirus that uses the ACE2 receptor](https://www.nature.com/articles/nature12711)
 20. [Identification of a new human coronavirus](https://www.nature.com/articles/nm1024)
 21. [Bats Are Natural Reservoirs of SARS-Like Coronaviruses](https://science.sciencemag.org/content/310/5748/676)
+22. [The R0 package: a toolbox to estimate reproduction numbers for epidemic outbreaks](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/1472-6947-12-147)
 
 # Classic Papers :
 1. [A contribution to the mathematical theory of epidemics-I](https://royalsocietypublishing.org/doi/10.1098/rspa.1927.0118)
