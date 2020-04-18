@@ -24,12 +24,23 @@ def SIR (t, y, N, beta, gamma):
    S, I, R  = y[0]/N, y[1], y[2]
    return [-beta*S*I, beta*S*I-gamma*I, gamma*I]
 
+def SEIR (t, y, N, beta, gamma, sigma):
+   S, E, I, R  = y[0]/N, y[1], y[2], y[3]
+   return [-beta*S*I, beta*S*I-sigma*E, sigma*E-gamma*I, gamma*I]
+
 
 def solve_ode (beta, gamma, size, N, I0, R0):
    S0 = N - I0 - R0
    solution = solve_ivp(SIR, [0, size], [S0,I0,R0],\
      t_eval=np.arange(0, size, 1), vectorized=True, args=(N,beta,gamma))
    return solution 
+
+
+def solve_ode1 (beta, gamma, sigma,  size, N, E0, I0, R0):
+   S0 = N - I0 - R0 - E0 
+   solution = solve_ivp(SEIR, [0, size], [S0,E0, I0,R0],\
+     t_eval=np.arange(0, size, 1), vectorized=True, args=(N,beta,gamma,sigma))
+   return solution
 
 
 def loss(point, data, N, I0, R0):
@@ -123,6 +134,8 @@ if __name__ == "__main__":
 
    new_indx, predict, sir  = L.predict(beta,gamma,data,args.num_days)
    #sir  = solve_ode (args.beta, args.gamma, args.num_days, N,I0, R0)
+   sir  = solve_ode1 (args.beta, args.gamma,0.011,args.num_days, N,I0,0,R0)
+
 
    plt.plot(sir.t,sir.y[0,:],c='g',label='Succeptable')
    plt.plot(sir.t,sir.y[1,:],c='r',label='Infected')
