@@ -1,13 +1,28 @@
 import numpy as np
 from scipy.integrate import solve_ivp
 
+"""
+The main module to solve the dynamical equations of Epidemiology
+"""
 
 def SIR (t, y, N, beta, gamma):
+   """
+   Succeptable-Infected-Recovered model.
+   Input :
+      y : S0, I0, R0  (initial condition)
+      N : Population size
+      beta, gamma : Usual parameters
+   """
    S, I, R  = y[0]/N, y[1], y[2]
    return [-beta*S*I, beta*S*I-gamma*I, gamma*I]
 
 
 def SEIR (t, y, N, beta, gamma, sigma):
+   """
+   Succeptable-Exposed-Infected-Recovered model.
+   One extra parameter sigma and 
+   One extra initial condition for exposed - E0
+   """
    S, E, I, R  = y[0]/N, y[1], y[2], y[3]
    return [-beta*S*I, beta*S*I-sigma*E, sigma*E-gamma*I, gamma*I]
 
@@ -28,6 +43,11 @@ class Epidemology:
  
 
     def evolve (self, *args):
+        """
+        This is the main evolution mthod.
+        > evolve (beta, gamma) : for SIR 
+        > evolve (beta, sigma, gamma) : for SEIR 
+        """
         if self.model == 'sir':
            beta,  gamma = args[0], args[1]
            self.S0 = self.N - self.I0 - self.R0 
