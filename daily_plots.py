@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import argparse 
 import datetime
-from common_utils import date_normalize
+from common_utils import date_normalize, get_country_data
 from datetime import date
 
 """
@@ -60,16 +60,7 @@ if __name__ == "__main__":
 
     df = df.replace({'United Kingdom': 'UK'}, regex=True)
   
-    get_top_countries (args, df)
-    #sys.exit()
-
-    df = df[df['country'] == args.country]
-
-    df = date_normalize (df)
-    df = df.sort_values(by='date') 
-
-    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
-    df = df.loc[:, ~df.columns.str.contains('country')]
+    df = get_country_data (df, args.country)
 
     df.to_csv(countries_dir + os.sep  + "covid-19-"+args.country + ".csv",index=False)
 

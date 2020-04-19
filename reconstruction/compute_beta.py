@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import argparse
-from common_utils import date_normalize, strip_year 
+from common_utils import date_normalize, strip_year, get_country_data 
 import matplotlib
 from reconstruction import Reconstruct
 
@@ -26,19 +26,10 @@ if __name__ == "__main__":
    parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
       default='../data/covid-19-lockdown.csv')
 
-
    args = parser.parse_args()
 
    df = pd.read_csv(args.input_file)
-
-   df = df.replace({'United Kingdom': 'UK'}, regex=True)
-
-   df = df[df['country'] == args.country_name]
-   df = date_normalize (df)
-   df = df.sort_values(by='date')
-
-   df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
-   df = df.loc[:, ~df.columns.str.contains('country')]
+   df = get_country_data (df, args.country_name)
 
    df = df[df['confirmed'] > 25]
    

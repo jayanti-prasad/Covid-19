@@ -2,6 +2,7 @@ from datetime import timedelta, date
 import datetime as dt
 
 def get_country_data (df, country):
+   df = df.replace({'United Kingdom': 'UK'}, regex=True)
    df = df.fillna(0)
    df = df[df['country'] == country]
    df = date_normalize (df)
@@ -32,10 +33,4 @@ def get_dates (start_date, num_days):
 def strip_year (dates):
    dates = [d.replace('2020-','') for d in dates]
    return dates 
-
-
-
-
-
-
  
