@@ -19,9 +19,9 @@ def get_top_countries (args, df):
     df1 = df1.sort_values(by='date')
     last_date = df1.tail(1)['date'].values[0] 
     df_last = df1[df1['date'] == last_date]
-    df_last = df_last.sort_values(by=['deaths'],ascending=False)[:10]
+    df_last = df_last.sort_values(by=['deaths'],ascending=False)[:50]
 
-    fig = plt.figure (figsize=(12,18))
+    fig = plt.figure (figsize=(18,18))
     ax = fig.add_subplot(111)
 
     df_last.plot(x="country", y="confirmed", kind="bar", ax=ax, color="C1")
@@ -30,8 +30,13 @@ def get_top_countries (args, df):
     ax.set_yscale('log')
     ax.set_title("Covid-19:" + str(date.today()))
     plt.setp(ax.get_xticklabels(), rotation=45, horizontalalignment='right',fontsize=10)
+
+    fig.text(0.65, 0.25, 'By Jayanti Prasad',fontsize=50, color='gray',\
+         ha='right', va='bottom', alpha=0.5)
+
+
     plt.savefig(args.output_dir + os.sep+ "top_countries.pdf")
-    #plt.show()
+    plt.show()
 
 if __name__ == "__main__":
 
