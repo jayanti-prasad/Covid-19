@@ -42,12 +42,13 @@ if __name__ == "__main__":
    Y = df['deaths'].to_numpy()  
    Z = df['recovered'].to_numpy()  
    dates = strip_year (df['date'].to_list())
-   X = X - Y - Z 
+   R = Y + Z  
+   I = X - R
   
    beta = np.zeros (X.shape[0]-1)
 
-   for i in range(0, X.shape[0]-1):
-     beta[i] = ((X[i+1]-X[i]) + (Z[i+1]-Z[i]))/ X[i]
+   for i in range(0, I.shape[0]-1):
+     beta[i] = ((I[i+1]-I[i]) + (R[i+1]-R[i]))/ I[i]
 
 
    t = dates[args.start_date:-2]
