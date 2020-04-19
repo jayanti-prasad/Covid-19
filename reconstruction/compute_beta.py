@@ -54,20 +54,13 @@ if __name__ == "__main__":
    for i in range(0, I.shape[0]-1):
      beta[i] = ((I[i+1]-I[i]) + (R[i+1]-R[i]))/ I[i]
 
-
-   #t = dates[args.start_date:-2]
-   #x = beta[args.start_date:-1]
-
    t = dates[:-1]
 
    R = Reconstruct(args, args.country_name)
-
    g, s, a = 7.0, 7.0, 1.0
    R.solve (g, s, a)
    beta1 = R.beta[:-2]  
 
-   #print("beta:",beta.shape)
-   #print("beta1:",beta1.shape)
 
    fig = plt.figure(figsize=(18,12))
    ax = fig.add_subplot()  
@@ -84,9 +77,5 @@ if __name__ == "__main__":
    plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right',fontsize=10)
    plt.savefig(args.output_dir + os.sep + "beta_" + args.country_name + ".pdf")
    plt.show() 
-
-
-
-
 
    
