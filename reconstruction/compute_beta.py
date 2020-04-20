@@ -39,6 +39,11 @@ if __name__ == "__main__":
    dates = strip_year (df['date'].to_list())
    R = Y + Z  
    I = X - R
+
+  
+   It = np.array([ X[i+1] - X[i] for i in range(0, X.shape[0]-1)])
+   It =  It / np.sum (It)
+  
   
    beta = np.zeros (X.shape[0]-1)
 
@@ -53,9 +58,16 @@ if __name__ == "__main__":
    beta1 = R.beta[:-2]  
 
 
+   beta = beta / np.sum(beta)
+   beta1 = beta1 / np.sum(beta1)
+
+
    fig = plt.figure(figsize=(18,12))
    ax = fig.add_subplot()  
+   It = I / np.sum (I)
 
+   ax.plot(t, It[:-1],c='k')
+   ax.scatter(t, It[:-1],c='k')
    ax.plot(t, beta,'o',c='b')
    ax.plot(t, beta,label='Direct',c='b')
    ax.plot(t[:-1], beta1,label='Reconstructed',c='r')

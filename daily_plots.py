@@ -13,31 +13,6 @@ Plot daily time series data for a country.
 
 """
 
-def get_top_countries (args, df):
-    df1 = df.copy() 
-    df1 = date_normalize (df1)
-    df1 = df1.sort_values(by='date')
-    last_date = df1.tail(1)['date'].values[0] 
-    df_last = df1[df1['date'] == last_date]
-    df_last = df_last.sort_values(by=['deaths'],ascending=False)[:50]
-
-    fig = plt.figure (figsize=(18,18))
-    ax = fig.add_subplot(111)
-
-    df_last.plot(x="country", y="confirmed", kind="bar", ax=ax, color="C1")
-    df_last.plot(x="country", y="recovered", kind="bar", ax=ax, color="C2")
-    df_last.plot(x="country", y="deaths", kind="bar", ax=ax, color="C3")
-    ax.set_yscale('log')
-    ax.set_title("Covid-19:" + str(date.today()))
-    plt.setp(ax.get_xticklabels(), rotation=45, horizontalalignment='right',fontsize=10)
-
-    fig.text(0.65, 0.25, 'By Jayanti Prasad',fontsize=50, color='gray',\
-         ha='right', va='bottom', alpha=0.5)
-
-
-    plt.savefig(args.output_dir + os.sep+ "top_countries.pdf")
-    plt.show()
-
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
@@ -58,8 +33,6 @@ if __name__ == "__main__":
     if args.country not in df['country'].to_list():
        print("countries:",df['country'].to_list())
 
-    df = df.replace({'United Kingdom': 'UK'}, regex=True)
-  
     df = get_country_data (df, args.country)
 
     df.to_csv(countries_dir + os.sep  + "covid-19-"+args.country + ".csv",index=False)

@@ -17,10 +17,19 @@ if __name__ == "__main__":
    df = df.sort_values(by=['date'],ascending=True)
    print(df.columns)
    
-   df['infection'] = df['confirmed'] - df['deaths'] - df ['recovered'] 
+   X = df['confirmed'].to_list()
 
-   ax = df.plot(x="date", y="confirmed",color="C1")
-   df.plot(x="date", y="infection",ax=ax, color="C2")
-   plt.xticks(rotation=45)
+   Y = [ X[i+1] - X[i] for i in range(0, len(X)-1)]
+   t = [ i for i in range(0, len(Y))]
+
+   plt.plot(t,Y)
+   plt.scatter(t,Y)
+ 
+
+   #df['infection'] = df['confirmed'] - df['deaths'] - df ['recovered'] 
+
+   #ax = df.plot(x="date", y="confirmed",color="C1")
+   #df.plot(x="date", y="infection",ax=ax, color="C2")
+   #plt.xticks(rotation=45)
 
    plt.show()

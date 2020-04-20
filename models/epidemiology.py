@@ -27,6 +27,36 @@ def SEIR (t, y, N, beta, gamma, sigma):
    return [-beta*S*I, beta*S*I-sigma*E, sigma*E-gamma*I, gamma*I]
 
 
+def SEIARD (t, y,  N, beta, sigma, gamma, delta, p):
+   """
+   Reference : https://arxiv.org/pdf/2004.08288.pdf
+   Deafult parameters :
+
+   N, beta, sigma, gamma, delta, p =\
+   1000, 0.46, 0.14, 0.01, 0.01, 0.8
+
+   E0, I0, A0, RI0, RA0, D0 =\
+   10, 10, 0, 0, 0, 0
+
+   t = np.arange(0, 160, 1)
+
+   """
+   S, E, I, A, RI, RA, D =\
+     y[0], y[1], y[2], y[3], y[4], y[5], y[6]
+
+   f = (I-A) / (N-D)
+ 
+   dSdt = -beta * S * f
+   dEdt =  beta * S * f  - sigma * E
+   dIdt = p * sigma * E - (delta + gamma ) * I
+   dAdt = (1.0 -p ) * sigma * E - gamma * A
+   dRidt = gamma * I
+   dRadt = gamma * A
+   dDdt  = delta * I
+
+   return  [dSdt, dEdt, dIdt, dAdt, dRidt, dRadt,  dDdt]
+
+
 class Epidemology:
     def __init__(self, *args):
        self.model  = args[0]
@@ -36,10 +66,14 @@ class Epidemology:
    
     def set_init (self, *args):
        if self.model == 'sir':
-         [self.N, self.I0, self.R0] = args[0], args[1], args[2] 
+          [self.N, self.I0, self.R0] = args[0], args[1], args[2] 
        
        if self.model == 'seir':
-         [self.N, self.E0, self.I0, self.R0] = args[0], args[1], args[2], args[3]
+          [self.N, self.E0, self.I0, self.R0] = args[0], args[1], args[2], args[3]
+ 
+       if self.model == 'seiard':
+          [self.N, self.E0, self.I0, self.A0, self.RI0, self.RA0, self.D0] =\
+             args[0], args[1], args[2], args[3],args[4], args[5], args[6]
  
 
     def evolve (self, *args):
@@ -61,6 +95,19 @@ class Epidemology:
            Y0 = [self.S0, self.E0,  self.I0, self.R0]   
            params = self.N, beta, sigma, gamma      
            func = SEIR 
+
+        if self.model == 'seiard':
+           beta, sigma, gamma, delta, p = args[0], args[1],\
+               args[2], args[3], args[4] 
+  
+           self.S0 = self.N - (self.E0 + self.I0 + self.A0 +\
+              self.RI0 + self.RA0 + self.D0)
+
+           Y0 = [self.S0, self.E0, self.I0, self.A0, self.RI0,\
+              self.RA0, self.D0]
+           params = self.N,  beta, sigma, gamma, delta, p
+           func = SEIARD
+
 
         solution = solve_ivp(func, [0, self.size], Y0,\
             t_eval = self.t,vectorized=True, args=params)
