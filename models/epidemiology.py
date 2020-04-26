@@ -17,6 +17,16 @@ def SIR (t, y, N, beta, gamma):
    return [-beta*S*I, beta*S*I-gamma*I, gamma*I]
 
 
+def dbSIR (t, y, N, b0, mu, gamma):
+
+   #decaying beta model
+   beta_t = lambda t: b0 * np.exp (-mu *t)
+
+   beta = beta_t (t)
+   S, I, R  = y[0]/N, y[1], y[2]
+   return [-beta*S*I, beta*S*I-gamma*I, gamma*I]
+
+
 def SEIR (t, y, N, beta, gamma, sigma):
    """
    Succeptable-Exposed-Infected-Recovered model.
@@ -65,7 +75,7 @@ class Epidemology:
        self.t = np.arange(0, self.size, 1)
    
     def set_init (self, *args):
-       if self.model == 'sir':
+       if self.model == 'sir' or self.model == 'dbsir':
           [self.N, self.I0, self.R0] = args[0], args[1], args[2] 
        
        if self.model == 'seir':
@@ -88,6 +98,14 @@ class Epidemology:
            Y0 = [self.S0, self.I0, self.R0]   
            params = self.N, beta, gamma      
            func = SIR 
+ 
+        if self.model == 'dbsir':
+           beta0, mu, gamma = args[0], args[1], args[2]
+           self.S0 = self.N - self.I0 - self.R0 
+           Y0 = [self.S0, self.I0, self.R0]   
+           params = self.N, beta0, mu, gamma      
+           func = dbSIR 
+
 
         if self.model == 'seir':
            beta, sigma, gamma = args[0], args[1], args[2] 

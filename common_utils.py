@@ -1,8 +1,22 @@
 from datetime import timedelta, date
 import datetime as dt
 
-def get_country_data (df, country):
+def country_normalize(df):
    df = df.replace({'United Kingdom': 'UK'}, regex=True)
+   df = df.replace({'Korea, South': 'SK'}, regex=True)
+   df = df.replace({'Saudi Arabia': 'SaudiArabia'}, regex=True)
+   df = df.replace({'United Arab Emirates': 'UAE'}, regex=True)
+   df = df.replace({'Dominican Republic': 'DR'}, regex=True)
+   df = df.replace({'South Africa': 'SA'}, regex=True)
+   df = df.replace({'Czechia': 'Czech'}, regex=True)
+
+   return df 
+
+
+def get_country_data (df, country):
+   
+   df = country_normalize(df) 
+
    df = df.fillna(0)
    df = df[df['country'] == country]
    df = date_normalize (df)
