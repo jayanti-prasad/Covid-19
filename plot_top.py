@@ -8,8 +8,6 @@ fontsize = 8
 matplotlib.rc('xtick', labelsize=fontsize)
 matplotlib.rc('ytick', labelsize=fontsize)
 
-
-
 def get_top_countries(df, count):
     df = df.replace({'United Kingdom': 'UK'}, regex=True)
     df1 = df.copy()
@@ -20,7 +18,6 @@ def get_top_countries(df, count):
     df_top = df_top.sort_values(by=['confirmed'],ascending=False)[:count]
 
     return df_top  
-
 
 
 if __name__ == "__main__":

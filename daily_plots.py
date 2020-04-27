@@ -19,7 +19,7 @@ if __name__ == "__main__":
     parser.add_argument('-i','--input-file',help='Input CSV file',\
       default='data/covid-19-global.csv')
     parser.add_argument('-c','--country',help='Country name',default='India')
-    parser.add_argument('-o','--output-dir',help='Output dir',default='plots')
+    parser.add_argument('-o','--output-dir',help='Output dir',default='daily_updates')
     parser.add_argument('-n','--num-days',help='Number of days',default=0,type=int)
 
     args = parser.parse_args()

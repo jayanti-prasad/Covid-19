@@ -1,5 +1,24 @@
 from datetime import timedelta, date
 import datetime as dt
+import pandas as pd
+
+def get_population(country):
+   df_p = pd.read_csv("../data/world_population.csv")
+   P = df_p['pop_2020'].str.replace(",","").astype(int)
+   P.index = df_p['country'].to_list()
+   return  P[country]
+
+
+def get_top_countries(df, count):
+    df = country_normalize(df)
+    df1 = df.copy()
+    df1 = date_normalize (df1)
+    df1 = df1.sort_values(by='date')
+    last_date = df1.tail(1)['date'].values[0]
+    df_top = df1[df1['date'] == last_date]
+    df_top = df_top.sort_values(by=['confirmed'],ascending=False)[:count]
+    return df_top['country'].to_list()
+
 
 def country_normalize(df):
    df = df.replace({'United Kingdom': 'UK'}, regex=True)
@@ -9,6 +28,8 @@ def country_normalize(df):
    df = df.replace({'Dominican Republic': 'DR'}, regex=True)
    df = df.replace({'South Africa': 'SA'}, regex=True)
    df = df.replace({'Czechia': 'Czech'}, regex=True)
+   df = df.replace({'Bosnia and Herzegovina': 'BH'}, regex=True)
+   df = df.replace({'New Zealand': 'NZ'}, regex=True)
 
    return df 
 
