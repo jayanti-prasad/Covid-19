@@ -9,10 +9,15 @@ from epidemiology import  Epidemology
 from optimizer import Learner
 
 
+def beta (b0, mu, t):
+   return b0 * np.exp (-mu *t)
+
+fcountries=['China','SK','Uruguay']
+
 def get_fitting_data (args, df, country):
 
    df  = cu.get_country_data (df, country)
-   df = df[df['confirmed'] > 25]
+   df = df[df['confirmed'] > 100]
 
    dates = df['date'].to_list()
    data = df['confirmed'] - df['recovered'] - df['deaths']
@@ -31,12 +36,12 @@ def show_fitting(args, N, data, country_name, params):
    #  get the prediction 
    E = Epidemology (args.model_name,'solve_ivp',data.shape[0]+30)
    E.set_init(N, data[0], 0)
-   sir = E.evolve (params[0], params[1], params[2])
+   sir = E.evolve (params)
   
    y_true = data.to_numpy()
    y_pred = sir.y[1,:][:y_true.shape[0]]
 
-   mse  = np.sqrt(np.mean((y_true - y_pred)**2))/np.mean (y_true)
+   mse  = np.sqrt(np.mean((y_true - y_pred)**2))
 
    title = country_name  + r', $\beta_0$' +"=" + str('%.2f' %params[0])\
       + r', $\mu$= ' +  str('%.2f' % params[1]) \
@@ -76,10 +81,14 @@ if __name__ == "__main__":
 
    os.makedirs(args.output_dir, exist_ok=True)
 
-   countries = cu.get_top_countries(df, 100)
+   countries = cu.get_top_countries(df, args.num_countries)
 
-   df_params = pd.DataFrame(columns=['country','beta_0','mu','gamma','nmse'])
+   countries = [c for c in countries if c not in  fcountries]
+
+   df_params = pd.DataFrame(columns=['country','beta_0','mu','gamma','R0','nmse'])
    count = 0
+   #countries = ['Germany']
+
    for country in countries:
       try:
          data = get_fitting_data (args, df, country)
@@ -87,16 +96,21 @@ if __name__ == "__main__":
          L = Learner(N, data, args.model_name)
          L.initial_guess()
          params = L.fit()
+         #t = np.arange(0, data.shape[0],1)
+         #print(t)
+         #t_last = data.shape[0]
+         #beta_t = [ beta (params[0], params[1], tt)/params[2] for tt in t]
+         #plt.plot(t,beta_t)
+         #plt.show()
 
          if params:
+            R0 =  beta (params[0], params[1], data.shape[0])/params[2]
             mse = show_fitting(args, N, data, country, params)
-            data_row = [country, "%.6f" % params[0],"%.6f" %params[1], "%.6f" % params[2], "%.6f" %mse]
+            data_row = [country, "%.6f" % params[0],"%.6f" %params[1], "%.6f" % params[2],"%.6f" %R0, "%d" %mse]
             df_params.loc[count] = data_row 
             print(count, data_row)
             count +=1
       except:
-         print("Could not process for the country: " + country )  
-         pass
-  
+         pass  
    df_params.to_csv(args.output_dir + os.sep + "best_fit_params.csv")
 

@@ -86,7 +86,7 @@ class Epidemology:
              args[0], args[1], args[2], args[3],args[4], args[5], args[6]
  
 
-    def evolve (self, *args):
+    def evolve (self, args):
         """
         This is the main evolution mthod.
         > evolve (beta, gamma) : for SIR 

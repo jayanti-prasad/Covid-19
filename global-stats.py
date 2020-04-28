@@ -43,7 +43,7 @@ def get_top_countries (args, df):
     df_last = df1[df1['date'] == last_date]
     df_last = df_last.sort_values(by=['deaths'],ascending=False)[:80]
 
-    df_last.to_csv("top_countries.csv",columns=['country','confirmed','deaths','recovered'],index=False)
+    df_last.to_csv("plots/top_countries.csv",columns=['country','confirmed','deaths','recovered'],index=False)
 
     fig = plt.figure (figsize=(18,18))
     ax = fig.add_subplot(111)

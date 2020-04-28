@@ -30,6 +30,7 @@ def country_normalize(df):
    df = df.replace({'Czechia': 'Czech'}, regex=True)
    df = df.replace({'Bosnia and Herzegovina': 'BH'}, regex=True)
    df = df.replace({'New Zealand': 'NZ'}, regex=True)
+   df = df.replace({'Cote d\'Ivoire': 'CDI'}, regex=True)
 
    return df 
 

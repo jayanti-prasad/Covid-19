@@ -3,6 +3,14 @@ from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt 
 import sys
 from epidemiology import dbSIR 
+import matplotlib
+
+font = {'family' : 'normal',
+        'weight' : 'bold',
+        'size'   : 12}
+
+matplotlib.rc('font', **font)
+
 
 def beta_t (t, b0, mu):
   return  b0* np.exp(- mu * t)
@@ -33,27 +41,31 @@ if __name__ == "__main__":
     sol2= solve_ivp(dbSIR, [1, size], Y0,\
             t_eval = t,vectorized=True, args=params2)
 
-    fig = plt.figure(figsize=(12,9))
-    ax = fig.add_subplot(121)
-    bx = fig.add_subplot(122)
+    fig = plt.figure(figsize=(8,8))
+    ax = fig.add_subplot(111)
+    #bx = fig.add_subplot(122)
+
 
     ax.plot(sol1.t, sol1.y[0],'g', label='Succeptable')
     ax.plot(sol1.t, sol1.y[1],'r', label='Infected')
     ax.plot(sol1.t, sol1.y[2],'b', label='Removed')
 
-    ax.plot(sol2.t, sol2.y[0],'g:',label='Succeptable')
-    ax.plot(sol2.t, sol2.y[1],'r:',label='Infected')
-    ax.plot(sol2.t, sol2.y[2],'b:',label='Removed')
-    ax.set_title("Solid for fixed " + r'$\beta$' +" and dotted for varying "+ r'$\beta$')
+    ax.plot(sol2.t, sol2.y[0],'g:')
+    ax.plot(sol2.t, sol2.y[1],'r:')
+    ax.plot(sol2.t, sol2.y[2],'b:')
+    ax.set_title("Solid for fixed " + r'$\beta$' +" and dotted for decaying "+ r'$\beta$')
     ax.set_xlabel('time')
 
     ax.legend()
+    #ax.legend(loc='upper center', bbox_to_anchor=(0.25, 1.0),
+    #      ncol=3, fancybox=True, shadow=True)
 
-    bx.plot(t, y)
-    bx.set_xlabel('time')
-    bx.set_ylabel(r'$\beta(t)$')
-    bx.set_title("Time varying beta " + r'$\beta (t) = \beta_0 e^{-\mu t}$')
-    plt.savefig("plots/sir_with_varing_beta.pdf")
+
+    #bx.plot(t, y)
+    #bx.set_xlabel('time')
+    #bx.set_ylabel(r'$\beta(t)$')
+    #bx.set_title("Time varying beta " + r'$\beta (t) = \beta_0 e^{-\mu t}$')
+    plt.savefig("results_R0/dbsir.pdf")
 
 
     plt.show()

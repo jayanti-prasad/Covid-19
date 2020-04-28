@@ -1,13 +1,5 @@
-#import sys
-#import os
-#import argparse 
 import numpy as np
-#import pandas as pd
 from scipy.optimize import minimize
-#from datetime import timedelta, datetime
-#import matplotlib.pyplot as plt
-#from common_utils import get_country_data, strip_year  
-#from epidemiology import SIR, SEIR, SEIARD, Epidemology 
 from epidemiology import Epidemology 
 
 
@@ -19,13 +11,13 @@ class Learner(object):
 
         self.model = model
         self.data = data 
+        self.E = Epidemology (self.model,'solve_ivp',  data.shape[0])
 
         I0, R0 = self.data[0], 0  
         S0 =  N - I0 - R0 
 
-        self.E = Epidemology (self.model,'solve_ivp',  data.shape[0])
         self.E.set_init (N, I0, R0)
-        print(N, I0, R0, S0)
+  
 
     def initial_guess (self):
 
@@ -35,7 +27,7 @@ class Learner(object):
 
         if self.model == 'dbsir':
             starting_point = [0.1, 0.01, 0.1]
-            bounds = [(0.01, 1.0), (1.0E-4,1.0), (0.01, 1.0)]             
+            bounds = [(0.01, 1.0), (1.0E-3,2.0), (0.01, 1.0)]             
 
         return starting_point, bounds
 
@@ -56,9 +48,11 @@ class Learner(object):
 
     def loss (self, point):
         if self.model == 'sir':
-           solution = self.E.evolve(point[0], point[1])
+           params = point[0], point[1]
         if self.model == 'dbsir':
-           solution = self.E.evolve(point[0], point[1], point[2])
+           params = point[0], point[1], point[2]
+
+        solution = self.E.evolve(params)
 
         y =  self.data.to_numpy()
         return np.sqrt(np.mean((solution.y[1] - y)**2))
