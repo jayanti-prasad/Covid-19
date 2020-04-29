@@ -122,6 +122,12 @@ def show_fitting (data, N, A,B,to,tw):
     t = np.arange(0, data.shape[0]+30, 1)
     sol = solve_tbseir (t,tbSEIR,N,I0,E0,R0,A,B,to,tw)
 
+    y_true = data.to_numpy()
+    y_pred = sol.y[2,:][:y_true.shape[0]]
+    mse  = np.sqrt(np.mean((y_true - y_pred)**2))
+
+
+    """
     fig = plt.figure(figsize=(12,12))
     ax = fig.add_subplot()
 
@@ -140,7 +146,8 @@ def show_fitting (data, N, A,B,to,tw):
     ax.set_yscale('log')
     plt.show()
     #plt.savefig("Italy.pdf")
-
+    """
+    return mse 
 
 if __name__ == "__main__":
   
@@ -152,7 +159,7 @@ if __name__ == "__main__":
 
     countries = get_top_countries(df, 100)
  
-    df_out = pd.DataFrame(columns=['country','A','B','t_off','t_w'])
+    df_out = pd.DataFrame(columns=['country','A','B','t_off','t_w','mse','population'])
     
     count = 0
     for country in countries:
@@ -163,7 +170,8 @@ if __name__ == "__main__":
           O = Optimizer(N, data,tbSEIR)
           params = O.fit()
           A, B, to, tw = params
-          row = [country, "%.6f" % A, "%.6f" % B,"%.6f" % to,"%.6f" % tw]
+          mse = show_fitting (data, N, A,B,to,tw)
+          row = [country, "%.6f" % A, "%.6f" % B,"%.6f" % to,"%.6f" % tw, "%d" % mse, "%d" % N]
           print(row)
           df_out.loc[count] = row
           count +=1   

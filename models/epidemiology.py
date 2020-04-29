@@ -5,7 +5,7 @@ from scipy.integrate import solve_ivp
 The main module to solve the dynamical equations of Epidemiology
 """
 
-def SIR (t, y, N, beta, gamma):
+def SIR (t, y, *args):
    """
    Succeptable-Infected-Recovered model.
    Input :
@@ -13,28 +13,38 @@ def SIR (t, y, N, beta, gamma):
       N : Population size
       beta, gamma : Usual parameters
    """
+
+   N, beta, gamma = args[0], args[1], args[2]
    S, I, R  = y[0]/N, y[1], y[2]
+
    return [-beta*S*I, beta*S*I-gamma*I, gamma*I]
 
 
-def dbSIR (t, y, N, b0, mu, gamma):
+def dbSIR (t, y, *args):
 
-   #decaying beta model
-   beta_t = lambda t: b0 * np.exp (-mu *t)
-   #beta_t = lambda t : b0 * (1 -  np.tanh(mu*t))
+   N, b0, mu, gamma = args[0], args[1], args[2], args[3]
+
+   if args[4] == 'exp':
+      beta_t = lambda t: b0 * np.exp (-mu *t)
+   if args[4] == 'tanh':
+      beta_t = lambda t: b0 * (1 -  np.tanh(mu*t))
 
    beta = beta_t (t)
    S, I, R  = y[0]/N, y[1], y[2]
    return [-beta*S*I, beta*S*I-gamma*I, gamma*I]
 
 
-def SEIR (t, y, N, beta, gamma, sigma):
+def SEIR (t, y, *args):
    """
    Succeptable-Exposed-Infected-Recovered model.
    One extra parameter sigma and 
    One extra initial condition for exposed - E0
    """
+   N, beta, gamma, sigma =\
+      args[0], args[1], args[2], args[3]
+
    S, E, I, R  = y[0]/N, y[1], y[2], y[3]
+
    return [-beta*S*I, beta*S*I-sigma*E, sigma*E-gamma*I, gamma*I]
 
 
@@ -93,26 +103,27 @@ class Epidemology:
         > evolve (beta, gamma) : for SIR 
         > evolve (beta, sigma, gamma) : for SEIR 
         """
+        
         if self.model == 'sir':
-           beta,  gamma = args[0], args[1]
            self.S0 = self.N - self.I0 - self.R0 
            Y0 = [self.S0, self.I0, self.R0]   
-           params = self.N, beta, gamma      
+           params = self.N, args[0], args[1]      
+           #params = N, beta, gamma      
            func = SIR 
  
         if self.model == 'dbsir':
-           beta0, mu, gamma = args[0], args[1], args[2]
            self.S0 = self.N - self.I0 - self.R0 
            Y0 = [self.S0, self.I0, self.R0]   
-           params = self.N, beta0, mu, gamma      
+           params = self.N, args[0], args[1], args[2],args[3]    
+           #params = N, beta_0, mu, sigma, gamm  
            func = dbSIR 
 
 
         if self.model == 'seir':
-           beta, sigma, gamma = args[0], args[1], args[2] 
-           self.S0 = self.N - self.E0 - self.I0 - self.R0 
-           Y0 = [self.S0, self.E0,  self.I0, self.R0]   
-           params = self.N, beta, sigma, gamma      
+           self.S0 = self.N - self.E0 - self.I0 -  self.R0 
+           Y0 = [self.S0, self.E0, self.I0, self.R0]   
+           #params = N, beta, gamma, sigma 
+           params = self.N, args[0], args[1], args[2]      
            func = SEIR 
 
         if self.model == 'seiard':

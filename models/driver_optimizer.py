@@ -92,10 +92,10 @@ if __name__ == "__main__":
 
    df_params = pd.DataFrame(columns=['country','beta_0','mu','gamma','R0','nmse'])
    count = 0
-   #countries = ['Germany']
+   countries = ['Germany']
 
    for country in countries:
-      try:
+      if 0 == 0: #try:
          data = get_fitting_data (args, df, country)
          N = cu.get_population(country)
          L = Learner(N, data, args.model_name)
@@ -115,7 +115,7 @@ if __name__ == "__main__":
             df_params.loc[count] = data_row 
             print(count, data_row)
             count +=1
-      except:
-         pass  
-   df_params.to_csv(args.output_dir + os.sep + "best_fit_params.csv")
+      #except:
+      #   pass  
+   #df_params.to_csv(args.output_dir + os.sep + "best_fit_params.csv")
 

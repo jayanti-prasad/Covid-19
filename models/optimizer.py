@@ -55,5 +55,6 @@ class Learner(object):
         solution = self.E.evolve(params)
 
         y =  self.data.to_numpy()
+        print("y=",y) 
         return np.sqrt(np.mean((solution.y[1] - y)**2))
 
