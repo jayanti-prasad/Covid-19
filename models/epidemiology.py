@@ -21,6 +21,7 @@ def dbSIR (t, y, N, b0, mu, gamma):
 
    #decaying beta model
    beta_t = lambda t: b0 * np.exp (-mu *t)
+   #beta_t = lambda t : b0 * (1 -  np.tanh(mu*t))
 
    beta = beta_t (t)
    S, I, R  = y[0]/N, y[1], y[2]

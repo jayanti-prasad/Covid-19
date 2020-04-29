@@ -12,12 +12,17 @@ from optimizer import Learner
 def beta (b0, mu, t):
    return b0 * np.exp (-mu *t)
 
+
+#def beta (b0, mu, t):
+#   return b0 * (1 -  np.tanh(mu*t))
+
+
 fcountries=['China','SK','Uruguay']
 
 def get_fitting_data (args, df, country):
 
    df  = cu.get_country_data (df, country)
-   df = df[df['confirmed'] > 100]
+   df = df[df['confirmed'] > 25]
 
    dates = df['date'].to_list()
    data = df['confirmed'] - df['recovered'] - df['deaths']
