@@ -26,8 +26,8 @@ class Learner(object):
            bounds = [(1.0E-03, 10.0), (1.0E-03, 10.0)]
 
         if self.model == 'dbsir':
-            starting_point = [0.1, 0.01, 0.1]
-            bounds = [(0.01, 1.0), (1.0E-3,2.0), (0.01, 1.0)]             
+            starting_point = [0.12, 0.01, 0.12]
+            bounds = [(1.0E-3, 1.0), (1.0E-3,2.0), (1.0E-3, 1.0)]             
 
         return starting_point, bounds
 
@@ -40,11 +40,7 @@ class Learner(object):
         starting_point, bounds = self.initial_guess() 
         optimal = minimize(self.loss,starting_point, method='L-BFGS-B', bounds=bounds)
 
-        if optimal.success == True:
-           return tuple(optimal.x) 
-        else:
-           print(optimal) 
-           return None 
+        return optimal 
 
     def loss (self, point):
         if self.model == 'sir':
@@ -55,6 +51,5 @@ class Learner(object):
         solution = self.E.evolve(params)
 
         y =  self.data.to_numpy()
-        print("y=",y) 
         return np.sqrt(np.mean((solution.y[1] - y)**2))
 

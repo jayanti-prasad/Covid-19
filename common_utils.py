@@ -2,8 +2,24 @@ from datetime import timedelta, date
 import datetime as dt
 import pandas as pd
 
-def get_population(country):
-   df_p = pd.read_csv("../data/world_population.csv")
+
+def lockdown_info(lockdown_file,  country):
+   df = pd.read_csv(lockdown_file)
+   P = df['population']
+   L = df['lockdown']
+   T = df['num_testing']
+
+   P.index = df['country'].to_list()
+   L.index = df['country'].to_list()
+   T.index = df['country'].to_list()
+
+   return P[country], L[country], T[country]
+ 
+
+
+
+def get_population(pop_file, country):
+   df_p = pd.read_csv(pop_file)
    P = df_p['pop_2020'].str.replace(",","").astype(int)
    P.index = df_p['country'].to_list()
    return  P[country]

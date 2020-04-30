@@ -24,10 +24,10 @@ def dbSIR (t, y, *args):
 
    N, b0, mu, gamma = args[0], args[1], args[2], args[3]
 
-   if args[4] == 'exp':
-      beta_t = lambda t: b0 * np.exp (-mu *t)
-   if args[4] == 'tanh':
-      beta_t = lambda t: b0 * (1 -  np.tanh(mu*t))
+   #if args[4] == 'exp':
+   beta_t = lambda t: b0 * np.exp (-mu *t)
+   #if args[4] == 'tanh':
+   #   beta_t = lambda t: b0 * (1 -  np.tanh(mu*t))
 
    beta = beta_t (t)
    S, I, R  = y[0]/N, y[1], y[2]
@@ -86,9 +86,13 @@ class Epidemology:
        self.t = np.arange(0, self.size, 1)
    
     def set_init (self, *args):
-       if self.model == 'sir' or self.model == 'dbsir':
+       if self.model == 'sir':
           [self.N, self.I0, self.R0] = args[0], args[1], args[2] 
-       
+
+       if  self.model == 'dbsir':
+          [self.N, self.I0, self.R0] = args[0], args[1], args[2]
+
+
        if self.model == 'seir':
           [self.N, self.E0, self.I0, self.R0] = args[0], args[1], args[2], args[3]
  
@@ -114,7 +118,7 @@ class Epidemology:
         if self.model == 'dbsir':
            self.S0 = self.N - self.I0 - self.R0 
            Y0 = [self.S0, self.I0, self.R0]   
-           params = self.N, args[0], args[1], args[2],args[3]    
+           params = self.N, args[0], args[1], args[2] 
            #params = N, beta_0, mu, sigma, gamm  
            func = dbSIR 
 

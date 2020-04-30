@@ -22,11 +22,12 @@ fcountries=['China','SK','Uruguay']
 def get_fitting_data (args, df, country):
 
    df  = cu.get_country_data (df, country)
-   df = df[df['confirmed'] > 25]
-
+   #df = df[df['confirmed'] > 25]
    dates = df['date'].to_list()
    data = df['confirmed'] - df['recovered'] - df['deaths']
    data.index = df['date'].to_list()
+   data = data [ data > args.start_number ]
+
    #return data[start_date:]
    return data
 
@@ -65,7 +66,10 @@ def show_fitting(args, N, data, country_name, params):
    ax.set_title(title)
    ax.legend()
    plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
-   plt.savefig(args.output_dir + os.sep +  country_name + ".pdf")
+
+   plot_dir = args.output_dir + os.sep + "plots"
+   os.makedirs(plot_dir, exist_ok=True)
+   plt.savefig(plot_dir + os.sep +  country_name + ".pdf")
    #plt.show()
    return mse  
 
@@ -80,7 +84,10 @@ if __name__ == "__main__":
    parser.add_argument('-o','--output-dir',help='Output directory')
    parser.add_argument('-n','--num-countries',type=int,\
       default=100, help='Number of countries')
-
+     
+   parser.add_argument('-s','--start-number',type=int,\
+      default=25, help='I0')
+   
    args = parser.parse_args()
    df = pd.read_csv(args.input_file)
 
@@ -90,32 +97,27 @@ if __name__ == "__main__":
 
    countries = [c for c in countries if c not in  fcountries]
 
-   df_params = pd.DataFrame(columns=['country','beta_0','mu','gamma','R0','nmse'])
+   columns = ['country','start_date', 'beta_0','mu','gamma','R0','mse','I0','population','Convergence']
+   df_params = pd.DataFrame(columns=columns)
    count = 0
-   countries = ['Germany']
-
    for country in countries:
-      if 0 == 0: #try:
+      try:
          data = get_fitting_data (args, df, country)
          N = cu.get_population(country)
          L = Learner(N, data, args.model_name)
          L.initial_guess()
-         params = L.fit()
-         #t = np.arange(0, data.shape[0],1)
-         #print(t)
-         #t_last = data.shape[0]
-         #beta_t = [ beta (params[0], params[1], tt)/params[2] for tt in t]
-         #plt.plot(t,beta_t)
-         #plt.show()
-
+         fit = L.fit()
+         params = tuple(fit.x)
          if params:
             R0 =  beta (params[0], params[1], data.shape[0])/params[2]
             mse = show_fitting(args, N, data, country, params)
-            data_row = [country, "%.6f" % params[0],"%.6f" %params[1], "%.6f" % params[2],"%.6f" %R0, "%d" %mse]
+            data_row = [country, data.index[0], "%.6f" % params[0],"%.6f" %params[1],\
+                "%.6f" % params[2],"%.6f" %R0, "%d" %mse, "%d" % data[0], N,  fit.success]
             df_params.loc[count] = data_row 
             print(count, data_row)
             count +=1
-      #except:
-      #   pass  
-   #df_params.to_csv(args.output_dir + os.sep + "best_fit_params.csv")
+      except:
+         print("Could not process for the country:",country)
+         pass  
+   df_params.to_csv(args.output_dir + os.sep + "best_fit_params.csv")
 

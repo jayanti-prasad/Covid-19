@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import matplotlib.pyplot as plt 
 from epidemiology import Epidemology  
@@ -67,4 +69,6 @@ if __name__ == "__main__":
        plt.fill_between(sol.t,0, sol.y[2],color="b", alpha=0.3)
 
     plt.legend()
-    plt.show()
+    #plt.show()
+    plt.savefig("plots" + os.sep + args.model_name + ".pdf")
+

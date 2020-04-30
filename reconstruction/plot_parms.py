@@ -5,7 +5,10 @@ import numpy as np
 import pandas as pd
 import matplotlib 
 import matplotlib.pyplot as plt
-from reconstruction import Reconstruct
+from beta_solver import BetaSolver
+from common_utils import get_country_data
+from common_utils import lockdown_info
+
 
 fontsize = 28 
 matplotlib.rc('xtick', labelsize=fontsize) 
@@ -26,9 +29,19 @@ if __name__ == "__main__":
       default='../data/covid-19-lockdown.csv')
 
    args = parser.parse_args()
-   os.makedirs(args.output_dir, exist_ok=True)
 
-   R = Reconstruct(args, args.country_name)
+   os.makedirs(args.output_dir, exist_ok=True)
+   df = pd.read_csv(args.input_file)
+
+   df = df[df['confirmed'] > 25]
+
+   N, L, T = lockdown_info (args.lockdown_file, args.country_name)
+
+   print(args.country_name, N, L)
+
+   df = get_country_data (df, args.country_name)
+
+   R = BetaSolver (df, N)
 
    if args.param == "gamma":
       gamma = [5,9,14]
@@ -64,9 +77,11 @@ if __name__ == "__main__":
    for g in gamma:
      for s in sigma:
         for a in alpha:
-          R.solve (g, s, a)
-          y = R.beta 
-          x = np.array([float(i) for i in range(0, y.shape[0])])
+          beta = R.solve(g,s,a)
+
+          y = beta
+ 
+          x = np.array([float(i) for i in range(0, beta.shape[0])])
           if args.param == 'gamma':
              label = r'$1/\gamma=$' + str(g)
           if args.param == 'sigma':
@@ -89,4 +104,5 @@ if __name__ == "__main__":
    ax.legend(fontsize=fontsize)
    plt.savefig(args.output_dir + os.sep + "vary_" + args.param + ".pdf")
    plt.show()
-       
+      
+ 
