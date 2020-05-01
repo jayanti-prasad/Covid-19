@@ -5,7 +5,7 @@ import numpy  as np
 import pandas as pd
 import matplotlib.pyplot as plt 
 from beta_solver import BetaSolver
-from common_utils import get_population, get_country_data, strip_year 
+from common_utils import get_population, get_country_data, strip_year,lockdown_info 
 import matplotlib.dates as mdates
 import datetime
 
@@ -26,11 +26,11 @@ def split_average_diff (data):
    return y 
 
 
-def plot_data (args, beta):
+def plot_data (args, beta, lockdown_date):
 
    days = [int(i) for i in range(0, beta.shape[0])]
 
-   lockdown = beta.index.get_loc(args.lockdown_date, method ='ffill')
+   lockdown = beta.index.get_loc(lockdown_date, method ='ffill')
 
    print("lockdown day:",lockdown)
 
@@ -56,14 +56,18 @@ def plot_data (args, beta):
 if __name__ == "__main__":
 
    parser = argparse.ArgumentParser()
-   parser.add_argument('-i','--input-file',help='Input csv file')
-   parser.add_argument('-p','--population-file',help='Population file')
-   parser.add_argument('-c','--country-name',help='Country name',default='Italy')
+   parser.add_argument('-i','--input-file',help='Input csv file',\
+      default='../data/covid-19-global.csv')
+   parser.add_argument('-l','--lockdown-file',help='Lockdown file',\
+      default='../data/covid-19-lockdown.csv')
+   parser.add_argument('-c','--country-name',help='Country name',\
+      default='Italy')
+   parser.add_argument('-o','--output-dir',help='Output dir',\
+      default='results')
    parser.add_argument('-g','--gamma-in',help='Parameter 1/gama',type=float,default=7)
    parser.add_argument('-s','--sigma-in',help='Parameter 1/sigma',type=float,default=7)
    parser.add_argument('-a','--alpha',help='Alpha',type=float,default=1)
-   parser.add_argument('-o','--output-dir',help='Output dir', default='results')
-   parser.add_argument('-l','--lockdown-date',help='Lockdown date',default='2020-03-09')
+
 
    args = parser.parse_args()
 
@@ -71,13 +75,13 @@ if __name__ == "__main__":
    df = pd.read_csv(args.input_file)
 
    df = df[df['confirmed'] > 25] 
- 
-   N = get_population(args.population_file, args.country_name)
+
+   N, L, T = lockdown_info(args.lockdown_file,  args.country_name)
    df = get_country_data (df, args.country_name)
 
    R = BetaSolver (df, N)
    beta = R.solve(args.gamma_in, args.sigma_in, args.alpha)
    
-   plot_data (args, beta)
+   plot_data (args, beta, L)
    
 

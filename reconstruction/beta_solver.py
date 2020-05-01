@@ -38,16 +38,15 @@ class BetaSolver:
 
       # initial number for the removed 
       rr[0] = (self.r.iloc[0] + self.d.iloc[0]) * alpha 
-   
+
       # Now get the reconstructed ones  
       for j in range(0, self.size-1):
          ii = self.i.iloc[j]
          iip = self.i.iloc[j+1]
-         iim = self.i.iloc[j-1]
          e.loc[j] = (iip - ii  + gamma * ii) /sigma
 
          if j > 0:
-            rr.loc[j] = rr.iloc[j-1] + gamma * iim 
+            rr.loc[j] = rr.iloc[j-1] + gamma * self.i.iloc[j-1] 
          s[j] = 1.0 - (ii + e.loc[j] + rr.loc[j])
       for j in range(0, self.size-1):
          beta.loc[j] = (e.iloc[j+1] - e.iloc[j] \
