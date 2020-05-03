@@ -1,8 +1,10 @@
+import os
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
-from common_utils import date_normalize,get_country_data
+from common_utils import date_normalize,get_country_data,get_date_diff 
 import matplotlib 
+import numpy as np
 
 fontsize = 8
 matplotlib.rc('xtick', labelsize=fontsize)
@@ -23,24 +25,40 @@ def get_top_countries(df, count):
 if __name__ == "__main__":
 
    df = pd.read_csv(sys.argv[1])
+   df_l = pd.read_csv("data/lockdown.csv")
+ 
+   L = df_l['date']
+   L.index = df_l['country'].to_list()
 
-   df_top = get_top_countries(df, 50)
-   x = [int(i) for i in range(0, 50)] 
+
+   df_top = get_top_countries(df, 100)
+   x = [int(i) for i in range(0, 500)] 
    y = df_top['confirmed'].to_list()
-   print(x)
-   print(y)
 
    countries = df_top['country'].to_list()
  
-   print(countries)
    fig = plt.figure(figsize=(18,18))
    col = 1
    for c in countries:
       dF = get_country_data (df, c)
       x = [int(i) for i in range(0, dF.shape[0])]
-      y = dF['confirmed'].to_numpy()
-      ax = fig.add_subplot(5,10,col)
-      ax.plot(x,y,'g--')
-      ax.set_title(c, fontsize=fontsize)
-      col +=1
-   plt.show()
+      x = dF['date'].to_list()
+      y = dF['confirmed'] -dF['deaths'] -dF['recovered']
+      if dF.shape[0] > 0 and col < 51 and c != 'China':
+         lockdown_day = np.max (get_date_diff(dF.iloc[0]['date'], L[c]),0) 
+         print(c, L[c], dF.shape,dF.iloc[0]['date'], lockdown_day )
+         #ax = fig.add_subplot(5,10,col)
+         fig = plt.figure(figsize=(18,12))
+         ax = fig.add_subplot(1,1,1)
+         plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
+         ax.axvline(x=float(lockdown_day),c='k',ls='--')
+         ax.plot(x,y,'b')
+         ax.plot(x,y,'bo')
+         ax.set_title(str(col) + " : " + c, fontsize=fontsize)
+         #ax.set_yscale('log')
+         ax.grid()
+         col +=1
+         plt.show()
+         #plt.savefig("tests1" + os.sep + c + ".png") 
+
+

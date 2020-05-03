@@ -1,6 +1,13 @@
 from datetime import timedelta, date
 import datetime as dt
 import pandas as pd
+import arrow
+
+def get_date_diff(date1,date2):
+   a = arrow.get(date1)
+   b = arrow.get(date2)
+   delta = (b-a) 
+   return delta.days
 
 
 def lockdown_info(lockdown_file,  country):
