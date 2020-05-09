@@ -1,39 +1,62 @@
 import numpy as np 
+import pandas as pd
 import matplotlib.pyplot as plt 
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
-import argparse 
-from driver_optimizer import get_fitting_data 
-from common_utils import get_population,get_top_countries
-import pandas as pd
-import matplotlib
 
-"""
-font = {'family' : 'normal',
-        'weight' : 'bold',
-        'size'   : 22}
 
-matplotlib.rc('font', **font)
-"""
+data_file="../data/covid-19-global.csv"
+population_file="../data/world_population.csv"
 
-"""
+def get_population(pop_file, country):
+   df_p = pd.read_csv(pop_file)
+   P = df_p['pop_2020'].str.replace(",","").astype(int)
+   P.index = df_p['country'].to_list()
+   return  P[country]
 
-def SEIR (t, y, N, beta, gamma, sigma):
-   S, E, I, R  = y[0]/N, y[1], y[2], y[3]
-   return [-beta*S*I, beta*S*I-sigma*E, sigma*E-gamma*I, gamma*I]
+def get_country_data (df, country):
+   df = country_normalize(df)
+   df = df.fillna(0)
+   df = df[df['country'] == country]
+   df = date_normalize (df)
+   df = df.sort_values(by='date')
+   df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+   df = df.loc[:, ~df.columns.str.contains('country')]
+   return df
 
-def solve_seir (t,model,N,I0,E0,R0,beta,sigma,gamma):
-    S0 = N - (I0+E0+R0)
-    Y0 = [S0, E0,  I0, R0]
-    params = N, beta, sigma, gamma
-    solution = solve_ivp(model, [0, t.shape[0]], Y0, t_eval = t,vectorized=True, args=params)
-    return solution
-"""
+def date_normalize (df):
+    dates = df['date'].to_list()
+    dates1 = []
+    for d in dates:
+      dd = d.split('-')
+      dates1.append(dd[2]+"-"+dd[0]+"-"+dd[1])
+    df['date'] = dates1
+    return df
 
-#def dbSEIR (t, y, N, beta, gamma, sigma):
-#   S, E, I, R  = y[0]/N, y[1], y[2], y[3]
-#   beta = beta_t(t, -0.52, 0.80, 18.90, 10.35)
-#   return [-beta*S*I, beta*S*I-sigma*E, sigma*E-gamma*I, gamma*I]
+
+def country_normalize(df):
+   df = df.replace({'United Kingdom': 'UK'}, regex=True)
+   df = df.replace({'Korea, South': 'SK'}, regex=True)
+   df = df.replace({'Saudi Arabia': 'SaudiArabia'}, regex=True)
+   df = df.replace({'United Arab Emirates': 'UAE'}, regex=True)
+   df = df.replace({'Dominican Republic': 'DR'}, regex=True)
+   df = df.replace({'South Africa': 'SA'}, regex=True)
+   df = df.replace({'Czechia': 'Czech'}, regex=True)
+   df = df.replace({'Bosnia and Herzegovina': 'BH'}, regex=True)
+   df = df.replace({'New Zealand': 'NZ'}, regex=True)
+   df = df.replace({'Cote d\'Ivoire': 'CDI'}, regex=True)
+
+   return df
+
+
+def get_fitting_data (df, country):
+   df  = get_country_data (df, country)
+   dates = df['date'].to_list()
+   data = df['confirmed'] - df['recovered'] - df['deaths']
+   data.index = df['date'].to_list()
+   data = data [ data > 25]
+
+   return data
 
 
 def beta_t (t, A, B, t_off, t_w):
@@ -80,8 +103,6 @@ class Optimizer:
        """
        optimal = minimize(self.loss,self.starting_point, method='L-BFGS-B', bounds=self.bounds)
 
-       #print("Success:", optimal.success)
-
        return tuple(optimal.x)
 
 
@@ -100,31 +121,9 @@ class Optimizer:
         self.df_loss.loc[self.count] = data;
         self.count +=1  
 
-        print(point, loss_value)
+        print("parameters:", point, "loss:", loss_value)
 
         return loss_value 
-
-
-def tester():
-    N, I0, E0, R0 = 1000, 10, 1, 0
-    beta, sigma, gamma =  0.625, 0.1425, 0.1425
-    t = np.arange(1,160,1)
-
-    sol = solve_seir (t,SEIR,N,I0,E0,R0,beta,sigma,gamma) 
-    sol1 = solve_seir (t,dbSEIR,N,I0,E0,R0,beta,sigma,gamma) 
-   
-    plt.plot(sol.t, sol.y[0],c='g', label='Succeptable')
-    plt.plot(sol.t, sol.y[1],c='r', label='Exposed')
-    plt.plot(sol.t, sol.y[2],c='y', label='Infected')
-    plt.plot(sol.t, sol.y[3],c='b', label='Recovered')
-
-    plt.plot(sol1.t, sol1.y[0],':',c='g')
-    plt.plot(sol1.t, sol1.y[1],':',c='r',)
-    plt.plot(sol1.t, sol1.y[2],':',c='y')
-    plt.plot(sol1.t, sol1.y[3],':',c='b')
-
-    plt.legend()
-    plt.show()
 
 
 def show_fitting (data, country_name, N, A,B,to,tw):
@@ -140,7 +139,6 @@ def show_fitting (data, country_name, N, A,B,to,tw):
     mse  = np.sqrt(np.mean((y_true - y_pred)**2))
 
 
-    #"""
     fig = plt.figure(figsize=(12,12))
     ax = fig.add_subplot()
 
@@ -152,58 +150,26 @@ def show_fitting (data, country_name, N, A,B,to,tw):
 
     
     ax.plot(O.t, data/N,'o',c='b',label='Data')
-    #plt.plot(sol.t, sol.y[1]/N,c='r',label='Exposed')
     ax.plot(sol.t, sol.y[2]/N,c='r',label='Infected')
-    #plt.plot(sol.t, sol.y[3],c='g',label='Recovered')
     ax.legend()
     ax.set_yscale('log')
     plt.show()
-    #plt.savefig("Italy.pdf")
-    #"""
     return mse 
 
 if __name__ == "__main__":
   
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-i','--input-file',help='Input CSV file',\
-       default='../data/covid-19-global.csv')
-    parser.add_argument('-p','--population-file',help='Input population file',\
-       default='../data/world_population.csv')
-    parser.add_argument('-s','--start-number',help='Mimimum cut off',\
-       default=25, type=int) 
+    df = pd.read_csv(data_file)
 
-    args = parser.parse_args()
-    df = pd.read_csv(args.input_file)
-
-    #countries = get_top_countries(df, 100)
-
-    #print("countries:",countries)
- 
     df_out = pd.DataFrame(columns=['country','A','B','t_off','t_w','mse','population'])
-    countries = ['Italy']    
+    country = 'Italy'    
 
-    count = 0
-    for country in countries:
-       if 0 == 0: #try:
-          N = get_population(args.population_file, country) 
-          data = get_fitting_data (args, df, country)
+    N = get_population(population_file, country) 
+    data = get_fitting_data (df, country)
 
-          O = Optimizer(N, data,tbSEIR)
-          params = O.fit()
-          A, B, to, tw = params
-          mse = show_fitting (data, country, N, A,B,to,tw)
-          row = [country, "%.6f" % A, "%.6f" % B,"%.6f" % to,"%.6f" % tw, "%d" % mse, "%d" % N]
-          print(row)
-          df_out.loc[count] = row
-          count +=1   
-          print(A, B, to, tw)
-          #show_fitting (data, country, N, A,B,to,tw)
-       #except:
-       #   pass 
-          O.df_loss.to_csv("loss.csv")
-
-    df_out.to_csv("results/params_beta_tanh.csv")
-       
-   
-
-
+    O = Optimizer(N, data,tbSEIR)
+    params = O.fit()
+    A, B, to, tw = params
+    mse = show_fitting (data, country, N, A,B,to,tw)
+    row = [country, "%.6f" % A, "%.6f" % B,"%.6f" % to,"%.6f" % tw, "%d" % mse, "%d" % N]
+    print(row)
+    
