@@ -52,17 +52,22 @@ if __name__ == "__main__":
     colors = ['red','green','blue']
 
     for i in range (0, len(cases)):
-      plt.setp(ax[i].get_xticklabels(), rotation=90, horizontalalignment='right')
+      #plt.setp(ax[i].get_xticklabels(), rotation=90, horizontalalignment='right')
       y = df[cases[i]].to_numpy()
       #ax[i].plot(dates,y,c=colors[i])
+
+      labels = [dates[i] for i in range(0, len(days))  if i% 3 == 0]
+      plt.xticks(np.arange(0,len(days),3), labels)
+      plt.setp(ax[i].get_xticklabels(), rotation=90, horizontalalignment='right')
+
       ax[i].plot(dates[-1*args.num_days:],y[-1*args.num_days:],c=colors[i])
       ax[i].scatter(dates[-1*args.num_days:],y[-1*args.num_days:],c=colors[i])
       ax[i].set_ylabel(cases[i])
-      ax[i].grid()
-      if i == 0:
-        ax[i].set_title(args.country)
-      if i < 2 :
-        ax[i].set_xticklabels([])
+      #ax[i].grid()
+      #if i == 0:
+      #  ax[i].set_title(args.country)
+      #if i < 2 :
+      #  ax[i].set_xticklabels([])
 
     plt.savefig(args.output_dir + os.sep + "covid-19-"+args.country+".pdf")
     plt.show()

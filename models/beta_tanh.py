@@ -16,6 +16,7 @@ font = {'family' : 'normal',
 matplotlib.rc('font', **font)
 """
 
+"""
 
 def SEIR (t, y, N, beta, gamma, sigma):
    S, E, I, R  = y[0]/N, y[1], y[2], y[3]
@@ -27,7 +28,7 @@ def solve_seir (t,model,N,I0,E0,R0,beta,sigma,gamma):
     params = N, beta, sigma, gamma
     solution = solve_ivp(model, [0, t.shape[0]], Y0, t_eval = t,vectorized=True, args=params)
     return solution
-
+"""
 
 #def dbSEIR (t, y, N, beta, gamma, sigma):
 #   S, E, I, R  = y[0]/N, y[1], y[2], y[3]
@@ -70,6 +71,8 @@ class Optimizer:
 
        self.starting_point =  [-0.5, 0.7, 18, 10]
        self.bounds = [(-2.0, 2.0), (1.0E-03, 10.0), (1,30), (1, 30)]
+       self.df_loss = pd.DataFrame(columns=['A','B','t_off','t_w','mse'])
+       self.count = 0 
 
     def fit(self):
        """
@@ -89,7 +92,17 @@ class Optimizer:
 
 
         y =  self.data.to_numpy()
-        return np.sqrt(np.mean((solution.y[2] - y)**2))
+        loss_value = np.sqrt(np.mean((solution.y[2] - y)**2))    
+
+        data =  [point[0], point[1], point[2], point[3], loss_value]
+        data = [ "%.6f" %x for x in data] 
+
+        self.df_loss.loc[self.count] = data;
+        self.count +=1  
+
+        print(point, loss_value)
+
+        return loss_value 
 
 
 def tester():
@@ -114,7 +127,7 @@ def tester():
     plt.show()
 
 
-def show_fitting (data, N, A,B,to,tw):
+def show_fitting (data, country_name, N, A,B,to,tw):
     I0, R0 = data[0], 0
     E0 = I0
     S0 = N - I0 - R0 - E0
@@ -127,11 +140,11 @@ def show_fitting (data, N, A,B,to,tw):
     mse  = np.sqrt(np.mean((y_true - y_pred)**2))
 
 
-    """
+    #"""
     fig = plt.figure(figsize=(12,12))
     ax = fig.add_subplot()
 
-    ax.set_title(args.country_name +", A=" + str("%.4f" %A) + \
+    ax.set_title(country_name +", A=" + str("%.4f" %A) + \
       ", B=" + str("%.4f" % B) +\
       r', $t_{off}=$' + str("%.4f" % to)+\
       r', $t_w=$' + str("%.4f" % tw)+\
@@ -146,39 +159,51 @@ def show_fitting (data, N, A,B,to,tw):
     ax.set_yscale('log')
     plt.show()
     #plt.savefig("Italy.pdf")
-    """
+    #"""
     return mse 
 
 if __name__ == "__main__":
   
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i','--input-file',help='Input CSV file')
+    parser.add_argument('-i','--input-file',help='Input CSV file',\
+       default='../data/covid-19-global.csv')
+    parser.add_argument('-p','--population-file',help='Input population file',\
+       default='../data/world_population.csv')
+    parser.add_argument('-s','--start-number',help='Mimimum cut off',\
+       default=25, type=int) 
 
     args = parser.parse_args()
     df = pd.read_csv(args.input_file)
 
-    countries = get_top_countries(df, 100)
+    #countries = get_top_countries(df, 100)
+
+    #print("countries:",countries)
  
     df_out = pd.DataFrame(columns=['country','A','B','t_off','t_w','mse','population'])
-    
+    countries = ['Italy']    
+
     count = 0
     for country in countries:
-       try:
-          N = get_population(country) 
+       if 0 == 0: #try:
+          N = get_population(args.population_file, country) 
           data = get_fitting_data (args, df, country)
 
           O = Optimizer(N, data,tbSEIR)
           params = O.fit()
           A, B, to, tw = params
-          mse = show_fitting (data, N, A,B,to,tw)
+          mse = show_fitting (data, country, N, A,B,to,tw)
           row = [country, "%.6f" % A, "%.6f" % B,"%.6f" % to,"%.6f" % tw, "%d" % mse, "%d" % N]
           print(row)
           df_out.loc[count] = row
           count +=1   
-          #print(A, B, to, tw)
-          #show_fitting (data, N, A,B,to,tw)
-       except:
-          pass 
+          print(A, B, to, tw)
+          #show_fitting (data, country, N, A,B,to,tw)
+       #except:
+       #   pass 
+          O.df_loss.to_csv("loss.csv")
 
     df_out.to_csv("results/params_beta_tanh.csv")
        
+   
+
+
