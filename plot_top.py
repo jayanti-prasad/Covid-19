@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
    countries = df_top['country'].to_list()
  
-   fig = plt.figure(figsize=(18,18))
+   fig = plt.figure(figsize=(12,18))
    col = 1
    for c in countries:
       dF = get_country_data (df, c)
@@ -47,18 +47,22 @@ if __name__ == "__main__":
       if dF.shape[0] > 0 and col < 51 and c != 'China':
          lockdown_day = np.max (get_date_diff(dF.iloc[0]['date'], L[c]),0) 
          print(c, L[c], dF.shape,dF.iloc[0]['date'], lockdown_day )
-         #ax = fig.add_subplot(5,10,col)
-         fig = plt.figure(figsize=(18,12))
-         ax = fig.add_subplot(1,1,1)
-         plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
-         ax.axvline(x=float(lockdown_day),c='k',ls='--')
+         ax = fig.add_subplot(10,5,col)
+         #fig = plt.figure(figsize=(18,12))
+         #ax = fig.add_subplot(1,1,1)
+         #plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
+         #ax.axvline(x=float(lockdown_day),c='k',ls='--')
          ax.plot(x,y,'b')
-         ax.plot(x,y,'bo')
-         ax.set_title(str(col) + " : " + c, fontsize=fontsize)
+         #ax.plot(x,y,'bo')
+         ax.set_title(c, fontsize=fontsize)
          #ax.set_yscale('log')
-         ax.grid()
+         #ax.grid()
+         ax.set_xticks([])
+         ax.set_yticks([])
          col +=1
-         plt.show()
+         #plt.show()
          #plt.savefig("tests1" + os.sep + c + ".png") 
 
+   plt.savefig("plots" + os.sep +"top50a.pdf") 
+   #plt.show()
 
