@@ -41,12 +41,24 @@ def date_normalize (df):
     return df
 
 def get_fitting_data (df, country):
+
    df  = get_country_data (df, country)
    df.index = df['date'].to_list() 
+
+   # You can use any condition you want
+   # orginal data is copied and not modified 
+ 
+   df1 = df[df['confirmed'] > 25].copy()
+   # This is the data for the first day after condition satisfied
+   D = df1.iloc[0]
+   print("Date:", D['date'], "\n Confirmed:",\
+     D['confirmed'],"\n Recovered:", D['recovered'],"\n Deaths:", D['deaths'])  
+
+   # change if needed  
    removed = df['recovered'] +  df['deaths'] 
    data = df['confirmed'] - removed 
    data = data [ data > 25]
- 
+    
    return data, removed
 #############################################
 
