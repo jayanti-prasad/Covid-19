@@ -27,6 +27,8 @@
 18. [CDDEP INDIA](https://cddep.org/covid-19/)
 19. [DATA.GOV INDIA](https://data.gov.in/major-indicator/covid-19-india-data-source-mohfw)
 20. [COVID-19 INDIA](https://www.covid19india.org/)
+21. [Our world in data](https://ourworldindata.org/coronavirus)
+23. [OWID data](https://github.com/owid/covid-19-data)
 # Papers 
 1. [A new coronavirus associated with human respiratory disease in China](https://www.nature.com/articles/s41586-020-2008-3)
 2. [A pneumonia outbreak associated with a new coronavirus of probable bat origin](https://www.nature.com/articles/s41586-020-2012-7)

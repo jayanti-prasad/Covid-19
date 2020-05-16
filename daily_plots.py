@@ -11,7 +11,7 @@ import matplotlib
 
 font = {'family' : 'normal',
         'weight' : 'bold',
-        'size'   : 22}
+        'size'   : 12}
 
 matplotlib.rc('font', **font)
 
