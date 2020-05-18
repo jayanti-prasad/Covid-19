@@ -36,17 +36,29 @@ if __name__ == "__main__":
    y = df_top['confirmed'].to_list()
 
    countries = df_top['country'].to_list()
+
+   with open ("/Users/jayanti/Projects/Softlab/Covid-19/code/output/17-05-2020/bad_fit.txt","r") as fp:
+      data = fp.read()
+
+   countries=data.split('\n')
+
+   #print(countries)
+   #sys.exit()  
  
    fig = plt.figure(figsize=(12,18))
    col = 1
    for c in countries:
-      dF = get_country_data (df, c)
+      try:
+        dF = get_country_data (df, c)
+      except:
+        continue  
+
       x = [int(i) for i in range(0, dF.shape[0])]
       x = dF['date'].to_list()
       y = dF['confirmed'] -dF['deaths'] -dF['recovered']
       if dF.shape[0] > 0 and col < 51 and c != 'China':
-         lockdown_day = np.max (get_date_diff(dF.iloc[0]['date'], L[c]),0) 
-         print(c, L[c], dF.shape,dF.iloc[0]['date'], lockdown_day )
+         #lockdown_day = np.max (get_date_diff(dF.iloc[0]['date'], L[c]),0) 
+         print(c,dF.shape,dF.iloc[0]['date'])
          ax = fig.add_subplot(10,5,col)
          #fig = plt.figure(figsize=(18,12))
          #ax = fig.add_subplot(1,1,1)
@@ -63,6 +75,6 @@ if __name__ == "__main__":
          #plt.show()
          #plt.savefig("tests1" + os.sep + c + ".png") 
 
-   plt.savefig("plots" + os.sep +"top50a.pdf") 
-   #plt.show()
+   #plt.savefig("plots" + os.sep +"top50a.pdf") 
+   plt.show()
 
