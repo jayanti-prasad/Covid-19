@@ -38,7 +38,7 @@ if __name__ == "__main__":
       output_rows.append(output_row)
       data = [output_row[i] for i in range(0, len(output_row))]
       if len(data) > 0:
-        print(len(data), len(columns_new))
+        print(data)
         df.loc[count]= data 
       count +=1
 

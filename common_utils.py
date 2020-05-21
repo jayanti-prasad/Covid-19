@@ -44,6 +44,7 @@ def get_top_countries(df, count):
 
 
 def country_normalize(df):
+   df = df.replace({'United States': 'US'}, regex=True)
    df = df.replace({'United Kingdom': 'UK'}, regex=True)
    df = df.replace({'Korea, South': 'SK'}, regex=True)
    df = df.replace({'Saudi Arabia': 'SaudiArabia'}, regex=True)
