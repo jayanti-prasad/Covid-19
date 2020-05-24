@@ -2,6 +2,7 @@ from datetime import timedelta, date
 import datetime as dt
 import pandas as pd
 import arrow
+import re
 
 def get_date_diff(date1,date2):
    a = arrow.get(date1)
@@ -22,8 +23,6 @@ def lockdown_info(lockdown_file,  country):
 
    return P[country], L[country], T[country]
  
-
-
 
 def get_population(pop_file, country):
    df_p = pd.read_csv(pop_file)
@@ -69,7 +68,54 @@ def get_country_data (df, country):
    df = df.sort_values(by='date')
    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
    df = df.loc[:, ~df.columns.str.contains('country')]
+   df.index = df['date'].to_list()
+
    return df 
+
+
+def get_country_data_owid (df, country):
+   df = country_normalize(df)
+   df = df.fillna(0)
+
+   df = df [df['location'] == country]
+   df = df[['date','total_cases','total_deaths']].copy()
+   df.rename(columns = {'date':'date', 'total_cases':'confirmed','total_deaths':'deaths'}, inplace = True)
+
+   df = df.sort_values(by='date')
+   df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+   df = df.loc[:, ~df.columns.str.contains('country')]
+   df.index = df['date'].to_list()
+
+   return df
+
+
+def get_country_data_kaggle (df, country):
+
+    df = df[['Country/Region','ObservationDate','Confirmed','Recovered','Deaths']].copy() 
+    df = country_normalize(df)
+    df = df.fillna(0)
+    df = df [df['Country/Region'] == country]
+
+    df.rename(columns = {'ObservationDate':'date', 'Confirmed':'confirmed',\
+      'Recovered':'recovered','Deaths':'deaths'}, inplace = True)
+
+    df = df.sort_values(by='date')
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+    df = df.loc[:, ~df.columns.str.contains('Country/Region')]
+
+    dates = df['date'].to_list()
+    new_dates = []
+    for d in dates:
+       parts = d.split('/') 
+       dd = parts[2]+"-"+parts[0]+"-"+parts[1]
+       new_dates.append(dd)  
+
+    df['date'] = new_dates 
+
+    df.index = new_dates 
+
+    return df
+
 
 def date_normalize (df):
     dates = df['date'].to_list()
@@ -91,6 +137,6 @@ def get_dates (start_date, num_days):
    return dates
 
 def strip_year (dates):
-   dates = [d.replace('2020-','') for d in dates]
+   dates = [re.sub(r'[1-3][0-9]{3}-','',d)  for d in dates]
    return dates 
  

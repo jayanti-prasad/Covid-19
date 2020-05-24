@@ -37,10 +37,10 @@ if __name__ == "__main__":
 
    countries = df_top['country'].to_list()
 
-   with open ("/Users/jayanti/Projects/Softlab/Covid-19/code/output/17-05-2020/bad_fit.txt","r") as fp:
-      data = fp.read()
+   #with open ("/Users/jayanti/Projects/Softlab/Covid-19/code/output/17-05-2020/bad_fit.txt","r") as fp:
+   #   data = fp.read()
 
-   countries=data.split('\n')
+   #countries=data.split('\n')
 
    #print(countries)
    #sys.exit()  
@@ -75,6 +75,6 @@ if __name__ == "__main__":
          #plt.show()
          #plt.savefig("tests1" + os.sep + c + ".png") 
 
-   #plt.savefig("plots" + os.sep +"top50a.pdf") 
-   plt.show()
+   plt.savefig("current" + os.sep +"top50a.pdf") 
+   #plt.show()
 

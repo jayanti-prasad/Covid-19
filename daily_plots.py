@@ -5,7 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import argparse 
 import datetime
-from common_utils import date_normalize, get_country_data
+from common_utils import date_normalize, get_country_data,strip_year 
+from common_utils import get_country_data_owid,get_country_data_kaggle
+
 from datetime import date
 import matplotlib 
 
@@ -35,19 +37,28 @@ if __name__ == "__main__":
     os.makedirs(args.output_dir, exist_ok=True)
     os.makedirs(countries_dir, exist_ok=True)
 
-    df = pd.read_csv(args.input_file)
-    
-    if args.country not in df['country'].to_list():
-        print("countries:",df['country'].to_list())
+    dF = pd.read_csv(args.input_file)
+    df = get_country_data (dF, args.country)
+    df.index = df['date'].to_list() 
 
-    df = get_country_data (df, args.country)
+    dF1 = pd.read_csv("data/owid-covid-data.csv")
+    df1 = get_country_data_owid (dF1, args.country)
 
-    df.to_csv(countries_dir + os.sep  + "covid-19-"+args.country + ".csv",index=False)
+    dF2 = pd.read_csv("data/kaggel/covid_19_data.csv")
+    df2 = get_country_data_kaggle (dF2, args.country)
 
-    dates = [d.replace('2020-','') for d in df['date'].to_list()]
+    #print(df2.index)
+
+    #sys.exit()
+
+    df1 = df1[df1.index.isin(df.index)]
+    dates1 = strip_year(df1['date'].to_list())
+
+    df2 = df2[df2.index.isin(df.index)]
+    dates2 = strip_year(df2['date'].to_list())
+
+    dates = strip_year (df['date'].to_list())
     days  = [int(i) for i in range(0, len(dates))]
-
-    print("dates:",dates)
 
     fig = plt.figure(figsize=(18,18))
  
@@ -58,10 +69,23 @@ if __name__ == "__main__":
     cases = ['confirmed','recovered','deaths']  
     colors = ['blue','green','red']
 
+    #print(df1.shape, df2.shape, df.shape)
+    #print(df1.columns, df2.columns, df.columns)
+    #print(dates)
+    #print(dates1)
+    #print(dates2)
+
+    #sys.exit()
+
+
     for i in range (0, len(cases)):
-  
+
+       
       Y = df[cases[i]]
-      Y.index = dates 
+      Y2 = df2[cases[i]]
+
+
+      #Y.index = dates 
 
       labels = [dates[i] for i in range(0, len(days))  if i% 3 == 0]
       plt.xticks(np.arange(0,len(days),3), labels)
@@ -74,9 +98,17 @@ if __name__ == "__main__":
 
       ax[i].plot(dates, Y,c=colors[i])
       ax[i].scatter(dates, Y,c=colors[i])
+  
+      #ax[i].plot(dates2, Y2,'+',c='k')
+
+
+      if i != 1:
+         X = df1[cases[i]]
+         ax[i].plot(dates1, X,'x',c='y')
 
       ax[i].set_ylabel(cases[i])
       ax[i].grid()
+
       if i == 0:
         ax[i].set_title(args.country)
       if i < 2 :
