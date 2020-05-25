@@ -41,21 +41,21 @@ if __name__ == "__main__":
     df = get_country_data (dF, args.country)
     df.index = df['date'].to_list() 
 
-    dF1 = pd.read_csv("data/owid-covid-data.csv")
-    df1 = get_country_data_owid (dF1, args.country)
+    #dF1 = pd.read_csv("data/owid-covid-data.csv")
+    #df1 = get_country_data_owid (dF1, args.country)
 
-    dF2 = pd.read_csv("data/kaggel/covid_19_data.csv")
-    df2 = get_country_data_kaggle (dF2, args.country)
+    #dF2 = pd.read_csv("data/kaggel/covid_19_data.csv")
+    #df2 = get_country_data_kaggle (dF2, args.country)
 
     #print(df2.index)
 
     #sys.exit()
 
-    df1 = df1[df1.index.isin(df.index)]
-    dates1 = strip_year(df1['date'].to_list())
+    #df1 = df1[df1.index.isin(df.index)]
+    #dates1 = strip_year(df1['date'].to_list())
 
-    df2 = df2[df2.index.isin(df.index)]
-    dates2 = strip_year(df2['date'].to_list())
+    #df2 = df2[df2.index.isin(df.index)]
+    #dates2 = strip_year(df2['date'].to_list())
 
     dates = strip_year (df['date'].to_list())
     days  = [int(i) for i in range(0, len(dates))]
@@ -82,14 +82,13 @@ if __name__ == "__main__":
 
        
       Y = df[cases[i]]
-      Y2 = df2[cases[i]]
+      #Y2 = df2[cases[i]]
 
 
       #Y.index = dates 
 
       labels = [dates[i] for i in range(0, len(days))  if i% 3 == 0]
       plt.xticks(np.arange(0,len(days),3), labels)
-
       plt.setp(ax[i].get_xticklabels(), rotation=90, horizontalalignment='right')
 
       #dY = Y.diff(periods=1).iloc[1:]
@@ -102,9 +101,9 @@ if __name__ == "__main__":
       #ax[i].plot(dates2, Y2,'+',c='k')
 
 
-      if i != 1:
-         X = df1[cases[i]]
-         ax[i].plot(dates1, X,'x',c='y')
+      #if i != 1:
+      #   X = df1[cases[i]]
+      #   ax[i].plot(dates1, X,'x',c='y')
 
       ax[i].set_ylabel(cases[i])
       ax[i].grid()

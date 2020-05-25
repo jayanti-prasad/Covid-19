@@ -16,11 +16,13 @@ if __name__ == "__main__":
 
     print(df.shape, df.columns)
 
+    df.loc[df.shape[0]+1] = ['Delhi',12910,6267,231]
     df = df.sort_values(by='Confirmed',ascending=False)
    
     df = df [ df['Confirmed'] > 0]
     df = df[df ['District'] !='Unknown']
     df = df[df ['District'] !='Unassigned']
+
 
     df.index = df['District'].to_list()
 
