@@ -4,7 +4,7 @@
 ## References 
 # Our Papers 
 1. [Extracting the effective contact rate of COVID-19 pandemic](https://arxiv.org/abs/2004.07750)
-
+2. [A data first approach to modelling Covid-19](https://www.medrxiv.org/content/10.1101/2020.05.22.20110171v1)
 
 # Collection 
 1. [WHO](https://www.who.int/emergencies/diseases/novel-coronavirus-2019)
