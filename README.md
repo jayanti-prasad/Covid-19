@@ -29,6 +29,7 @@
 20. [COVID-19 INDIA](https://www.covid19india.org/)
 21. [Our world in data](https://ourworldindata.org/coronavirus)
 23. [OWID data](https://github.com/owid/covid-19-data)
+24. [COV-IND-19 Study Group](https://umich-biostatistics.shinyapps.io/covid19/)
 # Papers 
 1. [A new coronavirus associated with human respiratory disease in China](https://www.nature.com/articles/s41586-020-2008-3)
 2. [A pneumonia outbreak associated with a new coronavirus of probable bat origin](https://www.nature.com/articles/s41586-020-2012-7)
