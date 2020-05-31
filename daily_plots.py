@@ -40,6 +40,7 @@ if __name__ == "__main__":
     dF = pd.read_csv(args.input_file)
     df = get_country_data (dF, args.country)
     df.index = df['date'].to_list() 
+    print("dates:",df.index)
 
     #dF1 = pd.read_csv("data/owid-covid-data.csv")
     #df1 = get_country_data_owid (dF1, args.country)
