@@ -26,6 +26,8 @@ def split_average_diff (data):
    return y 
 
 
+
+
 def plot_data (args, beta, lockdown_date):
 
    days = [int(i) for i in range(0, beta.shape[0])]
