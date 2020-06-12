@@ -20,5 +20,6 @@ if __name__ == "__main__":
     df.index = df['date'].to_list() 
 
     plot_data (df,['deaths','recovered','confirmed'],0,args.country,3,args.output_dir)
+    #plot_data (df,['deaths','recovered','confirmed'],1,args.country,3,args.output_dir)
 
 
