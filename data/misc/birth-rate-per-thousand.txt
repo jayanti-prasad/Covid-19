@@ -1,0 +1,231 @@
+Country Comparison :: Birth rate
+
+1       Niger                                                            47.50        2020 est.
+2       Angola                                                           42.70        2020 est.
+3       Uganda                                                           42.30        2020 est.
+4       Mali                                                             42.20        2020 est.
+5       Benin                                                            42.10        2020 est.
+6       Chad                                                             41.70        2020 est.
+7       Congo, Democratic Republic of the                                41.00        2020 est.
+8       Zambia                                                           40.40        2020 est.
+9       Malawi                                                           40.10        2020 est.
+10      South Sudan                                                      38.80        2020 est.
+11      Somalia                                                          38.70        2020 est.
+12      Mozambique                                                       38.60        2020 est.
+13      Liberia                                                          37.30        2020 est.
+14      Guinea-Bissau                                                    36.90        2020 est.
+15      Afghanistan                                                      36.70        2020 est.
+16      Burundi                                                          36.50        2020 est.
+17      Cameroon                                                         36.30        2020 est.
+18      Guinea                                                           36.10        2020 est.
+19      Sierra Leone                                                     35.40        2020 est.
+20      Burkina Faso                                                     35.10        2020 est.
+21      Nigeria                                                          34.60        2020 est.
+22      Tanzania                                                         34.60        2020 est.
+23      Sudan                                                            33.80        2020 est.
+24      Zimbabwe                                                         33.60        2020 est.
+25      Central African Republic                                         33.20        2020 est.
+26      Congo, Republic of the                                           32.60        2020 est.
+27      Timor-Leste                                                      32.00        2020 est.
+28      Togo                                                             32.00        2020 est.
+29      Senegal                                                          31.80        2020 est.
+30      Ethiopia                                                         31.60        2020 est.
+31      Equatorial Guinea                                                30.70        2020 est.
+32      Madagascar                                                       29.90        2020 est.
+33      Sao Tome and Principe                                            29.70        2020 est.
+34      Ghana                                                            29.60        2020 est.
+35      Cote d'Ivoire                                                    29.10        2020 est.
+36      Mauritania                                                       29.00        2020 est.
+37      Gaza Strip                                                       28.60        2020 est.
+38      Western Sahara                                                   28.00        2020 est.
+39      Eritrea                                                          27.90        2020 est.
+40      Rwanda                                                           27.90        2020 est.
+41      Pakistan                                                         27.40        2020 est.
+42      Egypt                                                            27.20        2020 est.
+43      Kenya                                                            27.20        2020 est.
+44      Gambia, The                                                      27.00        2020 est.
+45      Gabon                                                            26.30        2020 est.
+46      Yemen                                                            25.80        2020 est.
+47      Iraq                                                             25.70        2020 est.
+48      Namibia                                                          25.70        2020 est.
+49      West Bank                                                        25.20        2020 est.
+50      Eswatini                                                         24.50        2020 est.
+51      Syria                                                            23.80        2020 est.
+52      Comoros                                                          23.60        2020 est.
+53      Solomon Islands                                                  23.60        2020 est.
+54      Tuvalu                                                           23.40        2020 est.
+55      Guatemala                                                        23.30        2020 est.
+56      Lesotho                                                          23.20        2020 est.
+57      Oman                                                             23.10        2020 est.
+58      Jordan                                                           23.00        2020 est.
+59      Libya                                                            23.00        2020 est.
+60      Philippines                                                      22.90        2020 est.
+61      Marshall Islands                                                 22.80        2020 est.
+62      Djibouti                                                         22.70        2020 est.
+63      Papua New Guinea                                                 22.50        2020 est.
+64      Laos                                                             22.40        2020 est.
+65      Vanuatu                                                          22.40        2020 est.
+66      Belize                                                           22.00        2020 est.
+67      Nauru                                                            21.90        2020 est.
+68      Tajikistan                                                       21.80        2020 est.
+69      Haiti                                                            21.70        2020 est.
+70      Cambodia                                                         21.30        2020 est.
+71      Tonga                                                            21.00        2020 est.
+72      Botswana                                                         20.90        2020 est.
+73      Bolivia                                                          20.80        2020 est.
+74      Kyrgyzstan                                                       20.60        2020 est.
+75      Kiribati                                                         20.50        2020 est.
+76      Algeria                                                          20.00        2020 est.
+77      Samoa                                                            19.60        2020 est.
+78      South Africa                                                     19.20        2020 est.
+79      Cabo Verde                                                       19.10        2020 est.
+80      Guam                                                             18.90        2020 est.
+81      Micronesia, Federated States of                                  18.90        2020 est.
+82      El Salvador                                                      18.60        2020 est.
+83      Dominican Republic                                               18.50        2020 est.
+84      Honduras                                                         18.50        2020 est.
+85      Malaysia                                                         18.30        2020 est.
+86      Turkmenistan                                                     18.30        2020 est.
+87      India                                                            18.20        2020 est.
+88      Bangladesh                                                       18.10        2020 est.
+89      Nepal                                                            18.10        2020 est.
+90      Kuwait                                                           18.00        2020 est.
+91      Morocco                                                          17.90        2020 est.
+92      Venezuela                                                        17.90        2020 est.
+93      American Samoa                                                   17.80        2020 est.
+94      Israel                                                           17.60        2020 est.
+95      Mexico                                                           17.60        2020 est.
+96      Fiji                                                             17.40        2020 est.
+97      Nicaragua                                                        17.10        2020 est.
+98      Panama                                                           17.10        2020 est.
+99      Burma                                                            17.00        2020 est.
+100     Ecuador                                                          17.00        2020 est.
+101     Peru                                                             17.00        2020 est.
+102     Mongolia                                                         16.60        2020 est.
+103     Paraguay                                                         16.60        2020 est.
+104     Brunei                                                           16.50        2020 est.
+105     Kazakhstan                                                       16.40        2020 est.
+106     Bhutan                                                           16.30        2020 est.
+107     Iran                                                             16.30        2020 est.
+108     Jamaica                                                          16.10        2020 est.
+109     Uzbekistan                                                       16.10        2020 est.
+110     Argentina                                                        16.00        2020 est.
+111     Maldives                                                         16.00        2020 est.
+112     Tunisia                                                          15.90        2020 est.
+113     Guyana                                                           15.50        2020 est.
+114     Antigua and Barbuda                                              15.40        2020 est.
+115     Colombia                                                         15.40        2020 est.
+116     Indonesia                                                        15.40        2020 est.
+117     Kosovo                                                           15.40        2020 est.
+118     Northern Mariana Islands                                         15.10        2020 est.
+119     Faroe Islands                                                    14.90        2020 est.
+120     Suriname                                                         14.90        2020 est.
+121     Bahamas, The                                                     14.80        2020 est.
+122     Costa Rica                                                       14.80        2020 est.
+123     Turkey                                                           14.80        2020 est.
+124     Saudi Arabia                                                     14.70        2020 est.
+125     Grenada                                                          14.60        2020 est.
+126     Azerbaijan                                                       14.50        2020 est.
+127     Dominica                                                         14.50        2020 est.
+128     Korea, North                                                     14.50        2020 est.
+129     New Caledonia                                                    14.50        2020 est.
+130     Vietnam                                                          14.50        2020 est.
+131     Saint Martin                                                     14.30        2020 est.
+132     Sri Lanka                                                        14.20        2020 est.
+133     Greenland                                                        14.10        2020 est.
+134     Turks and Caicos Islands                                         14.10        2020 est.
+135     French Polynesia                                                 14.00        2020 est.
+136     Gibraltar                                                        13.80        2020 est.
+137     Brazil                                                           13.60        2020 est.
+138     Lebanon                                                          13.60        2020 est.
+139     Curacao                                                          13.40        2020 est.
+140     Cook Islands                                                     13.30        2020 est.
+141     Iceland                                                          13.30        2020 est.
+142     Chile                                                            13.10        2020 est.
+143     Albania                                                          13.00        2020 est.
+144     Ireland                                                          13.00        2020 est.
+145     Sint Maarten                                                     12.90        2020 est.
+146     Uruguay                                                          12.90        2020 est.
+147     New Zealand                                                      12.80        2020 est.
+148     Seychelles                                                       12.80        2020 est.
+149     Bahrain                                                          12.70        2020 est.
+150     Jersey                                                           12.70        2020 est.
+151     Wallis and Futuna                                                12.70        2020 est.
+152     Mauritius                                                        12.60        2020 est.
+153     Saint Kitts and Nevis                                            12.60        2020 est.
+154     Saint Vincent and the Grenadines                                 12.60        2020 est.
+155     Saint Lucia                                                      12.50        2020 est.
+156     Australia                                                        12.40        2020 est.
+157     United States                                                    12.40        2020 est.
+158     Anguilla                                                         12.20        2020 est.
+159     Norway                                                           12.20        2020 est.
+160     Aruba                                                            12.10        2020 est.
+161     Sweden                                                           12.10        2020 est.
+162     Virgin Islands                                                   12.10        2020 est.
+163     Armenia                                                          11.90        2020 est.
+164     Cayman Islands                                                   11.90        2020 est.
+165     France                                                           11.90        2020 est.
+166     United Kingdom                                                   11.90        2020 est.
+167     Montserrat                                                       11.70        2020 est.
+168     China                                                            11.60        2020 est.
+169     Georgia                                                          11.60        2020 est.
+170     Luxembourg                                                       11.60        2020 est.
+171     Montenegro                                                       11.50        2020 est.
+172     Trinidad and Tobago                                              11.40        2020 est.
+173     Barbados                                                         11.30        2020 est.
+174     Palau                                                            11.30        2020 est.
+175     Bermuda                                                          11.20        2020 est.
+176     Belgium                                                          11.10        2020 est.
+177     British Virgin Islands                                           11.10        2020 est.
+178     Denmark                                                          11.10        2020 est.
+179     Netherlands                                                      11.00        2020 est.
+180     Cyprus                                                           10.90        2020 est.
+181     Falkland Islands (Islas Malvinas)                                10.90        2012 est.
+182     Isle of Man                                                      10.80        2020 est.
+183     Macedonia                                                        10.70        2020 est.
+184     Moldova                                                          10.70        2020 est.
+185     Thailand                                                         10.70        2020 est.
+186     Finland                                                          10.60        2020 est.
+187     Switzerland                                                      10.50        2020 est.
+188     Cuba                                                             10.40        2020 est.
+189     Liechtenstein                                                    10.40        2020 est.
+190     Canada                                                           10.20        2020 est.
+191     Russia                                                           10.00        2020 est.
+192     Malta                                                             9.90        2020 est.
+193     Guernsey                                                          9.80        2020 est.
+194     Ukraine                                                           9.60        2020 est.
+195     Austria                                                           9.50        2020 est.
+196     Belarus                                                           9.50        2020 est.
+197     Lithuania                                                         9.50        2020 est.
+198     United Arab Emirates                                              9.50        2020 est.
+199     Saint Helena, Ascension, and Tristan da Cunha                     9.40        2020 est.
+200     Estonia                                                           9.30        2020 est.
+201     Qatar                                                             9.30        2020 est.
+202     Saint Barthelemy                                                  9.30        2020 est.
+203     Slovakia                                                          9.30        2020 est.
+204     Latvia                                                            9.20        2020 est.
+205     Czechia                                                           8.90        2020 est.
+206     Poland                                                            8.90        2020 est.
+207     Singapore                                                         8.90        2020 est.
+208     Hungary                                                           8.80        2020 est.
+209     San Marino                                                        8.80        2020 est.
+210     Serbia                                                            8.80        2020 est.
+211     Croatia                                                           8.70        2020 est.
+212     Slovenia                                                          8.70        2020 est.
+213     Spain                                                             8.70        2020 est.
+214     Bosnia and Herzegovina                                            8.60        2020 est.
+215     Germany                                                           8.60        2020 est.
+216     Romania                                                           8.50        2020 est.
+217     Hong Kong                                                         8.40        2020 est.
+218     Italy                                                             8.40        2020 est.
+219     Bulgaria                                                          8.30        2020 est.
+220     Korea, South                                                      8.20        2020 est.
+221     Portugal                                                          8.10        2020 est.
+222     Puerto Rico                                                       8.00        2020 est.
+223     Taiwan                                                            8.00        2020 est.
+224     Macau                                                             7.90        2020 est.
+225     Greece                                                            7.80        2020 est.
+226     Japan                                                             7.30        2020 est.
+227     Andorra                                                           7.00        2020 est.
+228     Saint Pierre and Miquelon                                         6.70        2020 est.
+229     Monaco                                                            6.40        2020 est.

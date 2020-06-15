@@ -1,0 +1,51 @@
+Urbanization:This entry provides two measures of the degree of urbanization of a population. The first, urban population, describes the percentage of the total population living in urban areas, as defined by the country. The second, rate of urbanization, describes the projected average rate of change of the size of the urban population over the given period of time. It is possible for a country with a 100% urban population to still display a change in the rate of urbanization (up or down). For example . . . moreUrbanization field listing
+
+urban population: 34.9% of total population (2020)
+rate of urbanization: 2.37% annual rate of change (2015-20 est.)
+
+Major urban areas - population:This entry provides the population of the capital and up to six major cities defined as urban agglomerations with populations of at least 750,000 people. An urban agglomeration is defined as comprising the city or town proper and also the suburban fringe or thickly settled territory lying outside of, but adjacent to, the boundaries of the city. For smaller countries, lacking urban centers of 750,000 or more, only the population of the capital is presented.Major urban areas - population field listing
+
+30.291 million NEW DELHI (capital), 20.411 million Mumbai, 14.850 million Kolkata, 1.237 million Bangalore, 10.971 million Chennai, 10.004 million Hyderabad (2020)
+
+Sex ratio:This entry includes the number of males for each female in five age groups - at birth, under 15 years, 15-64 years, 65 years and over, and for the total population. Sex ratio at birth has recently emerged as an indicator of certain kinds of sex discrimination in some countries. For instance, high sex ratios at birth in some Asian countries are now attributed to sex-selective abortion and infanticide due to a strong preference for sons. This will affect future marriage patterns and fertilit . . . moreSex ratio field listing
+at birth: 1.11 male(s)/female
+0-14 years: 1.13 male(s)/female
+15-24 years: 1.14 male(s)/female
+25-54 years: 1.07 male(s)/female
+55-64 years: 1 male(s)/female
+65 years and over: 0.89 male(s)/female
+total population: 1.08 male(s)/female (2020 est.)
+Maternal mortality rate:The maternal mortality rate (MMR) is the annual number of female deaths per 100,000 live births from any cause related to or aggravated by pregnancy or its management (excluding accidental or incidental causes). The MMR includes deaths during pregnancy, childbirth, or within 42 days of termination of pregnancy, irrespective of the duration and site of the pregnancy, for a specified year.Maternal mortality rate field listing
+145 deaths/100,000 live births (2017 est.)
+country comparison to the world: 57
+Infant mortality rate:This entry gives the number of deaths of infants under one year old in a given year per 1,000 live births in the same year. This rate is often used as an indicator of the level of health in a country.Infant mortality rate field listing
+total: 35.4 deaths/1,000 live births
+male: 34.4 deaths/1,000 live births
+female: 36.5 deaths/1,000 live births (2020 est.)
+country comparison to the world: 45
+Life expectancy at birth:This entry contains the average number of years to be lived by a group of people born in the same year, if mortality at each age remains constant in the future. Life expectancy at birth is also a measure of overall quality of life in a country and summarizes the mortality at all ages. It can also be thought of as indicating the potential return on investment in human capital and is necessary for the calculation of various actuarial measures.Life expectancy at birth field listing
+total population: 69.7 years
+male: 68.4 years
+female: 71.2 years (2020 est.)
+country comparison to the world: 167
+Total fertility rate:This entry gives a figure for the average number of children that would be born per woman if all women lived to the end of their childbearing years and bore children according to a given fertility rate at each age. The total fertility rate (TFR) is a more direct measure of the level of fertility than the crude birth rate, since it refers to births per woman. This indicator shows the potential for population change in the country. A rate of two children per woman is considered the replaceme . . . moreTotal fertility rate field listing
+2.35 children born/woman (2020 est.)
+
+
+total: 5.9% of population (2015 est.)
+Current Health Expenditure:Current Health Expenditure (CHE) describes the share of spending on health in each country relative to the size of its economy.  It includes expenditures corresponding to the final consumption of health care goods and services and excludes investment, exports, and intermediate consumption.  CHE shows the importance of the health sector in the economy and indicates the priority given to health in monetary terms.  Note: Current Health Expenditure replaces the former Health Expenditures field . . . moreCurrent Health Expenditure field listing
+3.5% (2017)
+Physicians density:This entry gives the number of medical doctors (physicians), including generalist and specialist medical practitioners, per 1,000 of the population. Medical doctors are defined as doctors that study, diagnose, treat, and prevent illness, disease, injury, and other physical and mental impairments in humans through the application of modern medicine. They also plan, supervise, and evaluate care and treatment plans by other health care providers. The World Health Organization estimates that f . . . morePhysicians density field listing
+0.78 physicians/1,000 population (2017)
+Hospital bed density:This entry provides the number of hospital beds per 1,000 people; it serves as a general measure of inpatient service availability. Hospital beds include inpatient beds available in public, private, general, and specialized hospitals and rehabilitation centers. In most cases, beds for both acute and chronic care are included. Because the level of inpatient services required for individual countries depends on several factors - such as demographic issues and the burden of disease - there is . . . moreHospital bed density field listing
+0.7 beds/1,000 population (2011)
+Sanitation facility access:This entry provides information about access to improved or unimproved sanitation facilities available to segments of the population of a country. Improved sanitation - use of any of the following facilities: flush or pour-flush to a piped sewer system, septic tank or pit latrine; ventilated improved pit (VIP) latrine; pit latrine with slab; or a composting toilet. Unimproved sanitation - use of any of the following facilities: flush or pour-flush not piped to a sewer system, septic tank . . . moreSanitation facility access field listing
+improved:
+urban: 62.6% of population (2015 est.)
+rural: 28.5% of population (2015 est.)
+total: 39.6% of population (2015 est.)
+unimproved:
+urban: 37.4% of population (2015 est.)
+rural: 71.5% of population (2015 est.)
+total: 60.4% of population (2015 est.)
+
