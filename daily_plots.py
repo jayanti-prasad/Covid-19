@@ -18,6 +18,7 @@ if __name__ == "__main__":
     dF = pd.read_csv(args.input_file)
     df = get_country_data (dF, args.country)
     df.index = df['date'].to_list() 
+    df.to_csv(args.output_dir + os.sep + args.country+".csv")
 
     plot_data (df,['deaths','recovered','confirmed'],0,args.country,3,args.output_dir)
     #plot_data (df,['deaths','recovered','confirmed'],1,args.country,3,args.output_dir)
