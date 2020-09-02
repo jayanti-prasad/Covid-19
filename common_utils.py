@@ -4,6 +4,15 @@ import pandas as pd
 import arrow
 import re
 
+from datetime import datetime
+
+def get_dtobject  (date_str):
+   parts = date_str.split('-')
+   parts = [int(x) for x in parts]
+   print("parts",parts)
+   return datetime(parts[0], parts[1], parts[2], 0, 0, 0)
+
+
 def get_date_diff(date1,date2):
    a = arrow.get(date1)
    b = arrow.get(date2)
@@ -68,7 +77,12 @@ def get_country_data (df, country):
    df = df.sort_values(by='date')
    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
    df = df.loc[:, ~df.columns.str.contains('country')]
-   df.index = df['date'].to_list()
+
+   dates = df['date'].to_list()
+   dates = [get_dtobject(x) for x in dates]
+
+   df.index = dates
+   df['date'] = dates 
 
    return df 
 
