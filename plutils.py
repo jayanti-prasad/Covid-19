@@ -50,9 +50,10 @@ def plot_data (df, columns, flag, title, skip_days, output_dir):
         ax[i].set_ylabel(columns[i])
         ax[i].grid()
         if i == 0:
-           ax[i].set_title(title)
+           ax[i].set_title("Covid-19 [" + title +"]")
 
     plt.savefig(output_dir + os.sep + title.replace(" ","") +".pdf")
     print("output:",output_dir + os.sep + title.replace(" ","") +".pdf")
+    #fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     plt.show()
   

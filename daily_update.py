@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from datetime import datetime 
 import argparse 
 import glob
 import os
@@ -61,6 +62,7 @@ if __name__ == "__main__":
           df = pd.read_csv(f)
           C, D, R = get_summary(df)
           date =  os.path.basename(f).replace(".csv","")
+
           for k in C.keys():
              data = [date, k, C[k], D[k], R[k]]
              dF.loc[count] = data 

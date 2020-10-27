@@ -41,11 +41,12 @@ def get_top_countries (args, df):
     df1 = df1.sort_values(by='date')
     last_date = df1.tail(1)['date'].values[0]
     df_last = df1[df1['date'] == last_date]
-    df_last = df_last.sort_values(by=['confirmed'],ascending=False)[:60]
+    #df_last = df_last.sort_values(by=['confirmed'],ascending=False)[:50]
+    df_last = df_last.sort_values(by=['deaths'],ascending=False)[:50]
 
     df_last.to_csv(args.output_dir + "top_countries.csv",columns=['country','confirmed','deaths','recovered'],index=False)
 
-    fig = plt.figure (figsize=(18,18))
+    fig = plt.figure (figsize=(36,24))
     ax = fig.add_subplot(111)
 
     df_last.plot(x="country", y="confirmed", kind="bar", ax=ax, color="C1")
@@ -61,7 +62,7 @@ def get_top_countries (args, df):
          ha='right', va='bottom', alpha=0.5)
 
 
-    plt.savefig(args.output_dir + os.sep+ "top_countries.pdf")
+    plt.savefig(args.output_dir + os.sep+ "top_countries0.pdf")
     plt.show()
 
 

@@ -9,7 +9,6 @@ from datetime import datetime
 def get_dtobject  (date_str):
    parts = date_str.split('-')
    parts = [int(x) for x in parts]
-   print("parts",parts)
    return datetime(parts[0], parts[1], parts[2], 0, 0, 0)
 
 
